@@ -14,7 +14,8 @@ USE auction_db;
 -- CREATE TABLES FOR DATABASE --
 CREATE TABLE User (
   uid INTEGER,
-  uname VARCHAR(20),
+  first_name VARCHAR(20),
+  last_name VARCHAR(20),
   email VARCHAR(20),
   phone_num VARCHAR(20),
   aid INTEGER,
@@ -108,11 +109,21 @@ CREATE TABLE Discussion (
 CREATE TABLE Review (
   uid INTEGER,
   iid INTEGER,
-
+  rating FLOAT,
+  rcontent VARCHAR(64),
+  PRIMARY KEY(uid, iid),
+  FOREIGN KEY(uid) REFERENCES User(uid),
+  FOREIGN KEY(iid) REFERENCES Item(iid)
 );
 
 CREATE TABLE Wishlist (
-
+  uid INTEGER,
+  iid INTEGER,
+  likes INTEGER,
+  wcontent VARCHAR(64),
+  PRIMARY KEY(uid, iid),
+  FOREIGN KEY(uid) REFERENCES User(uid),
+  FOREIGN KEY(iid) REFERENCES Item(iid)
 );
 
 -- POPULATE TABLES --
