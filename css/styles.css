@@ -38,6 +38,40 @@
   border-right: none;
 }
 
+/* Auction Item Shit */
+.auction {
+  /* background-color: #777799 */
+}
+
+.auction h1 {
+  text-align: center;
+  color: #4CAF50;
+  /* text-color: #4CAF50; */
+}
+
+.auction table {
+  /* align-self: center; */
+  /* float: right; */
+  margin: auto;
+  border: 1px solid black;
+}
+
+tr, th, td{
+  border: 1px solid green;
+}
+
+/* Selling item shit */
+.selling h1{
+  text-align: center;
+  color: #4CAF50;
+}
+
+.selling table {
+  margin: auto;
+  border: 1px solid black;
+}
+
+/* Footer */
 .footer {
   position:absolute;
   bottom:0;
