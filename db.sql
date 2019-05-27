@@ -2,6 +2,8 @@
   Authors: Hawon Park, Jeong Ho Shin, Sujeong Youn
 */
 
+-- C:\Users\hawon\Documents\GitHub\cse305final\db.sql
+
 -- DATABASE INITIALIZATION --
 DROP DATABASE IF EXISTS auction_db;
 
@@ -12,6 +14,14 @@ GRANT ALL PRIVILEGES ON auction_db.* to user@localhost identified by 'hey';
 USE auction_db;
 
 -- CREATE TABLES FOR DATABASE --
+CREATE TABLE Address (
+  aid INTEGER,
+  details VARCHAR(20),
+  street VARCHAR(20),
+  city VARCHAR(20),
+  PRIMARY KEY (aid)
+);
+
 CREATE TABLE User (
   uid INTEGER,
   first_name VARCHAR(20),
@@ -21,14 +31,6 @@ CREATE TABLE User (
   aid INTEGER,
   PRIMARY KEY(uid),
   FOREIGN KEY(aid) REFERENCES Address(aid)
-);
-
-CREATE TABLE Address (
-  aid INTEGER,
-  details VARCHAR(20),
-  street VARCHAR(20),
-  city VARCHAR(20),
-  PRIMARY KEY (aid)
 );
 
 CREATE TABLE City(
