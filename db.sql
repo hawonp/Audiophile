@@ -84,7 +84,7 @@ CREATE TABLE Auction (
   end_date DATE,
   PRIMARY KEY(uid, iid),
   FOREIGN KEY(uid) REFERENCES User(uid),
-  FOREIGN KEY(iid) REFERENCES Item(iid)
+  FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
 -- CREATE TABLE Notification (
@@ -105,7 +105,7 @@ CREATE TABLE Discussion (
   comment VARCHAR(64),
   PRIMARY KEY(thread),
   FOREIGN KEY(uid) REFERENCES User(uid),
-  FOREIGN KEY(iid) REFERENCES Item(iid)
+  FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
 CREATE TABLE Review (
@@ -115,7 +115,7 @@ CREATE TABLE Review (
   rcontent VARCHAR(64),
   PRIMARY KEY(uid, iid),
   FOREIGN KEY(uid) REFERENCES User(uid),
-  FOREIGN KEY(iid) REFERENCES Item(iid)
+  FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
 CREATE TABLE Wishlist (
@@ -125,7 +125,7 @@ CREATE TABLE Wishlist (
   wcontent VARCHAR(64),
   PRIMARY KEY(uid, iid),
   FOREIGN KEY(uid) REFERENCES User(uid),
-  FOREIGN KEY(iid) REFERENCES Item(iid)
+  FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
 -- POPULATE TABLES --
