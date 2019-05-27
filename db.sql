@@ -145,6 +145,25 @@ INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
 INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
   VALUES (9900, "Suhyun", "Shin", "lol@gmail.com", "919", 002);
 
+
+-- Item 0
+INSERT INTO Item (iid, iname, sellprice) VALUES (001, "SENNHEISER MOMENTUM True Wireless", 399000);
+INSERT INTO Item_To_Category (iname, category) VALUES ("SENNHEISER MOMENTUM True Wireless", "earbuds");
+
+
+--User 1 selling Item 0
+INSERT INTO Sells (uid, iid, stock) VALUES (9898, 001, 5);
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 359100);
+
+--Auction 0: Item 0, user 1
+INSERT INTO Auction (uid, iid, curr_bid, start_date, end_date) VALUES (9899, 001, 360000, , );
+
+
+--Buy 0: 
+INSERT INTO Buys () VALUES ();
+
+
+
 -- TEST SQL QUERIES --
 SELECT * FROM User;
 
