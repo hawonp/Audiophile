@@ -34,8 +34,8 @@ CREATE TABLE User (
 );
 
 CREATE TABLE City(
-  city VARCHAR(20),
-  country VARCHAR(20),
+  city VARCHAR(50),
+  country VARCHAR(50),
   PRIMARY KEY(city)
 );
 
@@ -129,3 +129,25 @@ CREATE TABLE Wishlist (
 );
 
 -- POPULATE TABLES --
+-- user 1
+INSERT INTO Address (aid, details, street, city) VALUES (001, "A535", "Moonwharo-119", "Songdo");
+INSERT INTO City(city, country) VALUES ("Songdo", "South Korea");
+INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
+  VALUES (9898, "Hawon", "Park", "topfrag@gmail.com", "991", 001);
+
+-- user 2
+INSERT INTO Address (aid, details, street, city) VALUES (002, "A516", "Moonwharo-119", "Songdo");
+
+INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
+  VALUES (9899, "Jeong Ho", "Shin", "bottomfrag@gmail.com", "119", 002);
+
+-- user 3
+INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
+  VALUES (9900, "Suhyun", "Shin", "lol@gmail.com", "919", 002);
+
+-- TEST SQL QUERIES --
+SELECT * FROM User;
+
+SELECT * FROM City;
+
+SELECT * FROM Address;
