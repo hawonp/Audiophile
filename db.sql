@@ -133,13 +133,13 @@ CREATE TABLE Wishlist (
 INSERT INTO Address (aid, details, street, city) VALUES (001, "A535", "Moonwharo-119", "Songdo");
 INSERT INTO City(city, country) VALUES ("Songdo", "South Korea");
 INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
-  VALUES (9898, "Hawon", "Park", "topfrag@gmail.com", "991", 001);
+  VALUES (9898, "Hawon", "Park", "bottomfrag@gmail.com", "991", 001);
 
 -- user 2
 INSERT INTO Address (aid, details, street, city) VALUES (002, "A516", "Moonwharo-119", "Songdo");
 
 INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
-  VALUES (9899, "Jeong Ho", "Shin", "bottomfrag@gmail.com", "119", 002);
+  VALUES (9899, "Jeong Ho", "Shin", "topfrag@gmail.com", "119", 002);
 
 -- user 3
 INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
@@ -156,11 +156,11 @@ INSERT INTO Sells (uid, iid, stock) VALUES (9898, 001, 5);
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 359100);
 
 --Auction 0: Item 0, user 1
-INSERT INTO Auction (uid, iid, curr_bid, start_date, end_date) VALUES (9899, 001, 360000, , );
+INSERT INTO Auction (uid, iid, curr_bid, start_date, end_date) VALUES (9899, 001, 360000, "2000-03-06", "2000-03-12");
 
 
 --Buy 0: 
-INSERT INTO Buys () VALUES ();
+--INSERT INTO Buys () VALUES ();
 
 
 
