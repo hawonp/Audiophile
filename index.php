@@ -16,9 +16,9 @@
 
   <!-- Navigation -->
   <div class="topnav">
-    <a class="active" href="index.html">Home</a>
-    <a href="#auction">Auction</a>
-    <a href="#contact">Contact</a>
+    <a class="active" href="index.php">Home</a>
+    <a href="auction.php">Auction</a>
+    <a href="selling.php">Sales</a>
     <a class="rightAlign" href="#login">LOGIN</a>
   </div>
 
