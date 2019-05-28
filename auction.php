@@ -26,6 +26,24 @@
 
   <p> hello it auction </p>
 
+  <?php
+/*
+$sql = "SELECT i FROM Auction";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<table><tr><th>Item name</th><th>Current bid price</th><th>Auction end date</th></tr>";
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "<tr><td>".$row["iname"]."</td><td>".$row["curr_bid"]." ".$row["end_date"]."</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "0 results";
+}
+*/
+?>
+
   <!-- FOOTER -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
