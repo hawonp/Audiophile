@@ -160,7 +160,7 @@ INSERT INTO Auction (uid, iid, curr_bid, start_date, end_date) VALUES (9899, 001
 
 
 --Buy 0: 
---INSERT INTO Buys () VALUES ();
+INSERT INTO Buys (uid, iid, bdate) VALUES (9900, 001, "2000-03-05");
 
 
 
