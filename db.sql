@@ -23,13 +23,13 @@ CREATE TABLE Address (
 );
 
 CREATE TABLE User (
-  uid INTEGER,
+  email VARCHAR(20),
   first_name VARCHAR(20),
   last_name VARCHAR(20),
-  email VARCHAR(20),
+  password VARCHAR(20),
   phone_num VARCHAR(20),
   aid INTEGER,
-  PRIMARY KEY(uid),
+  PRIMARY KEY(email),
   FOREIGN KEY(aid) REFERENCES Address(aid)
 );
 
@@ -59,31 +59,31 @@ CREATE TABLE Sellprice_To_Bid(
 );
 
 CREATE TABLE Sells(
-  uid INTEGER,
+  email VARCHAR(20),
   iid INTEGER,
   stock INTEGER,
-  PRIMARY KEY(uid, iid),
-  FOREIGN KEY(uid) REFERENCES User(uid),
+  PRIMARY KEY(email, iid),
+  FOREIGN KEY(email) REFERENCES User(email),
   FOREIGN KEY(iid) REFERENCES Item(iid)
 );
 
 CREATE TABLE Buys (
-  uid INTEGER,
+  email VARCHAR(20),
   iid INTEGER,
   bdate DATE,
-  PRIMARY KEY(uid, iid),
-  FOREIGN KEY(uid) REFERENCES User(uid),
+  PRIMARY KEY(email, iid),
+  FOREIGN KEY(email) REFERENCES User(email),
   FOREIGN KEY(iid) REFERENCES Item(iid)
 );
 
 CREATE TABLE Auction (
-  uid INTEGER,
+  email VARCHAR(20),
   iid INTEGER,
   curr_bid INTEGER,
   start_date DATE,
   end_date DATE,
-  PRIMARY KEY(uid, iid),
-  FOREIGN KEY(uid) REFERENCES User(uid),
+  PRIMARY KEY(email, iid),
+  FOREIGN KEY(email) REFERENCES User(email),
   FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
@@ -98,18 +98,18 @@ CREATE TABLE Auction (
 -- );
 
 CREATE TABLE Discussion (
-  uid INTEGER,
+  email VARCHAR(20),
   iid INTEGER,
   thread INTEGER,
   comment_date DATE,
   comment VARCHAR(64),
   PRIMARY KEY(thread),
-  FOREIGN KEY(uid) REFERENCES User(uid),
+  FOREIGN KEY(email) REFERENCES User(email),
   FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
 CREATE TABLE Review (
-  uid INTEGER,
+  email VARCHAR(20),
   iid INTEGER,
   rating FLOAT,
   rcontent VARCHAR(64),
@@ -119,12 +119,12 @@ CREATE TABLE Review (
 );
 
 CREATE TABLE Wishlist (
-  uid INTEGER,
+  email VARCHAR(20),
   iid INTEGER,
   likes INTEGER,
   wcontent VARCHAR(64),
-  PRIMARY KEY(uid, iid),
-  FOREIGN KEY(uid) REFERENCES User(uid),
+  PRIMARY KEY(email, iid),
+  FOREIGN KEY(email) REFERENCES User(email),
   FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
@@ -132,18 +132,18 @@ CREATE TABLE Wishlist (
 -- user 1
 INSERT INTO Address (aid, details, street, city) VALUES (001, "A535", "Moonwharo-119", "Songdo");
 INSERT INTO City(city, country) VALUES ("Songdo", "South Korea");
-INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
-  VALUES (9898, "Hawon", "Park", "bottomfrag@gmail.com", "991", 001);
+INSERT INTO User(first_name, last_name, password, email, phone_num, aid)
+  VALUES ("Hawon", "Park", "ps1", "hawonp@gmail.com", "991", 001);
 
 -- user 2
 INSERT INTO Address (aid, details, street, city) VALUES (002, "A516", "Moonwharo-119", "Songdo");
 
-INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
-  VALUES (9899, "Jeong Ho", "Shin", "topfrag@gmail.com", "119", 002);
+INSERT INTO User(first_name, last_name, password, email, phone_num, aid)
+  VALUES ("Jeong Ho", "Shin", "ps2", "topfrag@gmail.com", "119", 002);
 
 -- user 3
-INSERT INTO User(uid, first_name, last_name, email, phone_num, aid)
-  VALUES (9900, "Suhyun", "Shin", "lol@gmail.com", "919", 002);
+INSERT INTO User(first_name, last_name, password, email, phone_num, aid)
+  VALUES ("Suhyun", "Shin", "ps3", "lol@gmail.com", "919", 002);
 
 
 -- Item 0
@@ -152,17 +152,15 @@ INSERT INTO Item_To_Category (iname, category) VALUES ("SENNHEISER MOMENTUM True
 
 
 --User 1 selling Item 0
-INSERT INTO Sells (uid, iid, stock) VALUES (9898, 001, 5);
+INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 001, 5);
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 359100);
 
 --Auction 0: Item 0, user 1
-INSERT INTO Auction (uid, iid, curr_bid, start_date, end_date) VALUES (9899, 001, 360000, "2000-03-06", "2000-03-12");
+INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 001, 360000, "2000-03-06", "2000-03-12");
 
 
---Buy 0: 
-INSERT INTO Buys (uid, iid, bdate) VALUES (9900, 001, "2000-03-05");
-
-
+--Buy 0:
+INSERT INTO Buys (email, iid, bdate) VALUES ("lol@gmail.com", 001, "2000-03-05");
 
 -- TEST SQL QUERIES --
 SELECT * FROM User;
@@ -170,3 +168,9 @@ SELECT * FROM User;
 SELECT * FROM City;
 
 SELECT * FROM Address;
+
+SELECT * FROM Auction;
+
+SELECT * FROM Buys;
+
+SELECT * FROM Item_To_Category;

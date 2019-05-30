@@ -1,0 +1,15 @@
+.button_primary {
+  /* color: #2196F3; */
+  /* border: 1px solid #bbb; */
+  background-color: green;
+	color: white;
+	width: 60px;
+	height: 30px;
+}
+
+.button_default {
+  background-color: red;
+  color: white;
+  width: 60px;
+  height: 30px;
+}

@@ -1,0 +1,31 @@
+/* .login p {
+  text-align: center;
+} */
+
+.login {
+  text-align: center;
+  float: auto;
+  outline: 5px solid black;
+}
+
+/* Footer */
+.footer {
+  position:absolute;
+  bottom:0;
+  width:90%;
+  height:60px;
+  text-align: center;
+}
+
+input[type=text] {
+  /* width: 100%; */
+  padding: 10px 15px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border: 1px solid #555;
+  outline: none;
+}
+
+input[type=text]:focus {
+  background-color: lightblue;
+}
