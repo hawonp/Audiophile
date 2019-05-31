@@ -88,12 +88,12 @@ CREATE TABLE Auction (
 );
 
 -- CREATE TABLE Notification (
---   uid INTEGER,
+--   email VARCHAR(20),
 --   iid INTEGER,
 --   ncontent VARCHAR(20),
 --   nnumber VARCHAR(20),
---   PRIMARY KEY(uid, iid),
---   FOREIGN KEY(uid) REFERENCES User(uid),
+--   PRIMARY KEY(email, iid),
+--   FOREIGN KEY(email) REFERENCES User(email),
 --   FOREIGN KEY(iid) REFERENCES Item(iid)
 -- );
 
@@ -113,8 +113,8 @@ CREATE TABLE Review (
   iid INTEGER,
   rating FLOAT,
   rcontent VARCHAR(64),
-  PRIMARY KEY(uid, iid),
-  FOREIGN KEY(uid) REFERENCES User(uid),
+  PRIMARY KEY(email, iid),
+  FOREIGN KEY(email) REFERENCES User(email),
   FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
@@ -149,14 +149,29 @@ INSERT INTO User(first_name, last_name, password, email, phone_num, aid)
 -- Item 0
 INSERT INTO Item (iid, iname, sellprice) VALUES (001, "SENNHEISER MOMENTUM True Wireless", 399000);
 INSERT INTO Item_To_Category (iname, category) VALUES ("SENNHEISER MOMENTUM True Wireless", "earbuds");
-
+-- Item 1
+INSERT INTO Item (iid, iname, sellprice) VALUES (002, "some_cheap_earphones", 35000);
+INSERT INTO Item_To_Category (iname, category) VALUES ("some_cheap_earphones", "earbuds");
+-- Item 2
+INSERT INTO Item (iid, iname, sellprice) VALUES (003, "acer-xrsomethn", 100000);
+INSERT INTO Item_To_Category (iname, category) VALUES ("acer-xrsomethn", "monitor");
 
 --User 1 selling Item 0
 INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 001, 5);
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 359100);
 
+--User 1 selling Item 1
+INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 002, 2);
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (35000, 31500);
+
+--User 2 selling Item 3
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 003, 10);
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (100000, 90000);
+
 --Auction 0: Item 0, user 1
 INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 001, 360000, "2000-03-06", "2000-03-12");
+--Auction 1: Item 1, user 1
+INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 002, 360000, "2000-02-01", "2000-03-7");
 
 
 --Buy 0:
