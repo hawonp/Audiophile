@@ -19,7 +19,8 @@ CREATE TABLE Address (
   details VARCHAR(20),
   street VARCHAR(20),
   city VARCHAR(20),
-  PRIMARY KEY (aid)
+  PRIMARY KEY (aid),
+  FOREIGN KEY(city) REFERENCES City(city)
 );
 
 CREATE TABLE User (

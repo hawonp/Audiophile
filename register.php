@@ -11,14 +11,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$mypassword = $myemail = "";
+#GENERATE UNIQUE AID EVERY TIME
+function get_count(){
+  static $count = 2;
+  return $count++;
+}
 
 // CHECK CREDENTIALS
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   // echo "hey";
-
-
-
 
   //VALIDATE EMAIL
   $sql = "SELECT email FROM User WHERE email = \"".$_POST["email"]."\"";
@@ -37,7 +38,50 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   else {
     echo "Error message = ".mysqli_error($conn);
   }
-  //VALIDATE PASSWORD
+
+  //PREPARE TO ADD NEW USER
+  $mypassword = $_POST["password"];
+  $myfname = $_POST["first_name"];
+  $mylname = $_POST["last_name"];
+  $mypnum = $_POST["phone_number"];
+  $mydetails = $_POST["plot"];
+  $mystreet = $_POST["street"];
+  $mycity = $_POST["city"];
+  $mycountry = $_POST["country"];
+
+  echo substr($mypnum, 0, 5);
+
+  #ENTER NEW ADDRESS
+  $sql = "SELECT country FROM City WHERE city = \"".$_POST["city"]."\"";
+  if ($res = mysqli_query($conn, $sql)){
+    if (mysqli_num_rows($res) > 0) { //if there already exists a product with the specifications
+      echo "Skip adding new city tuple";
+    }
+    else {
+      $sql2 = "INSERT INTO City(city, country)
+        VALUES (\"".$_POST["city"]."\", \"".$_POST["country"]."\")";
+
+      if (mysqli_query($conn, $sql2) == true) {
+        echo "New City tuple Added!<br>";
+      } else {
+        echo "Could not add new city = ".mysqli_error($conn);
+      }
+    }
+  }
+  else {
+    echo "Error message = ".mysqli_error($conn);
+  }
+
+  #ENTER NEW ADDRESS
+  $sql = "INSERT INTO Address(aid, details, street, city)
+    VALUES(substr($mypnum, 0, 5), \"".$_POST["plot"]."\", \"".$_POST["street"]."\", \"".$_POST["city"]."\")";
+
+  if (mysqli_query($conn, $sql) == true) {
+    echo "New address Added!<br>";
+  }
+  else {
+    echo "Unable to add new address!\n".mysqli_error($conn);
+  }
 
 }
 mysqli_close($conn);
@@ -78,7 +122,7 @@ mysqli_close($conn);
       Password: <input type="password" name="password" required>
       <br><br>
 
-      <!-- First Name: <input type="text" name="first_name" required>
+      First Name: <input type="text" name="first_name" required>
       Last Name: <input type="text" name="last_name" required>
       <br><br>
 
@@ -88,14 +132,14 @@ mysqli_close($conn);
       House/Plot Number: <input type="text" name="plot" required>
       <br><br>
 
-      Street: <input type="text" name="name" required>
+      Street: <input type="text" name="street" required>
       <br><br>
 
-      City: <input type="text" name="name" required>
+      City: <input type="text" name="city" required>
       <br><br>
 
-      Country: <input type="text" name="name" required>
-      <br><br> -->
+      Country: <input type="text" name="country" required>
+      <br><br>
 
       <input type="submit" class="button_primary" value="Submit">
       <input type="reset" class="button_default" value = "Reset">
