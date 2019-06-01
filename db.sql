@@ -14,13 +14,10 @@ GRANT ALL PRIVILEGES ON auction_db.* to user@localhost identified by 'hey';
 USE auction_db;
 
 -- CREATE TABLES FOR DATABASE --
-CREATE TABLE Address (
-  aid INTEGER,
-  details VARCHAR(20),
-  street VARCHAR(20),
-  city VARCHAR(20),
-  PRIMARY KEY (aid),
-  FOREIGN KEY(city) REFERENCES City(city)
+CREATE TABLE City(
+  city VARCHAR(50),
+  country VARCHAR(50),
+  PRIMARY KEY(city)
 );
 
 CREATE TABLE User (
@@ -29,16 +26,26 @@ CREATE TABLE User (
   last_name VARCHAR(20),
   password VARCHAR(20),
   phone_num VARCHAR(20),
-  aid INTEGER,
+  details VARCHAR(20),
+  street VARCHAR(20),
+  city VARCHAR(20),
   PRIMARY KEY(email),
-  FOREIGN KEY(aid) REFERENCES Address(aid)
+  FOREIGN KEY(city) REFERENCES City(city)
 );
 
-CREATE TABLE City(
-  city VARCHAR(50),
-  country VARCHAR(50),
-  PRIMARY KEY(city)
-);
+SHOW ERRORS;
+
+-- CREATE TABLE Address (
+--   phone_num VARCHAR(20),
+  -- details VARCHAR(20),
+  -- street VARCHAR(20),
+  -- city VARCHAR(20),
+--   PRIMARY KEY (phone_num),
+--   FOREIGN KEY(phone_num) REFERENCES User(phone_num),
+  -- FOREIGN KEY(city) REFERENCES City(city)
+-- );
+
+SHOW ERRORS;
 
 CREATE TABLE Item (
   iid INTEGER,
@@ -131,21 +138,20 @@ CREATE TABLE Wishlist (
 
 -- POPULATE TABLES --
 -- user 1
-INSERT INTO Address (aid, details, street, city) VALUES (001, "A535", "Moonwharo-119", "Songdo");
 INSERT INTO City(city, country) VALUES ("Songdo", "South Korea");
-INSERT INTO User(first_name, last_name, password, email, phone_num, aid)
-  VALUES ("Hawon", "Park", "ps1", "hawonp@gmail.com", "991", 001);
+INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
+  VALUES ("Hawon", "Park", "ps1", "hawonp@gmail.com", "991", "A535", "Moonwharo-119", "Songdo");
+-- INSERT INTO Address (phone_num, details, street, city) VALUES ("991", "A535", "Moonwharo-119", "Songdo");
 
 -- user 2
-INSERT INTO Address (aid, details, street, city) VALUES (002, "A516", "Moonwharo-119", "Songdo");
-
-INSERT INTO User(first_name, last_name, password, email, phone_num, aid)
-  VALUES ("Jeong Ho", "Shin", "ps2", "topfrag@gmail.com", "119", 002);
+INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
+  VALUES ("Jeong Ho", "Shin", "ps2", "topfrag@gmail.com", "119", "A516", "Moonwharo-119", "Songdo");
+-- INSERT INTO Address (phone_num, details, street, city) VALUES ("119", "A516", "Moonwharo-119", "Songdo");
 
 -- user 3
-INSERT INTO User(first_name, last_name, password, email, phone_num, aid)
-  VALUES ("Suhyun", "Shin", "ps3", "lol@gmail.com", "919", 002);
-
+INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
+  VALUES ("Suhyun", "Shin", "ps3", "lol@gmail.com", "919", "A516", "Moonwharo-119", "Songdo");
+-- INSERT INTO Address (phone_num, details, street, city) VALUES ("919", "A516", "Moonwharo-119", "Songdo");
 
 -- Item 0
 INSERT INTO Item (iid, iname, sellprice) VALUES (001, "SENNHEISER MOMENTUM True Wireless", 399000);
@@ -180,10 +186,10 @@ INSERT INTO Buys (email, iid, bdate) VALUES ("lol@gmail.com", 001, "2000-03-05")
 
 -- TEST SQL QUERIES --
 SELECT * FROM User;
-
+--
 SELECT * FROM City;
 
-SELECT * FROM Address;
+-- SELECT * FROM Address;
 
 SELECT * FROM Auction;
 

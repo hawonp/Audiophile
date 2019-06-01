@@ -11,15 +11,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-#GENERATE UNIQUE AID EVERY TIME
-function get_count(){
-  static $count = 2;
-  return $count++;
-}
-
 // CHECK CREDENTIALS
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-  // echo "hey";
 
   //VALIDATE EMAIL
   $sql = "SELECT email FROM User WHERE email = \"".$_POST["email"]."\"";
@@ -31,57 +24,89 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "WARNING: This email is already taken! <br>";
     }
     else {
-      $myemail = trim($_POST["email"]);
-      echo $myemail;
-    }
-  }
-  else {
-    echo "Error message = ".mysqli_error($conn);
-  }
+      #ENTER NEW CITY
+      $sql = "SELECT country FROM City WHERE city = \"".$_POST["city"]."\"";
+      if ($res = mysqli_query($conn, $sql)){
+        if (mysqli_num_rows($res) > 0) { //if there already exists a product with the specifications
+          echo "Skip adding new city tuple";
+        }
+        else {
+          $sql2 = "INSERT INTO City(city, country)
+            VALUES (\"".$_POST["city"]."\", \"".$_POST["country"]."\")";
 
-  //PREPARE TO ADD NEW USER
-  $mypassword = $_POST["password"];
-  $myfname = $_POST["first_name"];
-  $mylname = $_POST["last_name"];
-  $mypnum = $_POST["phone_number"];
-  $mydetails = $_POST["plot"];
-  $mystreet = $_POST["street"];
-  $mycity = $_POST["city"];
-  $mycountry = $_POST["country"];
-
-  echo substr($mypnum, 0, 5);
-
-  #ENTER NEW ADDRESS
-  $sql = "SELECT country FROM City WHERE city = \"".$_POST["city"]."\"";
-  if ($res = mysqli_query($conn, $sql)){
-    if (mysqli_num_rows($res) > 0) { //if there already exists a product with the specifications
-      echo "Skip adding new city tuple";
-    }
-    else {
-      $sql2 = "INSERT INTO City(city, country)
-        VALUES (\"".$_POST["city"]."\", \"".$_POST["country"]."\")";
-
-      if (mysqli_query($conn, $sql2) == true) {
-        echo "New City tuple Added!<br>";
-      } else {
-        echo "Could not add new city = ".mysqli_error($conn);
+          if (mysqli_query($conn, $sql2) == true) {
+            echo "New City tuple Added!<br>";
+          } else {
+            echo "Could not add new city = ".mysqli_error($conn);
+          }
+        }
       }
-    }
+      else {
+        echo "Error message = ".mysqli_error($conn);
+      }
+
+      #ENTER NEW USER
+      $sql = "INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
+        VALUES( \"".$_POST["first_name"]."\",
+                \"".$_POST["last_name"]."\",
+                \"".$_POST["password"]."\",
+                \"".$_POST["email"]."\",
+                \"".$_POST["phone_number"]."\",
+                \"".$_POST["plot"]."\",
+                \"".$_POST["street"]."\",
+                \"".$_POST["city"]."\")";
+
+      if (mysqli_query($conn, $sql) == true) {
+        echo "New user Added!<br>";
+      }
+      else {
+        echo "Unable to add new user!\n".mysqli_error($conn);
+      }
+    } //this is the closing bracket
   }
+  //failure to check for email
   else {
     echo "Error message = ".mysqli_error($conn);
   }
+  
+  // #ENTER NEW CITY
+  // $sql = "SELECT country FROM City WHERE city = \"".$_POST["city"]."\"";
+  // if ($res = mysqli_query($conn, $sql)){
+  //   if (mysqli_num_rows($res) > 0) { //if there already exists a product with the specifications
+  //     echo "Skip adding new city tuple";
+  //   }
+  //   else {
+  //     $sql2 = "INSERT INTO City(city, country)
+  //       VALUES (\"".$_POST["city"]."\", \"".$_POST["country"]."\")";
+  //
+  //     if (mysqli_query($conn, $sql2) == true) {
+  //       echo "New City tuple Added!<br>";
+  //     } else {
+  //       echo "Could not add new city = ".mysqli_error($conn);
+  //     }
+  //   }
+  // }
+  // else {
+  //   echo "Error message = ".mysqli_error($conn);
+  // }
 
-  #ENTER NEW ADDRESS
-  $sql = "INSERT INTO Address(aid, details, street, city)
-    VALUES(substr($mypnum, 0, 5), \"".$_POST["plot"]."\", \"".$_POST["street"]."\", \"".$_POST["city"]."\")";
-
-  if (mysqli_query($conn, $sql) == true) {
-    echo "New address Added!<br>";
-  }
-  else {
-    echo "Unable to add new address!\n".mysqli_error($conn);
-  }
+  // #ENTER NEW USER
+  // $sql = "INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
+  //   VALUES( \"".$_POST["first_name"]."\",
+  //           \"".$_POST["last_name"]."\",
+  //           \"".$_POST["password"]."\",
+  //           \"".$_POST["email"]."\",
+  //           \"".$_POST["phone_number"]."\",
+  //           \"".$_POST["plot"]."\",
+  //           \"".$_POST["street"]."\",
+  //           \"".$_POST["city"]."\")";
+  //
+  // if (mysqli_query($conn, $sql) == true) {
+  //   echo "New user Added!<br>";
+  // }
+  // else {
+  //   echo "Unable to add new user!\n".mysqli_error($conn);
+  // }
 
 }
 mysqli_close($conn);
