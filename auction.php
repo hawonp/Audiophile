@@ -39,7 +39,7 @@
   <!-- <hr> -->
 
   <p> hello it auction </p>
-
+  <!-- Table of items currently on auction -->
   <?php
     $sql = "SELECT * FROM Auction a, Item i Where a.iid = i.iid";
     $result = $conn->query($sql);
