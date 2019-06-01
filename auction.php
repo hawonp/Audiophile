@@ -40,7 +40,7 @@
     <a href="index.php">Home</a>
     <a class = "active" href="auction.php">Auction</a>
     <a href="selling.php">Sales</a>
-    <a class="rightAlign" href="login.php">LOGIN</a>
+    <a class="rightAlign" href="logout.php">LOGOUT</a>
     <!-- change later if needed-->
     <a class="rightAlign" href="user.php">YOUR PROFILE</a>
   </div>
