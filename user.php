@@ -19,20 +19,22 @@
     $username = "user";
     $password = "hey";
     $dbname = "auction_db";
-    
+
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
-    } 
+    }
   ?>
   <!-- Navigation -->
   <div class="topnav">
-    <a class="active" href="index.php">Home</a>
+    <a href="index.php">Home</a>
     <a href="auction.php">Auction</a>
     <a href="selling.php">Sales</a>
-    <a class="rightAlign" href="#login">LOGIN</a>
+    <a class="rightAlign" href="login.php">LOGIN</a>
+    <!-- change later if needed-->
+    <a class="rightAlignActive" href="user.php">YOUR PROFILE</a>
   </div>
 
 
@@ -58,7 +60,7 @@
       $usr_email="lol@gmail.com"; /* TODO:Change to get act info later */
       $sql = "SELECT i.iname, bs.bdate FROM Item i JOIN (SELECT b.iid, b.bdate FROM Buys b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
       $result = $conn->query($sql);
-    
+
       if ($result->num_rows > 0) {
         echo "<table width=\"50%\"><tr><th align=\"left\">Item name</th><th align=\"right\">Purchase date</th></tr>";
         // output data of each row
@@ -94,7 +96,7 @@
     ?>
   </div>
 
-  
+
   <!-- FOOTER -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>

@@ -68,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   else {
     echo "Error message = ".mysqli_error($conn);
   }
-  
+
   // #ENTER NEW CITY
   // $sql = "SELECT country FROM City WHERE city = \"".$_POST["city"]."\"";
   // if ($res = mysqli_query($conn, $sql)){
@@ -123,21 +123,15 @@ mysqli_close($conn);
 
   <link href="./css/login.css" rel="stylesheet">
   <link href="./css/button.css" rel="stylesheet">
+  <link href="./css/styles.css" rel="stylesheet">
 
   <title>Auction</title>
 </head>
 
 <body>
-
-  <!-- Navigation -->
-  <!-- <div class="topnav">
-    <a href="index.php">Home</a>
-    <a href="#auction">Auction</a>
-    <a href="#contact">Contact</a>
-    <a class="rightAlign" href="#login">LOGIN</a>
-  </div> -->
-
+  
   <!-- login screen -->
+  <center>
   <div class = "login">
     <h2> Sign Up </h2>
     <p> Please fill this form to create an account. </p>
@@ -174,12 +168,12 @@ mysqli_close($conn);
     </form>
 
   </div>
+  </center>
 
   <!-- FOOTER -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
   </div>
-
 
 </body>
 

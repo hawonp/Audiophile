@@ -38,6 +38,15 @@
   border-right: none;
 }
 
+.topnav a.rightAlignActive {
+  float:right;
+  /* background-color: #98AFC7; */
+  border-right: none;
+  background-color: #4CAF50;
+  color: white;
+}
+
+
 /* Auction Item Shit */
 .auction {
   /* background-color: #777799 */
@@ -73,9 +82,8 @@ tr, th, td{
 
 /* Footer */
 .footer {
-  position:absolute;
+  position: fixed;
   bottom:0;
-  width:90%;
-  height:60px;
+  left: 46%;
   text-align: center;
 }

@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['email'])){
+    header("Location:Login.php");
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,21 +26,23 @@
     $username = "user";
     $password = "hey";
     $dbname = "auction_db";
-    
+
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
-    } 
+    }
   ?>
 
   <!-- Navigation -->
   <div class="topnav">
     <a href="index.php">Home</a>
-    <a class="active" href="auction.php">Auction</a>
+    <a class = "active" href="auction.php">Auction</a>
     <a href="selling.php">Sales</a>
-    <a class="rightAlign" href="#login">LOGIN</a>
+    <a class="rightAlign" href="login.php">LOGIN</a>
+    <!-- change later if needed-->
+    <a class="rightAlign" href="user.php">YOUR PROFILE</a>
   </div>
 
   <!-- <hr> -->

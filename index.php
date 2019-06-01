@@ -1,3 +1,15 @@
+<?php
+  session_start();
+  if(isset($_SESSION["email"])) {
+    $link = "logout.php";
+    $text = "LOGOUT";
+    // header("Location:index.php");
+  }
+  else {
+    $link = "login.php";
+    $text = "LOGIN";
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +31,7 @@
     <a class="active" href="index.php">Home</a>
     <a href="auction.php">Auction</a>
     <a href="selling.php">Sales</a>
-    <a class="rightAlign" href="#login">LOGIN</a>
+    <a class="rightAlign" href="<?php echo $link; ?>"> <?php echo $text; ?></a>
     <!-- change later if needed-->
     <a class="rightAlign" href="user.php">YOUR PROFILE</a>
   </div>
