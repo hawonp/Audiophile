@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['email'])){
+    header("Location:Login.php");
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,10 +23,12 @@
 
   <!-- Navigation -->
   <div class="topnav">
-    <a  href="index.php">Home</a>
+    <a href="index.php">Home</a>
     <a href="auction.php">Auction</a>
-    <a class="active" href="selling.php">Sales</a>
-    <a class="rightAlign" href="#login">LOGIN</a>
+    <a class = "active" href="selling.php">Sales</a>
+    <a class="rightAlign" href="login.php">LOGIN</a>
+    <!-- change later if needed-->
+    <a class="rightAlign" href="user.php">YOUR PROFILE</a>
   </div>
 
   <!-- <hr> -->
@@ -31,13 +40,13 @@
   $username = "user";
   $password = "hey";
   $dbname = "auction_db";
-  
+
   // Create connection
   $conn = new mysqli($servername, $username, $password, $dbname);
   // Check connection
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
-  } 
+  }
 
 $sql = "SELECT * FROM Sells S, Item I Where S.iid = I.iid";
 $result = $conn->query($sql);
@@ -54,7 +63,7 @@ if ($result->num_rows > 0) {
 }
 
 ?>
-    
+
   <!-- FOOTER -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>

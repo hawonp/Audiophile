@@ -6,15 +6,7 @@
   text-align: center;
   float: auto;
   outline: 5px solid black;
-}
-
-/* Footer */
-.footer {
-  position:absolute;
-  bottom:0;
-  width:90%;
-  height:60px;
-  text-align: center;
+  width: 30%;
 }
 
 input[type=text] {
