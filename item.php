@@ -3,6 +3,7 @@
   if(!isset($_SESSION['email'])){
     header("Location:Login.php");
   }
+  $iid = $_GET['id'];
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
 
   <link href="./css/styles.css" rel="stylesheet">
 
-  <title>Auction</title>
+  <title>USERNAMEPLACEHOLDER</title>
 </head>
 
 <body>
@@ -34,44 +35,22 @@
         die("Connection failed: " . $conn->connect_error);
     }
   ?>
-
   <!-- Navigation -->
   <div class="topnav">
     <a href="index.php">Home</a>
-    <a class = "active" href="auction.php">Auction</a>
+    <a href="auction.php">Auction</a>
     <a href="selling.php">Sales</a>
     <a class="rightAlign" href="logout.php">LOGOUT</a>
     <!-- change later if needed-->
-    <a class="rightAlign" href="user.php">YOUR PROFILE</a>
+    <a class="rightAlignActive" href="user.php">YOUR PROFILE</a>
   </div>
 
-  <!-- <hr> -->
-
-  <h2> Items currently on auction! </h2>
-  <!-- Table of items currently on auction -->
-  <div class="selling">
-    <?php
-      $sql = "SELECT * FROM Auction a, Item i Where a.iid = i.iid";
-      $result = $conn->query($sql);
-
-      if ($result->num_rows > 0) {
-        echo "<table><tr><th>Item name</th> <th>Current bidder</th> <th>Current bid price</th> <th>Auction end date</th></tr>";
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-          echo "<tr><td>".$row["iname"]."</td> <td>".$row["email"]."</td> <td>".$row["curr_bid"]."</td> <td>".$row["end_date"]."</td></tr>";
-        }
-        echo "</table>";
-      } else {
-      echo "0 results";
-      }
-    ?>
-  </div>
+  
 
   <!-- FOOTER -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
   </div>
-
 
 </body>
 
