@@ -44,10 +44,11 @@
     <a class="rightAlignActive" href="user.php">YOUR PROFILE</a>
   </div>
 
-
   <!-- User info -->
   <div>
     <img src="images/User_image.png" alt="User image">
+    <br>
+    <button onclick="window.location.href='/auction/sellItem.php'">Sell New Item</button>    <!-- <input type="reset" class="button_default" value = "Reset"> -->
   </div>
   <!-- <hr> -->
   <hr>
@@ -103,12 +104,10 @@
     ?>
   </div>
 
-
   <!-- FOOTER -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
   </div>
-
 
 </body>
 
