@@ -1,0 +1,15 @@
+.profile {
+  text-align: center;
+  float: left;
+  outline: 5px solid black;
+  width: 20%;
+  height: 100%;
+}
+
+.email {
+  color: red;
+}
+
+.number{
+  color: gray;
+}

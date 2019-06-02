@@ -3,6 +3,61 @@
   if(!isset($_SESSION['email'])){
     header("Location:Login.php");
   }
+
+  // echo mt_rand();
+
+  // Create connection
+  $servername = "localhost";
+  $username = "user";
+  $password = "hey";
+  $dbname = "auction_db";
+  $conn = new mysqli($servername, $username, $password, $dbname);
+
+  // Check connection
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+  }
+
+  // INSERT NEW ITEM INTO RESPECTIVE TABLES
+  if($_SERVER["REQUEST_METHOD"] == "POST") {
+    // INSERT NEW Sellprice_To_Bid TUPLE
+    // WILL REJECT ACTION IF DUPLICATE
+    $mysellprice = $_POST['sellprice'];
+    $myminbid = $mysellprice * 0.75;
+
+    $sql = "INSERT INTO Sellprice_To_Bid(sellprice, minbid)
+      VALUES('$mysellprice' , '$myminbid')";
+
+    mysqli_query($conn, $sql);
+
+    // INSERT NEW Item_To_Category TUPLE
+    // WILL REJECT ACTION IF DUPLICATE
+    $myiname = $_POST['item_name'];
+    $mycategory = $_POST['category'];
+
+    $sql = "INSERT INTO Item_To_Category(iname, category)
+      VALUES('$myiname', '$mycategory')";
+
+    mysqli_query($conn, $sql);
+
+    // INSERT NEW Item tuple
+    $myitemid = mt_rand();
+    $mystock = $_POST['stock'];
+
+    $sql = "INSERT INTO Item(iid, iname, sellprice)
+      VALUES('$myitemid', '$myiname', '$mysellprice')";
+
+    if(mysqli_query($conn, $sql) == true){
+
+    } else {
+      echo "cannot add new item<br>";
+      echo mysqli_error($conn);
+    }
+    // mysqli_query($conn, $sql);
+
+    header("Location:user.php");
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +96,7 @@
     <p> Please fill the item information! </p>
 
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-      Item Name: <input type="text" name="email" required>
+      Item Name: <input type="text" name="item_name" required>
       Sellprice: <input type="number" name="sellprice" min="1" max="20000">
       <br>
 

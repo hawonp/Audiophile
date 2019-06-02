@@ -33,7 +33,6 @@ CREATE TABLE User (
   FOREIGN KEY(city) REFERENCES City(city)
 );
 
-SHOW ERRORS;
 
 -- CREATE TABLE Address (
 --   phone_num VARCHAR(20),
@@ -45,13 +44,13 @@ SHOW ERRORS;
   -- FOREIGN KEY(city) REFERENCES City(city)
 -- );
 
-SHOW ERRORS;
+-- SHOW ERRORS;
 
-CREATE TABLE Item (
-  iid INTEGER,
-  iname VARCHAR(50),
+-- SHOW ENGINE INNODB STATUS;
+CREATE TABLE Sellprice_To_Bid(
   sellprice INTEGER,
-  PRIMARY KEY(iid)
+  minbid INTEGER,
+  PRIMARY KEY(sellprice)
 );
 
 CREATE TABLE Item_To_Category(
@@ -60,10 +59,13 @@ CREATE TABLE Item_To_Category(
   PRIMARY KEY(iname)
 );
 
-CREATE TABLE Sellprice_To_Bid(
+CREATE TABLE Item (
+  iname VARCHAR(50),
   sellprice INTEGER,
-  minbid INTEGER,
-  PRIMARY KEY(sellprice)
+  iid INTEGER,
+  PRIMARY KEY(iid),
+  FOREIGN KEY(sellprice) REFERENCES Sellprice_To_Bid(sellprice),
+  FOREIGN KEY(iname) REFERENCES Item_To_Category(iname)
 );
 
 CREATE TABLE Sells(
@@ -154,32 +156,34 @@ INSERT INTO User(first_name, last_name, password, email, phone_num, details, str
 -- INSERT INTO Address (phone_num, details, street, city) VALUES ("919", "A516", "Moonwharo-119", "Songdo");
 
 -- Item 0
-INSERT INTO Item (iid, iname, sellprice) VALUES (1, "SENNHEISER MOMENTUM True Wireless", 399000);
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 359100);
 INSERT INTO Item_To_Category (iname, category) VALUES ("SENNHEISER MOMENTUM True Wireless", "earbuds");
+INSERT INTO Item (iname, sellprice, iid) VALUES ("SENNHEISER MOMENTUM True Wireless", 399000, 1);
+-- INSERT INTO Item (iid, iname, sellprice) VALUES (1, "SENNHEISER MOMENTUM True Wireless", 399000);
+
 -- Item 1
-INSERT INTO Item (iid, iname, sellprice) VALUES (2, "some_cheap_earphones", 35000);
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (35000, 31500);
 INSERT INTO Item_To_Category (iname, category) VALUES ("some_cheap_earphones", "earbuds");
+INSERT INTO Item (iid, iname, sellprice) VALUES (2, "some_cheap_earphones", 35000);
+
 -- Item 2
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (100000, 90000);
+INSERT INTO Item_To_Category (iname, category) VALUES ("Acer-xr382cqk", "monitor");
 INSERT INTO Item (iid, iname, sellprice) VALUES (3, "Acer-xr382cqk", 100000);
-INSERT INTO Item_To_Category (iname, category) VALUES ("acer-xrsomethn", "monitor");
 
 --User 1 selling Item 0
 INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 1, 5);
-INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 359100);
 
 --User 1 selling Item 1
 INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 2, 2);
-INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (35000, 31500);
 
 --User 2 selling Item 3
-INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 003, 10);
-INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (100000, 90000);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 3, 10);
 
 --Auction 0: Item 0, user 1
 INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 1, 360000, "2000-03-06", "2000-03-12");
 --Auction 1: Item 1, user 1
 INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 2, 360000, "2000-02-01", "2000-03-7");
-
 
 --Buy 0:
 INSERT INTO Buys (email, iid, bdate) VALUES ("lol@gmail.com", 1, "2000-03-05");
