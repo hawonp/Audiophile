@@ -37,31 +37,24 @@
 
   <center>
   <div class = "login">
-    <h2> Sign Up </h2>
-    <p> Please fill this form to create an account. </p>
+    <h2> Sell an Item! </h2>
+    <p> Please fill the item information! </p>
 
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-      E-mail: <input type="email" name="email" required>
-      Password: <input type="password" name="password" required>
-      <br><br>
+      Item Name: <input type="text" name="email" required>
+      Sellprice: <input type="number" name="sellprice" min="1" max="20000">
+      <br>
 
-      First Name: <input type="text" name="first_name" required>
-      Last Name: <input type="text" name="last_name" required>
-      <br><br>
+      <p> The Minimum Bid to enter an auction on this item will be 75% of the sellprice! </p>
 
-      Phone Number: <input type="text" name="phone_number" required>
-      <br><br>
+      <!-- Category: <input type="text" list="categories" />
+      <datalist id="categories">
+        <option value="headphones">
+        <option value="earphones">
+      </datalist> -->
+      Category: <input type="text" name="category" required>
+      Stock: <input type="number" name="stock" min="1" max="100">
 
-      House/Plot Number: <input type="text" name="plot" required>
-      <br><br>
-
-      Street: <input type="text" name="street" required>
-      <br><br>
-
-      City: <input type="text" name="city" required>
-      <br><br>
-
-      Country: <input type="text" name="country" required>
       <br><br>
 
       <input type="submit" class="button_primary" value="Submit">
