@@ -97,8 +97,11 @@ tr, th, td{
 }
 
 .posts {
+  margin-top: 30px;
   margin-right: 80px;
   margin-left: 80px;
+  padding: 10px;
+  border-style: groove;
 }
 
 /* Footer */
