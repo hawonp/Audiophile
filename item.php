@@ -62,7 +62,7 @@
     </div>
     <!-- Item Description -->
     <div class="itemDes">
-      <h2 color="#4CAF50"> <?php echo $row["iname"]; ?></h2>  
+      <h2> <?php echo $row["iname"]; ?></h2>  
       <hr>
       dd
     </div>
@@ -73,7 +73,7 @@
 
   <!-- Discussion -->
   <div class="posts">
-    
+    <h3> Discussions about this item</h3>
   </div>
 
   <!-- hr -->
@@ -81,7 +81,7 @@
 
   <!-- Reviews -->
   <div class="posts">
-    
+    <h3> Reviews of this item</h3>
   </div>
 
   <!-- FOOTER -->
