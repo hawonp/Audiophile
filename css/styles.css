@@ -77,6 +77,35 @@ tr, th, td{
   border: 1px solid black
 }
 
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Item page */
+
+.posts {
+  margin-top: 30px;
+  margin-right: 80px;
+  margin-left: 80px;
+  padding: 10px;
+  border-style: groove;
+}
+
+.reviews{
+  margin-top: 30px;
+  margin-right: 80px;
+  margin-left: 80px;
+  padding: 10px;
+  border-style: groove;
+}
+
+.discussion {
+  float: left;
+  width: 33.33%;
+}
+
 .itemDes {
   padding: 40px;
   flex: 50%;
@@ -104,31 +133,9 @@ tr, th, td{
   /* text-color: #4CAF50; */
 }
 
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.posts {
-  margin-top: 30px;
-  margin-right: 80px;
-  margin-left: 80px;
-  padding: 10px;
-  border-style: groove;
-}
-
-.reviews{
-  margin-top: 30px;
-  margin-right: 80px;
-  margin-left: 80px;
-  padding: 10px;
-  border-style: groove;
-}
-
-.discussion {
+.whopost {
   float: left;
-  width: 33.33%;
+  width: 5%;
 }
 
 /* Style the tab */
