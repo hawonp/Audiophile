@@ -16,6 +16,7 @@
     die("Connection failed: " . $conn->connect_error);
   }
   $iid = $_GET['iid'];
+  $discussion = $review = "";
 ?>
 
 <!DOCTYPE html>
@@ -53,35 +54,78 @@
   </div>
 
   <!-- Item description -->
+  <div class="itemDes">
   <div class="row">
     <!-- Item image -->
-    <div class="itemDes">
+    <div class="itemImg">
       <?php
         echo "<img src='images/".$row["iname"].".jpg' alt='Item image'>";
       ?>
     </div>
     <!-- Item Description -->
-    <div class="itemDes">
+    <div class="itemDesc">
       <h2> <?php echo $row["iname"]; ?></h2>  
       <hr>
       dd
     </div>
   </div>
-
-  <!-- hr -->
-  <hr>
-
-  <!-- Discussion -->
-  <div class="posts">
-    <h3> Discussions about this item</h3>
   </div>
 
   <!-- hr -->
   <hr>
+  
+  <!-- Discussion -->
+  <div class="posts">
+    <?php 
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (empty($_POST["discussion"])) {
+          $discussion = "";
+        } else {
+          $discussion = $_POST["discussion"];
+        }
+        if (empty($_POST["review"])) {
+          $review = "";
+        } else {
+          $review = $_POST["review"];
+        }
+      }
+    ?>
+    <h3> Discussions about this item</h3>
+    <!-- Text input -->
+    <div style="text-align: center">
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
+        <textarea name="discussion" rows="5" style="width:80%;" name="discussion"><?php echo $discussion;?></textarea>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
 
+    <!-- posts -->
+    <div style="text-align: center">
+      <div class="row"> <div class="discussion"> a</div> <div class="discussion"> b</div> </div>
+    </div>
+  </div>
+<!--
+  email VARCHAR(20),
+  iid INTEGER,
+  thread INTEGER,
+  comment_date DATE,
+  comment VARCHAR(64),
+    -->
   <!-- Reviews -->
   <div class="posts">
     <h3> Reviews of this item</h3>
+    <!-- Text input -->
+    <div style="text-align: center">
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
+        <textarea name="review" rows="5" style="width:80%;" name="review"><?php echo $review;?></textarea>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+
+    <!-- posts -->
+    <div style="text-align: center">
+      
+    </div>
   </div>
 
   <!-- FOOTER -->
@@ -90,5 +134,4 @@
   </div>
 
 </body>
-
 </html>
