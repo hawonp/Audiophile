@@ -13,3 +13,11 @@
   width: 60px;
   height: 30px;
 }
+
+.button_return {
+  background-color: blue;
+  color: white;
+  font-size: 20px;
+  /* width: 60px;
+  height: 30px; */
+}
