@@ -32,7 +32,7 @@
   <?php
     $sql = "SELECT i.iname FROM Item i WHERE i.iid=$iid";
     $result = $conn->query($sql);
-  
+
     if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
       echo "<title>".$row["iname"]."</title>";
@@ -40,6 +40,30 @@
       echo "SUCH ITEM DOESN'T EXIST";
     }
   ?>
+
+  <script>
+  function openCity(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  </script>
 </head>
 
 <body>
@@ -64,7 +88,7 @@
     </div>
     <!-- Item Description -->
     <div class="itemDesc">
-      <h2> <?php echo $row["iname"]; ?></h2>  
+      <h2> <?php echo $row["iname"]; ?></h2>
       <hr>
       dd
     </div>
@@ -73,10 +97,16 @@
 
   <!-- hr -->
   <hr>
-  
+
+  <div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'posts')">Posts </button>
+    <button class="tablinks" onclick="openCity(event, 'reviews')">Reviews</button>
+  </div>
+
+
   <!-- Discussion -->
-  <div class="posts">
-    <?php 
+  <div id="posts" class="tabcontent">
+    <?php
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($_POST["discussion"])) {
           $discussion = "";
@@ -112,7 +142,7 @@
   comment VARCHAR(64),
     -->
   <!-- Reviews -->
-  <div class="posts">
+  <div id="reviews" class="tabcontent">
     <h3> Reviews of this item</h3>
     <!-- Text input -->
     <div style="text-align: center">
@@ -124,7 +154,7 @@
 
     <!-- posts -->
     <div style="text-align: center">
-      
+
     </div>
   </div>
 
