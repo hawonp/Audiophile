@@ -143,23 +143,19 @@ CREATE TABLE Wishlist (
 INSERT INTO City(city, country) VALUES ("Songdo", "South Korea");
 INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
   VALUES ("Hawon", "Park", "ps1", "hawonp@gmail.com", "991", "A535", "Moonwharo-119", "Songdo");
--- INSERT INTO Address (phone_num, details, street, city) VALUES ("991", "A535", "Moonwharo-119", "Songdo");
 
 -- user 2
 INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
   VALUES ("Jeong Ho", "Shin", "ps2", "topfrag@gmail.com", "119", "A516", "Moonwharo-119", "Songdo");
--- INSERT INTO Address (phone_num, details, street, city) VALUES ("119", "A516", "Moonwharo-119", "Songdo");
 
 -- user 3
 INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
   VALUES ("Suhyun", "Shin", "ps3", "lol@gmail.com", "919", "A516", "Moonwharo-119", "Songdo");
--- INSERT INTO Address (phone_num, details, street, city) VALUES ("919", "A516", "Moonwharo-119", "Songdo");
 
 -- Item 0
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 359100);
 INSERT INTO Item_To_Category (iname, category) VALUES ("SENNHEISER MOMENTUM True Wireless", "earbuds");
 INSERT INTO Item (iname, sellprice, iid) VALUES ("SENNHEISER MOMENTUM True Wireless", 399000, 1);
--- INSERT INTO Item (iid, iname, sellprice) VALUES (1, "SENNHEISER MOMENTUM True Wireless", 399000);
 
 -- Item 1
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (35000, 31500);
