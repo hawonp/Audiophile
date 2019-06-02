@@ -4,6 +4,7 @@
   outline: 5px solid black;
   width: 20%;
   height: 100%;
+    
 }
 
 .email {
@@ -12,4 +13,11 @@
 
 .number{
   color: gray;
+}
+
+img {
+  max-width:100%;
+    max-height:100%;
+    height: auto;
+    width: auto; 
 }
