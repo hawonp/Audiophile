@@ -30,12 +30,12 @@
 
   <link href="./css/styles.css" rel="stylesheet">
   <?php
+    echo "<title>".$iid."</title>";
     $sql = "SELECT i.iname FROM Item i WHERE i.iid=$iid";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-      $row = $result->fetch_assoc();
-      echo "<title>".$row["iname"]."</title>";
+      $row = $result->fetch_assoc(); 
     } else {
       echo "SUCH ITEM DOESN'T EXIST";
     }
