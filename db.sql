@@ -49,13 +49,13 @@ SHOW ERRORS;
 
 CREATE TABLE Item (
   iid INTEGER,
-  iname VARCHAR(20),
+  iname VARCHAR(50),
   sellprice INTEGER,
   PRIMARY KEY(iid)
 );
 
 CREATE TABLE Item_To_Category(
-  iname VARCHAR(20),
+  iname VARCHAR(50),
   category VARCHAR(20),
   PRIMARY KEY(iname)
 );
@@ -154,21 +154,21 @@ INSERT INTO User(first_name, last_name, password, email, phone_num, details, str
 -- INSERT INTO Address (phone_num, details, street, city) VALUES ("919", "A516", "Moonwharo-119", "Songdo");
 
 -- Item 0
-INSERT INTO Item (iid, iname, sellprice) VALUES (001, "SENNHEISER MOMENTUM True Wireless", 399000);
+INSERT INTO Item (iid, iname, sellprice) VALUES (1, "SENNHEISER MOMENTUM True Wireless", 399000);
 INSERT INTO Item_To_Category (iname, category) VALUES ("SENNHEISER MOMENTUM True Wireless", "earbuds");
 -- Item 1
-INSERT INTO Item (iid, iname, sellprice) VALUES (002, "some_cheap_earphones", 35000);
+INSERT INTO Item (iid, iname, sellprice) VALUES (2, "some_cheap_earphones", 35000);
 INSERT INTO Item_To_Category (iname, category) VALUES ("some_cheap_earphones", "earbuds");
 -- Item 2
-INSERT INTO Item (iid, iname, sellprice) VALUES (003, "acer-xrsomethn", 100000);
+INSERT INTO Item (iid, iname, sellprice) VALUES (3, "Acer-xr382cqk", 100000);
 INSERT INTO Item_To_Category (iname, category) VALUES ("acer-xrsomethn", "monitor");
 
 --User 1 selling Item 0
-INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 001, 5);
+INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 1, 5);
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 359100);
 
 --User 1 selling Item 1
-INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 002, 2);
+INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 2, 2);
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (35000, 31500);
 
 --User 2 selling Item 3
@@ -176,13 +176,13 @@ INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 003, 10);
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (100000, 90000);
 
 --Auction 0: Item 0, user 1
-INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 001, 360000, "2000-03-06", "2000-03-12");
+INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 1, 360000, "2000-03-06", "2000-03-12");
 --Auction 1: Item 1, user 1
-INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 002, 360000, "2000-02-01", "2000-03-7");
+INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 2, 360000, "2000-02-01", "2000-03-7");
 
 
 --Buy 0:
-INSERT INTO Buys (email, iid, bdate) VALUES ("lol@gmail.com", 001, "2000-03-05");
+INSERT INTO Buys (email, iid, bdate) VALUES ("lol@gmail.com", 1, "2000-03-05");
 
 -- TEST SQL QUERIES --
 SELECT * FROM User;

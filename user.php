@@ -16,7 +16,7 @@
 
   <link href="./css/styles.css" rel="stylesheet">
 
-  <title>USERNAMEPLACEHOLDER</title>
+  <title>Your profile</title>
 </head>
 
 <body>

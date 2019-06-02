@@ -77,7 +77,28 @@ tr, th, td{
 
 .selling table {
   margin: auto;
-  border: 1px solid black;
+  border: 1px solid black
+}
+
+.itemDes {
+  padding: 40px;
+  flex: 50%;
+}
+
+.itemDes h2 {
+  color: #4CAF50;
+  /* text-color: #4CAF50; */
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.posts {
+  margin-right: 80px;
+  margin-left: 80px;
 }
 
 /* Footer */
