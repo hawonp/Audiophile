@@ -47,7 +47,7 @@
 }
 
 
-/* Auction Item Shit */
+/* Auction Item  */
 .auction {
   /* background-color: #777799 */
 }
@@ -85,7 +85,24 @@ tr, th, td{
   flex: 50%;
 }
 
-.itemDes h2 {
+.itemImg {
+  float: left;
+  width: 30%;
+}
+
+.itemDesc {
+  float: left;
+  width: 60%;
+  margin-left: 2%;
+  /* text-color: #4CAF50; */
+}
+
+.itemImg img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.itemDesc h2 {
   color: #4CAF50;
   /* text-color: #4CAF50; */
 }
@@ -102,6 +119,11 @@ tr, th, td{
   margin-left: 80px;
   padding: 10px;
   border-style: groove;
+}
+
+.discussion {
+  float: left;
+  width: 33.33%;
 }
 
 /* Footer */
