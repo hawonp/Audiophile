@@ -30,12 +30,12 @@
 
   <link href="./css/styles.css" rel="stylesheet">
   <?php
-    echo "<title>".$iid."</title>";
     $sql = "SELECT i.iname FROM Item i WHERE i.iid=$iid";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
       $row = $result->fetch_assoc(); 
+      echo "<title>".$row["iname"]."</title>";
     } else {
       echo "SUCH ITEM DOESN'T EXIST";
     }
@@ -79,20 +79,20 @@
 
   <!-- Item description -->
   <div class="itemDes">
-  <div class="row">
-    <!-- Item image -->
-    <div class="itemImg">
-      <?php
-        echo "<img src='images/".$row["iname"].".jpg' alt='Item image'>";
-      ?>
+    <div class="row">
+      <!-- Item image -->
+      <div class="itemImg">
+        <?php
+          echo "<img src='images/".$iid.".jpg' alt='Item image'>";
+        ?>
+      </div>
+      <!-- Item Description -->
+      <div class="itemDesc">
+        <h2> <?php echo $row["iname"]; ?></h2>
+        <hr>
+        description
+      </div>
     </div>
-    <!-- Item Description -->
-    <div class="itemDesc">
-      <h2> <?php echo $row["iname"]; ?></h2>
-      <hr>
-      dd
-    </div>
-  </div>
   </div>
 
   <!-- hr -->
@@ -131,7 +131,20 @@
 
     <!-- posts -->
     <div style="text-align: center">
-      <div class="row"> <div class="discussion"> a</div> <div class="discussion"> b</div> </div>
+      <?php
+        $sql = "SELECT * FROM Discussion d WHERE d.iid=$iid";
+        $result = $conn->query($sql);
+    
+        if ($result->num_rows > 0) {
+          while($row = $result->fetch_assoc()) {
+            $row = $result->fetch_assoc(); 
+            echo "<div class='whopost'>".$row["email"]."</div>";
+            echo "<div> dsadasd </div>";
+          }
+        } else {
+          echo "Quiet... It's too quiet here";
+        }
+      ?>
     </div>
   </div>
 <!--
@@ -154,7 +167,7 @@
 
     <!-- posts -->
     <div style="text-align: center">
-
+      <div class="row"> <div class="discussion"> a</div> <div class="discussion"> b</div> </div>
     </div>
   </div>
 
