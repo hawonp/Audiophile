@@ -55,7 +55,7 @@ if ($result->num_rows > 0) {
     echo "<table><tr><th>Item name</th><th>Sell Price</th></tr>";
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "<tr><td><a href='item.php?iid=".$row["iid"]."'>".$row["iname"]."</td><td>".$row["sellprice"]."</td></tr>";
+        echo "<tr><td><a href='item.php?iid=".$row["iid"]."'>".$row["iname"]."</td><td>".$row["sellprice"]." won</td></tr>";
     }
     echo "</table>";
 } else {

@@ -58,7 +58,7 @@
         echo "<table><tr><th>Item name</th> <th>Current bidder</th> <th>Current bid price</th> <th>Auction end date</th></tr>";
         // output data of each row
         while($row = $result->fetch_assoc()) {
-          echo "<tr><td>".$row["iname"]."</td> <td>".$row["email"]."</td> <td>".$row["curr_bid"]."</td> <td>".$row["end_date"]."</td></tr>";
+          echo "<tr><td>".$row["iname"]."</td> <td>".$row["email"]."</td> <td>".$row["curr_bid"]."</td> <td>".$row["end_date"]." won</td></tr>";
         }
         echo "</table>";
       } else {
