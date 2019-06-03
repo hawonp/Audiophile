@@ -2,6 +2,18 @@
   session_start();
   if(!isset($_SESSION['email'])){
     header("Location:Login.php");
+  } else {
+    $servername = "localhost";
+    $username = "user";
+    $password = "hey";
+    $dbname = "auction_db";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
   }
 ?>
 
@@ -14,9 +26,9 @@
   <meta name="description" content="whatever">
   <meta name="author" content="whatever">
 
-  <link href="./css/styles.css" rel="stylesheet">
+  <title> Audiophile </title>
 
-  <title>Audiophile</title>
+  <link href="./css/styles.css" rel="stylesheet">
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,33 +36,20 @@
   <!-- Custom styles for this template -->
   <link href="css/shop-homepage.css" rel="stylesheet">
 
-
+  <style>
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      color: white;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Accessing db -->
-  <?php
-    $servername = "localhost";
-    $username = "user";
-    $password = "hey";
-    $dbname = "auction_db";
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-  ?>
-
-  <!-- Navigation -->
-  <!-- <div class="topnav">
-    <a href="index.php">Home</a>
-    <a class = "active" href="auction.php">Auction</a>
-    <a href="selling.php">Sales</a>
-    <a class="rightAlign" href="logout.php">LOGOUT</a>
-    <a class="rightAlign" href="user.php">YOUR PROFILE</a>
-  </div> -->
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -65,9 +64,6 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="selling.php">Sales</a>
-          </li> -->
           <li class="nav-item active">
             <a class="nav-link" href="auction.php">Auctions</a>
           </li>
@@ -82,13 +78,18 @@
     </div>
   </nav>
 
-  <!-- <hr> -->
-
-  <h2> Items currently on auction! </h2>
-
+  <center>
   <!-- Table of items currently on auction -->
+  <div class="jumbotron emp">
+    <h2 class="my-4">Welcome to the Auctions Page</h2>
+    <p class="lead"> Bid on the Current Auctions</p>
+    <hr class="my-4">
 
-  <div class="selling">
+   <p class = "text-primary"> Email:  </p>
+  </div>
+  </center>
+
+  <div class="container-fluid selling">
     <?php
 
       function increaseBid($conn, $input, $textinput){
@@ -114,8 +115,9 @@
 
       if ($numRow > 0) {
 
-        echo "<table><tr><th>Item name</th> <th>Current bidder</th> <th>Current bid price</th><th>Auction end date</th><th>Bidding Amount Entry</th></tr>";
+        echo "<table class = \"table table-hover\"><thread><tr><th>Item name</th> <th>Current bidder</th> <th>Current bid price</th><th>Auction end date</th><th>Bidding Amount Entry</th></tr></thread>";
 
+        echo "<tbody>";
         while($row = mysqli_fetch_array($result)) {
           echo "<tr><td>".$row['iname']."</td><td>".$row['email']."</td><td>".$row['curr_bid']."</td><td>".$row['end_date']."</td>
           <td><form name = \"increase_bid\" method = 'POST' action = auction.php>
@@ -124,7 +126,7 @@
           </form></td></tr>";
           ++$inc;
         }
-
+        echo "</tbody>";
         echo "</table>";
 
       } else {
@@ -159,11 +161,11 @@
 
   </div>
 
-  <!-- FOOTER -->
-  <div class="footer">
-    <p>Copyright &copy; HaJoSue 2019</p>
+  <div class="py-5 footer bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; HaJoSue 2019</p>
+    </div>
   </div>
-
 
 </body>
 
