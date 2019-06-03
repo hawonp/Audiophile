@@ -100,7 +100,7 @@
     <h2 class="display-4">Hello <?php echo $myfname. " ". $mylname; ?>!</h2>
     <p class="lead"> Welcome to your Profile!</p>
     <!-- <hr class="my-4"> -->
-    
+
    <p class = "text-primary"> Email: <?php echo $myemail; ?> </p>
     <p class = "text-info"> Phone Number: <?php echo $mypnum; ?> </p>
     <!-- <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a> -->
@@ -197,10 +197,14 @@
   </div>
 
   </center>
-  <!-- FOOTER -->
-  <div class="footer">
-    <p>Copyright &copy; HaJoSue 2019</p>
-  </div>
+  
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; HaJoSue 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
 
 </body>
 

@@ -15,6 +15,13 @@
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
   }
+
+  $mycat = "";
+  if(isset($_GET['cat'])){
+    $mycat = $_GET['cat'];
+  }
+  // $mycat = $_GET['cat'];
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +33,7 @@
   <meta name="description" content="whatever">
   <meta name="author" content="whatever">
 
-  <link href="./css/styles.css" rel="stylesheet">
+  <!-- <link href="./css/styles.css" rel="stylesheet"> -->
 
   <title>Audiophile</title>
 
@@ -83,12 +90,12 @@
 
         <h1 class="my-4">Shop Name</h1>
         <div class="list-group">
-          <a href="#" class="list-group-item">Earphones</a>
-          <a href="#" class="list-group-item">Headphones</a>
-          <a href="#" class="list-group-item">Speakers</a>
-          <a href="#" class="list-group-item">Media Players</a>
-          <a href="#" class="list-group-item">Amplifiers</a>
-          <a href="#" class="list-group-item">Accessories</a>
+          <a href="index.php?cat=earphone" class="list-group-item">Earphones</a>
+          <a href="index.php?cat=headphone" class="list-group-item">Headphones</a>
+          <a href="index.php?cat=speaker" class="list-group-item">Speakers</a>
+          <a href="index.php?cat=media_player" class="list-group-item">Media Players</a>
+          <a href="index.php?cat=earphones" class="list-group-item">Amplifiers</a>
+          <a href="index.php?cat=earphones" class="list-group-item">Accessories</a>
         </div>
 
       </div>
@@ -126,26 +133,27 @@
         <div class="row">
 
           <?php
-            $sql = "SELECT * FROM Sells S, Item I Where S.iid = I.iid";
+            echo $mycat;
+            $sql = "SELECT * FROM Sells S, Item I, Item_To_Category C Where S.iid = I.iid AND I.iname = C.iname";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
               while($row = $result->fetch_assoc()) {
                 echo "<div class = \"col-lg-4 col-md-6 mb-4\">";
-                  echo "<div class=\"card h-100\">";
-                    echo "<a href=\"\"><img class=\"card-img-top\" src=\"http://placehold.it/700x400\" alt=\"\"></a>";
+                  echo "<div class=\"hey card h-100\">";
+                    echo "<img class=\"restrict card-img-top\" src='images/".$row["iid"].".jpg' alt=\"Image Does Not Exist!\">";
                     echo "<div class=\"card-body\">";
                       echo "<h4 class=\"card-title\">";
                       echo "<a href='item.php?iid=".$row["iid"]."'>".$row["iname"]."</a></h4>";
-                      echo "<h5>$24.99</h5>";
+                      echo "<h5>".$row["sellprice"]." WON</h5>";
                     echo "</div>";
-                    echo "<div class=\"card-footer\"> </div>";
+                    echo "<div class=\"card-footer\"> <small class=\"text-muted\">".$row["category"]."</small> </div>";
                   echo "</div>";
                 echo "</div>";
               }
 
             } else {
-                echo "<p> No Items On Sale Right Now </p>";
+                echo "<p> No Items Being Sold! </p>";
             }
           ?>
 

@@ -1,0 +1,9 @@
+.hey{
+  height: 400px;
+}
+
+.restrict{
+  display: block;
+  width: auto;
+  max-height: 100%;
+}
