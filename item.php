@@ -35,7 +35,7 @@
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-      $row = $result->fetch_assoc(); 
+      $row = $result->fetch_assoc();
       echo "<title>".$row["iname"]."</title>";
     } else {
       echo "SUCH ITEM DOESN'T EXIST";
@@ -99,7 +99,7 @@
     header("Refresh:0");
   }
 ?>
-  
+
   <!-- Navigation -->
   <div class="topnav">
     <a href="index.php">Home</a>
@@ -194,7 +194,7 @@
       <?php
         $sql = "SELECT * FROM Review r WHERE r.iid=$iid";
         $result = $conn->query($sql);
-    
+
         if ($result->num_rows > 0) {
           echo "<table class='commentTable' align='center'><tr><th class='discussionContent'></th></tr>";
           // output data of each row
