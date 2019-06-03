@@ -95,7 +95,7 @@
         echo "<script type='text/javascript'>alert('$message');</script>";
       }
     }
-    // header("Refresh:0");
+    header("Refresh:0");
   }
 ?>
   
@@ -141,7 +141,7 @@
     <!-- Text input -->
     <div style="text-align: center">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
-        <textarea name="discussion" rows="7" style="width:80%;" name="discussion"></textarea>
+        <textarea name="discussion" rows="7" style="width:80%;" name="discussion " placeholder="Enter discussion here"></textarea>
         <input type="submit" value="Submit">
       </form>
     </div>
@@ -172,7 +172,7 @@
     <!-- Text input -->
     <div style="text-align: center">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
-        <textarea name="review" rows="7" style="width:70%;" name="review" required></textarea>Rating : <input type="number" name="rating" value="5"max="5" required>
+        <textarea name="review" rows="7" style="width:70%;" name="review" placeholder="Enter review here" required></textarea>Rating : <input type="number" name="rating" value="5"max="5" required>
         <input type="submit" value="Submit">
       </form>
     </div>
