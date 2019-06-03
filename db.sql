@@ -217,6 +217,18 @@ INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 2, 2);
 --User 2 selling Item 3
 INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 3, 10);
 
+--User 2 selling 10 more items
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 4, 10);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 5, 4);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 6, 2);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 7, 7);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 8, 4);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 9, 1);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 10, 20);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 11, 8);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 12, 3);
+INSERT INTO Sells (email, iid, stock) VALUES ("topfrag@gmail.com", 13, 6);
+
 --Auction 0: Item 0, user 1
 INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 1, 360000, "2000-03-06", "2000-03-12");
 --Auction 1: Item 1, user 1
