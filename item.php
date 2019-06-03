@@ -122,7 +122,18 @@
       <div class="itemDesc">
         <h2> <?php echo $row["iname"]; ?></h2>
         <hr>
-        description
+        <?php
+          $sql = "SELECT AVG(r.rating) AS avgRating FROM Review r WHERE r.iid=$iid";
+          $result = $conn->query($sql);
+
+          if ($result->num_rows > 0) {
+            // output data of each row
+            $row = $result->fetch_assoc();
+            echo "Rating: ".round($row["avgRating"], 1)."/5";
+          } else {
+            echo "The item has not been reviewed yet";
+          }
+        ?>
       </div>
     </div>
   </div>
@@ -196,15 +207,7 @@
       ?>
     </div>
   </div>
-<!-- CREATE TABLE Review (
-  email VARCHAR(20),
-  iid INTEGER,
-  rating FLOAT,
-  rcontent VARCHAR(64),
-  PRIMARY KEY(email, iid),
-  FOREIGN KEY(email) REFERENCES User(email),
-  FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
-); -->
+
   <!-- FOOTER -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
