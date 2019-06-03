@@ -112,6 +112,26 @@
           }
         ?>
       </div>
+      <!-- Item seller list -->
+      <div class="itemSellers">
+        <h2> Buy from sellers below! </h2>
+        <hr>
+        <?php
+          $sql = "SELECT s.email, s.stock FROM Sells s WHERE s.iid=$iid ORDER BY s.stock DESC";
+          $result = $conn->query($sql);
+
+          if ($result->num_rows > 0) {
+            echo "<table align='center'><tr><th class='itemSellersContent'>Seller</th> <th class='itemSellersContent'>Stock</th></tr>";
+          // output data of each row
+            while($row = $result->fetch_assoc()) {
+            echo "<tr><td class='itemSellersContent'><a href='purchaseItem.php?iid=$iid&seller=".$row["email"]."'>".$row["email"]."dsadsa</a> <td class='itemSellersContent'>".$row["stock"]."</td></tr>";
+            }
+            echo "</table>";
+          } else {
+            echo "Oops! No one is selling this item right now";
+          }
+        ?>
+      </div>
     </div>
   </div>
 
@@ -129,13 +149,13 @@
     <!-- Text input -->
     <div style="text-align: center">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
-        <textarea name="discussion" rows="7" style="width:80%;" name="discussion " placeholder="Enter discussion here"></textarea>
+        <textarea name="discussion" rows="7" style="width:80%;" name="discussion " placeholder="Enter discussion here" maxlength="256" required></textarea>
         <input type="submit" value="Submit">
       </form>
     </div>
 
     <!-- posts -->
-    <div>
+    <div style="text-align: center">
       <?php
         $sql = "SELECT * FROM Discussion d WHERE d.iid=$iid ORDER BY d.thread ASC";
         $result = $conn->query($sql);
@@ -160,7 +180,7 @@
     <!-- Text input -->
     <div style="text-align: center">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
-        <textarea name="review" rows="7" style="width:70%;" name="review" placeholder="Enter review here" required></textarea>Rating : <input type="number" name="rating" value="5"max="5" required>
+        <textarea name="review" rows="7" style="width:70%;" name="review" placeholder="Enter review here" maxlength="256" required ></textarea>Rating : <input type="number" name="rating" value="5"max="5" required>
         <input type="submit" value="Submit">
       </form>
     </div>
