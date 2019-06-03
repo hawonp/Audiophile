@@ -48,47 +48,52 @@
   <meta name="description" content="whatever">
   <meta name="author" content="whatever">
 
-  <link href="./css/styles.css" rel="stylesheet">
   <link href="./css/login.css" rel="stylesheet">
-  <link href="./css/button.css" rel="stylesheet">
 
-  <title>Auction</title>
+  <title>Audiophile</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/shop-homepage.css" rel="stylesheet">
+
 </head>
 
 <body>
 
-  <!-- Navigation -->
-  <div class="topnav">
-    <a href="index.php">Home</a>
-    <a href="auction.php">Auction</a>
-    <a href="selling.php">Sales</a>
-    <a class="rightAlignActive" href="login.php">LOGIN</a>
-    <!-- change later if needed-->
-    <a class="rightAlign" href="user.php">YOUR PROFILE</a>
+  <div class="container login-container">
+    <!-- <div class="row"> -->
+      <div class="login-form-1">
+        <h3>Please Login First!</h3>
+
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+
+          <div class="form-group">
+            <input type="text" class="form-control" name = "email" placeholder="Your Email *" value="" required />
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name = "password" placeholder="Your Password *" value="" required />
+          </div>
+
+          <div class = "error">
+            <?php echo $error; ?>
+          </div>
+
+          <br>
+          <div class="form-group">
+            <input type="submit" class="btnSubmit" value="Login" />
+          </div>
+          <div class="form-group">
+            <a href="register.php" class="btnForgetPwd" value="register">Sign Up?</a>
+          </div>
+        </form>
+
+      </div>
+    <!-- </div> -->
   </div>
 
-  <!-- <hr> -->
-  <center>
-  <div class = "login">
-    <h2> Please Login First! </h2>
-
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-      E-mail: <input type="email" name="email" value = "" required>
-      Password: <input type="password" name="password" value = "" required>
-      <br><br>
-
-      <?php echo $error; ?>
-
-      <input type="submit" class="button_primary" value="Submit">
-      <input type="reset" class="button_default" value = "Reset">
-
-      <p>Dont have an account? <a href="register.php">Sign Up here!</a>.</p>
-
-    </form>
-  </div>
-  </center>
-
-  <!-- FOOTER -->
+  <!-- Footer -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
   </div>

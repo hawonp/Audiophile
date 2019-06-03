@@ -16,7 +16,15 @@
 
   <link href="./css/styles.css" rel="stylesheet">
 
-  <title>Auction</title>
+  <title>Audiophile</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/shop-homepage.css" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -36,27 +44,56 @@
   ?>
 
   <!-- Navigation -->
-  <div class="topnav">
+  <!-- <div class="topnav">
     <a href="index.php">Home</a>
     <a class = "active" href="auction.php">Auction</a>
     <a href="selling.php">Sales</a>
     <a class="rightAlign" href="logout.php">LOGOUT</a>
-    <!-- change later if needed-->
     <a class="rightAlign" href="user.php">YOUR PROFILE</a>
-  </div>
+  </div> -->
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.php">Audiophile</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.php">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="selling.php">Sales</a>
+          </li> -->
+          <li class="nav-item active">
+            <a class="nav-link" href="auction.php">Auctions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="user.php">My Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">LOGOUT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <!-- <hr> -->
 
   <h2> Items currently on auction! </h2>
-  
+
   <!-- Table of items currently on auction -->
 
   <div class="selling">
     <?php
 
       function increaseBid($conn, $input, $textinput){
-       
-        $raw_results = mysqli_query($conn, "SELECT * FROM Auction a, Item i Where a.iid = i.iid"); 
+
+        $raw_results = mysqli_query($conn, "SELECT * FROM Auction a, Item i Where a.iid = i.iid");
         $count = 0;
 
         if($input == 0){
@@ -70,15 +107,15 @@
           }
         }
       }
-    
+
       $result = mysqli_query($conn, "SELECT * FROM Auction a, Item i WHERE a.iid = i.iid");
       $numRow = mysqli_num_rows($result);
       $inc = 0;
 
       if ($numRow > 0) {
-        
+
         echo "<table><tr><th>Item name</th> <th>Current bidder</th> <th>Current bid price</th><th>Auction end date</th><th>Bidding Amount Entry</th></tr>";
-        
+
         while($row = mysqli_fetch_array($result)) {
           echo "<tr><td>".$row['iname']."</td><td>".$row['email']."</td><td>".$row['curr_bid']."</td><td>".$row['end_date']."</td>
           <td><form name = \"increase_bid\" method = 'POST' action = auction.php>
@@ -89,11 +126,11 @@
         }
 
         echo "</table>";
-      
+
       } else {
-      
+
         echo "0 results";
-      
+
       }
 
       if(isset($_POST['but_0'])){
