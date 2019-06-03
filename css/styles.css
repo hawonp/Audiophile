@@ -101,11 +101,6 @@ tr, th, td{
   border-style: groove;
 }
 
-.discussion {
-  float: left;
-  width: 33.33%;
-}
-
 .itemDes {
   padding: 40px;
   flex: 50%;
@@ -133,9 +128,25 @@ tr, th, td{
   /* text-color: #4CAF50; */
 }
 
+/*discussions and reviews*/
+
 .whopost {
   float: left;
   width: 5%;
+}
+
+.commentTable {
+  background-color: #F3F3F3;
+  border: none;
+  width: 90%;
+}
+
+.discussionContent {
+  margin: auto;
+  padding: 20px;
+  border: 1px;
+  text-align: left;
+  width: 100%;
 }
 
 /* Style the tab */
@@ -169,7 +180,7 @@ tr, th, td{
 /* Style the tab content */
 .tabcontent {
  display: none;
- padding: 6px 12px;
+ padding: 50px;
  border: 1px solid #ccc;
  border-top: none;
 } 

@@ -110,7 +110,7 @@ CREATE TABLE Auction (
 CREATE TABLE Discussion (
   email VARCHAR(20),
   iid INTEGER,
-  thread INTEGER,
+  thread INTEGER NOT NULL AUTO_INCREMENT,
   comment_date DATE,
   comment VARCHAR(64),
   PRIMARY KEY(thread),
@@ -121,7 +121,7 @@ CREATE TABLE Discussion (
 CREATE TABLE Review (
   email VARCHAR(20),
   iid INTEGER,
-  rating FLOAT,
+  rating INTEGER,
   rcontent VARCHAR(64),
   PRIMARY KEY(email, iid),
   FOREIGN KEY(email) REFERENCES User(email),

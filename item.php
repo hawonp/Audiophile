@@ -17,6 +17,7 @@
   }
   $iid = $_GET['iid'];
   $discussion = $review = "";
+  $rating;
 ?>
 
 <!DOCTYPE html>
@@ -67,6 +68,37 @@
 </head>
 
 <body>
+
+<!-- php input handlers -->
+<?php
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //posting discussions
+    if (empty($_POST["discussion"])) {
+      $discussion = "";
+    } else {
+      $discussion = $_POST["discussion"];
+      $query = "INSERT INTO Discussion (email, iid, comment_date, comment) VALUES" ."('".$_SESSION['email']."', $iid, CURDATE(), '$discussion')";
+      $result   = $conn->query($query);
+      if (!$result) echo "INSERT failed: $query<br>" .
+        $conn->error . "<br><br>";
+    }
+    //posting reviews
+    if (empty($_POST["review"]) || empty($_POST["rating"])) {
+      $review = "";
+    } else {
+      $review = $_POST["review"];
+      $rating = $_POST["rating"]; echo $rating;
+      $query = "INSERT INTO Review (email, iid, rating, rcontent) VALUES" ."('".$_SESSION['email']."', $iid, $rating, '$review')";
+      $result   = $conn->query($query);
+      if (!$result) {
+        $message = "You have already reviewed this product!";
+        echo "<script type='text/javascript'>alert('$message');</script>";
+      }
+    }
+    // header("Refresh:0");
+  }
+?>
+  
   <!-- Navigation -->
   <div class="topnav">
     <a href="index.php">Home</a>
@@ -86,7 +118,7 @@
           echo "<img src='images/".$iid.".jpg' alt='Item image'>";
         ?>
       </div>
-      <!-- Item Description -->
+      <!-- Ite  m Description? -->
       <div class="itemDesc">
         <h2> <?php echo $row["iname"]; ?></h2>
         <hr>
@@ -99,32 +131,17 @@
   <hr>
 
   <div class="tab">
-    <button class="tablinks" onclick="openCity(event, 'posts')">Posts </button>
+    <button class="tablinks" onclick="openCity(event, 'posts')">Discussions </button>
     <button class="tablinks" onclick="openCity(event, 'reviews')">Reviews</button>
   </div>
 
-
   <!-- Discussion -->
   <div id="posts" class="tabcontent">
-    <?php
-      if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (empty($_POST["discussion"])) {
-          $discussion = "";
-        } else {
-          $discussion = $_POST["discussion"];
-        }
-        if (empty($_POST["review"])) {
-          $review = "";
-        } else {
-          $review = $_POST["review"];
-        }
-      }
-    ?>
     <h3> Discussions about this item</h3>
     <!-- Text input -->
     <div style="text-align: center">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
-        <textarea name="discussion" rows="5" style="width:80%;" name="discussion"><?php echo $discussion;?></textarea>
+        <textarea name="discussion" rows="7" style="width:80%;" name="discussion"></textarea>
         <input type="submit" value="Submit">
       </form>
     </div>
@@ -132,45 +149,68 @@
     <!-- posts -->
     <div style="text-align: center">
       <?php
-        $sql = "SELECT * FROM Discussion d WHERE d.iid=$iid";
+        $sql = "SELECT * FROM Discussion d WHERE d.iid=$iid ORDER BY d.thread ASC";
         $result = $conn->query($sql);
-    
+
         if ($result->num_rows > 0) {
+          echo "<table class='commentTable' align='center'><tr><th class='discussionContent'></th></tr>";
+          // output data of each row
           while($row = $result->fetch_assoc()) {
-            $row = $result->fetch_assoc(); 
-            echo "<div class='whopost'>".$row["email"]."</div>";
-            echo "<div> dsadasd </div>";
+            echo "<tr><td class='discussionContent'>".$row["email"]." | ".$row["comment_date"]." <br> ".$row["comment"]."</td></tr>";
           }
+          echo "</table>";
         } else {
           echo "Quiet... It's too quiet here";
         }
       ?>
     </div>
   </div>
-<!--
-  email VARCHAR(20),
-  iid INTEGER,
-  thread INTEGER,
-  comment_date DATE,
-  comment VARCHAR(64),
-    -->
+
   <!-- Reviews -->
   <div id="reviews" class="tabcontent">
     <h3> Reviews of this item</h3>
     <!-- Text input -->
     <div style="text-align: center">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
-        <textarea name="review" rows="5" style="width:80%;" name="review"><?php echo $review;?></textarea>
+        <textarea name="review" rows="7" style="width:70%;" name="review" required></textarea>Rating : <input type="number" name="rating" value="5"max="5" required>
         <input type="submit" value="Submit">
       </form>
     </div>
 
     <!-- posts -->
     <div style="text-align: center">
-      <div class="row"> <div class="discussion"> a</div> <div class="discussion"> b</div> </div>
+      <?php
+        $sql = "SELECT * FROM Review r WHERE r.iid=$iid";
+        $result = $conn->query($sql);
+    
+        if ($result->num_rows > 0) {
+          echo "<table class='commentTable' align='center'><tr><th class='discussionContent'></th></tr>";
+          // output data of each row
+          while($row = $result->fetch_assoc()) {
+            echo "<tr><td class='discussionContent'>".$row["email"]." | rating: ".$row["rating"]."/5 <br> ".$row["rcontent"]."</td></tr>";
+          }
+          echo "</table>";
+          // while($row = $result->fetch_assoc()) {
+          //   $row = $result->fetch_assoc(); 
+          //   echo "<div class='whopost'>".$row["email"]."</div>";
+          //   echo "<div> dsadasd </div>";
+            
+          // }
+        } else {
+          echo "Quiet... It's too quiet here";
+        }
+      ?>
     </div>
   </div>
-
+<!-- CREATE TABLE Review (
+  email VARCHAR(20),
+  iid INTEGER,
+  rating FLOAT,
+  rcontent VARCHAR(64),
+  PRIMARY KEY(email, iid),
+  FOREIGN KEY(email) REFERENCES User(email),
+  FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
+); -->
   <!-- FOOTER -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
