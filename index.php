@@ -90,21 +90,23 @@
 
         <h1 class="my-4">Shop Name</h1>
         <div class="list-group">
-          <a href="index.php?cat=earphone" class="list-group-item">Earphones</a>
-          <a href="index.php?cat=headphone" class="list-group-item">Headphones</a>
-          <a href="index.php?cat=speaker" class="list-group-item">Speakers</a>
-          <a href="index.php?cat=media_player" class="list-group-item">Media Players</a>
-          <a href="index.php?cat=earphones" class="list-group-item">Amplifiers</a>
-          <a href="index.php?cat=earphones" class="list-group-item">Accessories</a>
+          <a href="index.php?cat=Earphones" class="list-group-item">Earphones</a>
+          <a href="index.php?cat=Headphones" class="list-group-item">Headphones</a>
+          <a href="index.php?cat=Speakers" class="list-group-item">Speakers</a>
+          <a href="index.php?cat=Media_Players" class="list-group-item">Media Players</a>
+          <a href="index.php?cat=Amplifiers" class="list-group-item">Amplifiers</a>
+          <a href="index.php?cat=Accessories" class="list-group-item">Accessories</a>
+          <a href="index.php" class="list-group-item">All</a>
         </div>
 
       </div>
       <!-- /.col-lg-3 -->
 
       <div class="col-lg-9">
-
+<!-- SELECT email, iid, SUM(rating) as score FROM Review GROUP BY iid ORDER BY score DESC LIMIT 3; -->
         <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
           <ol class="carousel-indicators">
+
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
@@ -133,8 +135,13 @@
         <div class="row">
 
           <?php
-            echo $mycat;
-            $sql = "SELECT * FROM Sells S, Item I, Item_To_Category C Where S.iid = I.iid AND I.iname = C.iname";
+            if($mycat == ""){
+              $sql = "SELECT * FROM Sells S, Item I, Item_To_Subcategory C Where S.iid = I.iid AND I.iname = C.iname";
+            } else {
+              $sql = "SELECT i.iid, i.iname, s2.subcategory, s2.category, i.sellprice FROM Item i INNER JOIN (SELECT s1.category, s1.subcategory, i1.iname FROM Item_To_Subcategory I1 INNER JOIN (SELECT * FROM Subcategory_To_Category sc WHERE sc.category='$mycat') AS s1 ON s1.subcategory=I1.subcategory) AS s2 ON i.iname=s2.iname WHERE i.iid IN (SELECT s.iid FROM Sells s)";
+              // $sql = "SELECT I.iid, I.iname, I.sellprice, S.subcategory FROM Sells S, Item I, Item_To_Subcategory S, Subcategory_To_Category Where S.iid = I.iid AND I.iname = S.iname AND C.category='$mycat'";
+            }
+
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -147,7 +154,7 @@
                       echo "<a href='item.php?iid=".$row["iid"]."'>".$row["iname"]."</a></h4>";
                       echo "<h5>".$row["sellprice"]." WON</h5>";
                     echo "</div>";
-                    echo "<div class=\"card-footer\"> <small class=\"text-muted\">".$row["category"]."</small> </div>";
+                    echo "<div class=\"card-footer\"> <small class=\"text-muted\">".$row["subcategory"]."</small> </div>";
                   echo "</div>";
                 echo "</div>";
               }
@@ -156,22 +163,6 @@
                 echo "<p> No Items Being Sold! </p>";
             }
           ?>
-
-          <!-- <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item One</a>
-                  </h4>
-                  <h5>$24.99</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-              </div>
-            </div>
-          </div> -->
 
         </div>
         <!-- /.row -->
