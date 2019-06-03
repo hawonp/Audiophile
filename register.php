@@ -21,7 +21,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($res = mysqli_query($conn, $sql)){
     // echo "hey";
     if (mysqli_num_rows($res) > 0) { //if there already exists a product with the specifications
-      echo "WARNING: This email is already taken! <br>";
+      // echo "WARNING: This email is already taken! <br>";
+      $link = "WARNING: This email is already taken!";
     }
     else {
       #ENTER NEW CITY
@@ -35,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (\"".$_POST["city"]."\", \"".$_POST["country"]."\")";
 
           if (mysqli_query($conn, $sql2) == true) {
-            echo "New City tuple Added!<br>";
+            // echo "New City tuple Added!<br>";
           } else {
             echo "Could not add new city = ".mysqli_error($conn);
           }
@@ -57,57 +58,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 \"".$_POST["city"]."\")";
 
       if (mysqli_query($conn, $sql) == true) {
-        echo "New user Added!<br>";
+        // echo "New user Added!<br>";
       }
       else {
         echo "Unable to add new user!\n".mysqli_error($conn);
       }
+      header("Location:login.php");
     } //this is the closing bracket
   }
   //failure to check for email
   else {
     echo "Error message = ".mysqli_error($conn);
   }
-
-  // #ENTER NEW CITY
-  // $sql = "SELECT country FROM City WHERE city = \"".$_POST["city"]."\"";
-  // if ($res = mysqli_query($conn, $sql)){
-  //   if (mysqli_num_rows($res) > 0) { //if there already exists a product with the specifications
-  //     echo "Skip adding new city tuple";
-  //   }
-  //   else {
-  //     $sql2 = "INSERT INTO City(city, country)
-  //       VALUES (\"".$_POST["city"]."\", \"".$_POST["country"]."\")";
-  //
-  //     if (mysqli_query($conn, $sql2) == true) {
-  //       echo "New City tuple Added!<br>";
-  //     } else {
-  //       echo "Could not add new city = ".mysqli_error($conn);
-  //     }
-  //   }
-  // }
-  // else {
-  //   echo "Error message = ".mysqli_error($conn);
-  // }
-
-  // #ENTER NEW USER
-  // $sql = "INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
-  //   VALUES( \"".$_POST["first_name"]."\",
-  //           \"".$_POST["last_name"]."\",
-  //           \"".$_POST["password"]."\",
-  //           \"".$_POST["email"]."\",
-  //           \"".$_POST["phone_number"]."\",
-  //           \"".$_POST["plot"]."\",
-  //           \"".$_POST["street"]."\",
-  //           \"".$_POST["city"]."\")";
-  //
-  // if (mysqli_query($conn, $sql) == true) {
-  //   echo "New user Added!<br>";
-  // }
-  // else {
-  //   echo "Unable to add new user!\n".mysqli_error($conn);
-  // }
-
 }
 mysqli_close($conn);
 ?>
@@ -122,53 +84,76 @@ mysqli_close($conn);
   <meta name="author" content="whatever">
 
   <link href="./css/login.css" rel="stylesheet">
-  <link href="./css/button.css" rel="stylesheet">
-  <link href="./css/styles.css" rel="stylesheet">
+  <!-- <link href="./css/button.css" rel="stylesheet">
+  <link href="./css/styles.css" rel="stylesheet"> -->
 
-  <title>Auction</title>
+  <title>Audiophile</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/shop-homepage.css" rel="stylesheet">
 </head>
 
 <body>
-  
-  <!-- login screen -->
-  <center>
-  <div class = "login">
-    <h2> Sign Up </h2>
-    <p> Please fill this form to create an account. </p>
 
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-      E-mail: <input type="email" name="email" required>
-      Password: <input type="password" name="password" required>
-      <br><br>
+  <div class="container login-container">
+    <!-- <div class="row"> -->
+      <div class="login-form-1">
+        <h3>Sign Up!</h3>
 
-      First Name: <input type="text" name="first_name" required>
-      Last Name: <input type="text" name="last_name" required>
-      <br><br>
+        <p> Please fill this form to create an account. </p>
 
-      Phone Number: <input type="text" name="phone_number" required>
-      <br><br>
+        <div class = "error">
+          <?php echo $error; ?>
+        </div>
 
-      House/Plot Number: <input type="text" name="plot" required>
-      <br><br>
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
-      Street: <input type="text" name="street" required>
-      <br><br>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "email" placeholder="Your Email *" value="" required />
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name = "password" placeholder="Your Password *" value="" required />
+          </div>
 
-      City: <input type="text" name="city" required>
-      <br><br>
+          <br>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "first_name" placeholder="First Name *" value="" required />
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "last_name" placeholder="Last Name *" value="" required />
+          </div>
+          <div class="form-group">
+            <input type="tel" class="form-control" name = "phone_number" placeholder="Phone Number *" value="" required />
+          </div>
 
-      Country: <input type="text" name="country" required>
-      <br><br>
+          <br>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "plot" placeholder="House Number *" value="" required />
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "street" placeholder="Street *" value="" required />
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "city" placeholder="City *" value="" required />
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "country" placeholder="Country *" value="" required />
+          </div>
 
-      <input type="submit" class="button_primary" value="Submit">
-      <input type="reset" class="button_default" value = "Reset">
+          <div class="form-group">
+            <input type="submit" class="btnSubmit" value="Submit" />
+          </div>
+          <div class="form-group">
+            <a href="login.php" class="btnForgetPwd" value="register">Login Here</a>
+          </div>
+        </form>
 
-      <p>Already have an account? <a href="login.php">Login here</a>.</p>
-
-    </form>
-
+      </div>
+    <!-- </div> -->
   </div>
-  </center>
 
   <!-- FOOTER -->
   <div class="footer">

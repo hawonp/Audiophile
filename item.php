@@ -34,7 +34,7 @@
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-      $row = $result->fetch_assoc(); 
+      $row = $result->fetch_assoc();
       echo "<title>".$row["iname"]."</title>";
     } else {
       echo "SUCH ITEM DOESN'T EXIST";
@@ -68,14 +68,42 @@
 
 <body>
   <!-- Navigation -->
-  <div class="topnav">
+  <!-- <div class="topnav">
     <a href="index.php">Home</a>
     <a href="auction.php">Auction</a>
     <a href="selling.php">Sales</a>
     <a class="rightAlign" href="logout.php">LOGOUT</a>
-    <!-- change later if needed-->
     <a class="rightAlign" href="user.php">YOUR PROFILE</a>
-  </div>
+  </div> -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Audiophile</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.php">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="selling.php">Sales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="auction.php">Auctions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="user.php">My Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">LOGOUT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <!-- Item description -->
   <div class="itemDes">
@@ -134,10 +162,10 @@
       <?php
         $sql = "SELECT * FROM Discussion d WHERE d.iid=$iid";
         $result = $conn->query($sql);
-    
+
         if ($result->num_rows > 0) {
           while($row = $result->fetch_assoc()) {
-            $row = $result->fetch_assoc(); 
+            $row = $result->fetch_assoc();
             echo "<div class='whopost'>".$row["email"]."</div>";
             echo "<div> dsadasd </div>";
           }

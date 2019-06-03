@@ -46,88 +46,135 @@
   <link href="./css/user.css" rel="stylesheet">
   <link href="./css/button.css" rel="stylesheet">
 
-  <title>Your profile</title>
+  <title> Audiophile </title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/shop-homepage.css" rel="stylesheet">
 </head>
 
 <body>
   <!-- Navigation -->
-  <div class="topnav">
+  <!-- <div class="topnav">
     <a href="index.php">Home</a>
     <a href="auction.php">Auction</a>
     <a href="selling.php">Sales</a>
     <a class="rightAlign" href="logout.php">LOGOUT</a>
-    <!-- change later if needed-->
     <a class="rightAlignActive" href="user.php">YOUR PROFILE</a>
-  </div>
+  </div> -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.php">Audiophile</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.php">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="selling.php">Sales</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="auction.php">Auctions</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="user.php">My Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">LOGOUT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <center>
   <!-- User info -->
-  <div class = "profile" >
-    <img src="images/User_image.png" alt="User image">
-    <h1> <?php echo $myfname. " ". $mylname; ?> </h1>
-    <p class = "email"> <?php echo $myemail; ?> </p>
-
-    <p class = "number"> <?php echo $mypnum; ?> </p>
-
+  <div class="jumbotron emp">
+    <h2 class="display-4">Hello <?php echo $myfname. " ". $mylname; ?>!</h2>
+    <p class="lead"> Welcome to your Profile!</p>
+    <!-- <hr class="my-4"> -->
+    
+   <p class = "text-primary"> Email: <?php echo $myemail; ?> </p>
+    <p class = "text-info"> Phone Number: <?php echo $mypnum; ?> </p>
+    <!-- <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a> -->
   </div>
-  <!-- <hr> -->
-  <!-- <hr> -->
-  <!-- #TODO
-  FOR  Joseph and Sue
-  Make user's personal page
-  it should contain the user's selling item
-  the auction that the user attended(?)
-  the items that user bought
-  User information-->
 
-  <!-- Your items -->
-  <div class = "selling">
+
+
+
+  <div class="container-fluid">
     <h2> Your Items!</h2>
-    <!-- retreiving data from db -->
-    <?php
-      $usr_email=$_SESSION['email'];
-      $sql = "SELECT i.iname, bs.stock FROM Item i JOIN (SELECT b.iid, b.stock FROM Sells b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
-      $result = $conn->query($sql);
+    <div class = "selling">
+      <?php
+        $usr_email=$_SESSION['email'];
+        $sql = "SELECT i.iname, bs.stock FROM Item i JOIN (SELECT b.iid, b.stock FROM Sells b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
+        $result = $conn->query($sql);
 
-      if ($result->num_rows > 0) {
-        echo "<table width=\"50%\"><tr><th align=\"left\">Item name</th><th align=\"right\">Stock</th></tr>";
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-          echo "<tr><td>".$row["iname"]."</td><td align=\"right\">".$row["stock"]."</td></tr>";
+        if ($result->num_rows > 0) {
+          // echo "<div class = \"container\">"
+          echo "<div class = \"container\">";
+          echo "<table class = \"table table-hover\" width=\"50%\"> <thread> <tr> <th align=\"left\">Item name</th> <th align=\"right\">Stock</th></tr></thread>";
+
+          // output data of each row
+          echo "<tbody>";
+          while($row = $result->fetch_assoc()) {
+            echo "<tr><td>".$row["iname"]."</td><td align=\"right\">".$row["stock"]."</td></tr>";
+          }
+          echo "</tbody>";
+          echo "</table>";
+          echo "</div class = \"container\">";
+        } else {
+          echo "<i>You are not selling anything right now!</i>";
         }
-        echo "</table>";
-      } else {
-        echo "<i>You are not selling anything right now!</i>";
-      }
-    ?>
-    <br>
-    <button class = "button_sell" onclick="window.location.href='/auction/sellItem.php'">SELL MORE ITEMS! </button>
+      ?>
+      <br>
+      <a class="btn btn-primary btn-lg" href="/auction/sellItem.php" role="button">Sell More Items?</a>
+    </div>
   </div>
 
-  <!-- Purchase history-->
-  <div class = "selling">
-    <h2> Your purchase history</h2>
-    <!-- retreiving data from db -->
-    <?php
-      $usr_email=$_SESSION['email'];
-      $sql = "SELECT i.iname, bs.bdate FROM Item i JOIN (SELECT b.iid, b.bdate FROM Buys b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
-      $result = $conn->query($sql);
+  <hr class="style1">
+  <!-- Purchase History -->
+  <div class="container-fluid bg-grey">
+    <h2> Purchase History!</h2>
 
-      if ($result->num_rows > 0) {
-        echo "<table width=\"50%\"><tr><th align=\"left\">Item name</th><th align=\"right\">Purchase date</th></tr>";
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-          echo "<tr><td>".$row["iname"]."</td><td align=\"right\">".$row["bdate"]."</td></tr>";
+    <div class = "selling">
+      <!-- retreiving data from db -->
+      <?php
+        $usr_email=$_SESSION['email'];
+        $sql = "SELECT i.iname, bs.bdate FROM Item i JOIN (SELECT b.iid, b.bdate FROM Buys b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+          echo "<div class = \"container\">";
+          echo "<table class = \"table table-hover\" width=\"50%\"><thread> <tr><th align=\"left\">Item name</th><th align=\"right\">Purchase date</th></tr></thread> ";
+
+          echo "<tbody>";
+          // output data of each row
+          while($row = $result->fetch_assoc()) {
+            echo "<tr><td>".$row["iname"]."</td><td align=\"right\">".$row["bdate"]."</td></tr>";
+          }
+          echo "</tbody>";
+          echo "</table>";
+          echo "</div class = \"container\">";
+        } else {
+          echo "<i>You have not bought anything yet!</i>";
         }
-        echo "</table>";
-      } else {
-        echo "<i>You have not bought anything yet!</i>";
-      }
-    ?>
+
+      ?>
+    </div>
+
   </div>
 
+  <hr class="style1">
   <!-- Auction history-->
-  <div class = "selling">
+  <div class = "container selling">
     <h2> Auctions you are participating in</h2>
     <?php
       $usr_email=$_SESSION['email'];
