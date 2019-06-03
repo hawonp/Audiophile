@@ -147,7 +147,7 @@
     </div>
 
     <!-- posts -->
-    <div style="text-align: center">
+    <div>
       <?php
         $sql = "SELECT * FROM Discussion d WHERE d.iid=$iid ORDER BY d.thread ASC";
         $result = $conn->query($sql);
@@ -190,12 +190,6 @@
             echo "<tr><td class='discussionContent'>".$row["email"]." | rating: ".$row["rating"]."/5 <br> ".$row["rcontent"]."</td></tr>";
           }
           echo "</table>";
-          // while($row = $result->fetch_assoc()) {
-          //   $row = $result->fetch_assoc(); 
-          //   echo "<div class='whopost'>".$row["email"]."</div>";
-          //   echo "<div> dsadasd </div>";
-            
-          // }
         } else {
           echo "Quiet... It's too quiet here";
         }

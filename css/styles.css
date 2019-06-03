@@ -139,6 +139,8 @@ tr, th, td{
   background-color: #F3F3F3;
   border: none;
   width: 90%;
+  margin-bottom: 10px;
+  padding-bottom: 30px;
 }
 
 .discussionContent {
