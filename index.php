@@ -113,9 +113,9 @@
 
           <?php
             if($mycat == ""){
-              $sql = "SELECT * FROM Sells S, Item I, Item_To_Subcategory C Where S.iid = I.iid AND I.iname = C.iname";
+              $sql = "SELECT I.iid, I.iname, I.sellprice, C.subcategory FROM Item I, Item_To_Subcategory C Where I.iname = C.iname";
             } else {
-              $sql = "SELECT i.iid, i.iname, s2.subcategory, s2.category, i.sellprice FROM Item i INNER JOIN (SELECT s1.category, s1.subcategory, i1.iname FROM Item_To_Subcategory I1 INNER JOIN (SELECT * FROM Subcategory_To_Category sc WHERE sc.category='$mycat') AS s1 ON s1.subcategory=I1.subcategory) AS s2 ON i.iname=s2.iname WHERE i.iid IN (SELECT s.iid FROM Sells s)";
+              $sql = "select i.iid, i.iname, s2.subcategory, s2.category, i.sellprice FROM Item i INNER JOIN (select s1.category, s1.subcategory, i1.iname from Item_To_Subcategory I1 INNER JOIN (select * from Subcategory_To_Category sc where sc.category='$mycat') AS s1 ON s1.subcategory=I1.subcategory) AS s2 ON i.iname=s2.iname";
               // $sql = "SELECT I.iid, I.iname, I.sellprice, S.subcategory FROM Sells S, Item I, Item_To_Subcategory S, Subcategory_To_Category Where S.iid = I.iid AND I.iname = S.iname AND C.category='$mycat'";
             }
 

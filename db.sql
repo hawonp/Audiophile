@@ -164,19 +164,19 @@ INSERT INTO User(first_name, last_name, password, email, phone_num, details, str
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 299250);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("True wireless earphones", "Earphones");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("SENNHEISER Momentum True Wireless", "True wireless earphones");
-INSERT INTO Item (iname, sellprice, iid, email, stock) VALUES ("SENNHEISER Momentum True Wireless", 399000, 1, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iname, sellprice, iid, email, stock) VALUES ("SENNHEISER Momentum True Wireless", 399000, 1, "hawonp@gmail.com", 10);
 
 -- Item 1
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (35000, 26250);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Wired earphones", "Earphones");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("LYPERTEK Bevi", "Wired earphones");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (2, "LYPERTEK Bevi", 35000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (2, "LYPERTEK Bevi", 35000, "hawonp@gmail.com", 10);
 
 -- Item 2
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (180000, 135000);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Sports earphones", "Earphones");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("JAYBIRD Tarah Pro", "Sports earphones");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (3, "JAYBIRD Tarah Pro", 180000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (3, "JAYBIRD Tarah Pro", 180000, "hawonp@gmail.com", 10);
 
 --Adding Items 3 - 13
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (110000, 82500);
