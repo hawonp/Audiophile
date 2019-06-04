@@ -102,10 +102,14 @@
         <h2> Notifications! </h2>
         <?php
           $usr_email=$_SESSION['email'];
-          $sql = "SELECT ncontent FROM Notification WHERE email='$usr_email' ORDER BY nnumber DESC LIMIT 2;";
+          $sql = " SELECT N.iid, N.ncontent, I.iname FROM Notification N, Item I WHERE N.email='$usr_email' AND N.iid = I.iid;";
+          // $sql = "SELECT iid, ncontent FROM Notification WHERE email='$usr_email' ORDER BY nnumber DESC LIMIT 3;";
           $result = $conn->query($sql);
           while($row = $result->fetch_assoc()){
-            echo "<h6><i>".$row['ncontent']."</i></h6>";
+            echo "<h6 style=\"text-align : left\"><i>(".$row['iname'].") : ".$row['ncontent']."</i></h6>";
+            // echo "<h6><i> ID (".$row['iid']."</i><i>) ".$row['ncontent']."</i></h6>";
+            echo "<br>";
+
           }
         ?>
       </div>

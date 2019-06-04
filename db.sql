@@ -275,9 +275,9 @@ INSERT INTO Review (email, iid, rating, rcontent) VALUES("sanjaylanjay@gmail.com
 
 
 --add pre notification for art lee
-INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "c");
-INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "b");
-INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "a");
+-- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "c");
+-- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "b");
+-- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "a");
 
 -- TEST SQL QUERIES --
 SELECT * FROM User;
@@ -292,27 +292,30 @@ SELECT * FROM Item_To_Subcategory;
 
 SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumber DESC LIMIT 2;
 
---TRIGGERs
-
--- CREATE TRIGGER manage_stock AFTER INSERT ON Buys
---   FOR
-
 -- NOTIFICATION TRIGGERS
-
--- email VARCHAR(50),
--- iid INTEGER,
--- ncontent VARCHAR(50),
--- 1) your item has been Sold
 -- 2) someone liked your item
 -- 3) an item that you liked is on auction
 -- 4) someone outbid you on auction #
--- 5) review this item!
 
 --TRIGGERs
 delimiter //
-CREATE TRIGGER nbuy AFTER INSERT ON Buys
+CREATE TRIGGER ItemSold AFTER INSERT ON Buys
   FOR EACH ROW
   BEGIN
     UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
+    SELECT email INTO @hey FROM Item WHERE iid=NEW.iid;
+    INSERT INTO Notification(email, iid, ncontent) VALUES(@hey, NEW.iid, "Your Item Has Been Sold!");
+    INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You bought this item! Leave a review!");
   END; //
 delimiter ;
+
+-- delimiter //
+-- CREATE TRIGGER ItemLike AFTER INSERT ON Likes
+--   FOR EACH ROW
+--   BEGIN
+--     UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
+--     SELECT email INTO @hey FROM Item WHERE iid=NEW.iid;
+--     INSERT INTO Notification(email, iid, ncontent) VALUES(@hey, NEW.iid, "Your Item Has Been Sold!");
+--     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You bought this item! Leave a review!");
+--   END; //
+-- delimiter ;
