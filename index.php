@@ -104,7 +104,7 @@
 
       <div class="col-lg-9">
         <div class="container">
-          <img class="d-block img-fluid" src="http://placehold.it/900x350">
+          <img class="d-block img-fluid" src="images/home.jpg">
         </div>
 
         <br>
