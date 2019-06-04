@@ -192,7 +192,7 @@
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-          echo "<table class='commentTable' align='center'><tr><th class='discussionContent'></th></tr>";
+          echo "<table class='commentTable table-striped' align='center'><tr><th class='discussionContent'></th></tr>";
           // output data of each row
           while($row = $result->fetch_assoc()) {
             echo "<tr><td class='discussionContent'>".$row["email"]." | ".$row["comment_date"]." <br> ".$row["comment"]."</td></tr>";
@@ -223,7 +223,7 @@
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-          echo "<table class='commentTable' align='center'><tr><th class='discussionContent'></th></tr>";
+          echo "<table class='commentTable table-striped' align='center'><tr><th class='discussionContent'></th></tr>";
           // output data of each row
           while($row = $result->fetch_assoc()) {
             echo "<tr><td class='discussionContent'>".$row["email"]." | rating: ".$row["rating"]."/5 <br> ".$row["rcontent"]."</td></tr>";
