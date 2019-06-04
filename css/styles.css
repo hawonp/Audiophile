@@ -113,15 +113,8 @@ tr, th, td{
 
 .itemDesc {
   float: left;
-  width: 40%;
+  width: 70%;
   margin-left: 2%;
-}
-
-.itemSellers {
-  float: left;
-  width: 20%;
-  margin-left: 3%;
-  /* text-color: #4CAF50; */
 }
 
 .itemSellersContent {

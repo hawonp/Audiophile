@@ -29,7 +29,26 @@
   <meta name="description" content="whatever">
   <meta name="author" content="whatever">
 
+  <title> Audiophile </title>
+
   <link href="./css/styles.css" rel="stylesheet">
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/shop-homepage.css" rel="stylesheet">
+
+  <style>
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      color: white;
+      text-align: center;
+    }
+  </style>
   <?php
     $sql = "SELECT i.iname FROM Item i WHERE i.iid=$iid";
     $result = $conn->query($sql);
@@ -73,15 +92,34 @@
 
 <body>
 
+  
   <!-- Navigation -->
-  <div class="topnav">
-    <a href="index.php">Home</a>
-    <a href="auction.php">Auction</a>
-    <a href="selling.php">Sales</a>
-    <a class="rightAlign" href="logout.php">LOGOUT</a>
-    <!-- change later if needed-->
-    <a class="rightAlign" href="user.php">YOUR PROFILE</a>
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.php">Audiophile</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.php">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="auction.php">Auctions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="user.php">My Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">LOGOUT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <!-- Item description -->
   <div class="itemDes">
@@ -105,27 +143,23 @@
             $row = $result->fetch_assoc();
             echo "Rating: ".round($row["avgRating"], 1)."/5";
           } else {
-            echo "The item has not been reviewed yet";
+            echo "Rating: N/A";
           }
-        ?>
-      </div>
-      <!-- Item seller list -->
-      <div class="itemSellers">
-        <h2> Buy from sellers below! </h2>
-        <hr>
-        <?php
-          $sql = "SELECT s.email, s.stock FROM Sells s WHERE s.iid=$iid ORDER BY s.stock DESC";
+          echo "<br>";
+          //Get stock number
+          $sql = "SELECT s.email, s.stock FROM Item s WHERE s.iid=$iid ORDER BY s.stock DESC";
           $result = $conn->query($sql);
 
           if ($result->num_rows > 0) {
-            echo "<table align='center'><tr><th class='itemSellersContent'>Seller</th> <th class='itemSellersContent'>Stock</th></tr>";
-          // output data of each row
-            while($row = $result->fetch_assoc()) {
-            echo "<tr><td class='itemSellersContent'><a href='purchaseItem.php?iid=$iid&seller=".$row["email"]."'>".$row["email"]."</a> <td class='itemSellersContent'>".$row["stock"]."</td></tr>";
+            $row = $result->fetch_assoc();
+            if ($row["stock"] > 0) {
+              echo "Stock: ".$row["stock"];
+            } else {
+              echo "Out of stock";
             }
-            echo "</table>";
+            //echo "<tr><td class='itemSellersContent'><a href='purchaseItem.php?iid=$iid&seller=".$row["email"]."'>".$row["email"]."</a> <td class='itemSellersContent'>".$row["stock"]."</td></tr>";
           } else {
-            echo "Oops! No one is selling this item right now";
+            echo "Something went wrong";
           }
         ?>
       </div>
