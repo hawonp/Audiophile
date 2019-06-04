@@ -154,10 +154,11 @@
             $row = $result->fetch_assoc();
             if ($row["stock"] > 0) {
               echo "Stock: ".$row["stock"];
+              echo "<br>";
+              echo "<a class=\"btn btn-primary btn-sm\" href='purchaseItem.php?iid=$iid&seller=".$row["email"]."' role=\"button\">Buy this item</a>";
             } else {
               echo "Out of stock";
             }
-            //echo "<tr><td class='itemSellersContent'><a href='purchaseItem.php?iid=$iid&seller=".$row["email"]."'>".$row["email"]."</a> <td class='itemSellersContent'>".$row["stock"]."</td></tr>";
           } else {
             echo "Something went wrong";
           }
