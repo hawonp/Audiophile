@@ -81,11 +81,10 @@
   <center>
   <!-- Table of items currently on auction -->
   <div class="jumbotron emp">
-    <h2 class="my-4">Welcome to the Auctions Page</h2>
+    <h2 class="my-4">Welcome to Auction Page!</h2>
     <p class="lead"> Bid on the Current Auctions</p>
     <hr class="my-4">
 
-   <p class = "text-primary"> Email:  </p>
   </div>
   </center>
 
@@ -104,7 +103,7 @@
         while($row = mysqli_fetch_array($result)) {
           echo "<tr><td>".$row['iname']."</td><td>".$row['email']."</td><td>".$row['curr_bid']."</td><td>".$row['end_date']."</td>
           <td><form name = \"increase_bid\" method = 'POST' action = auction.php>
-          <input type=text size=30 name=\"bid_".$inc."\"/>
+          <input type=text size=30 max='2147483647' name=\"bid_".$inc."\"/>
           <input type=submit name = \"but_".$inc."\" value=\"RACE!\"/>
           </form></td></tr>";
           ++$inc;
@@ -124,19 +123,26 @@
         $count = 0;
 
         if($input == 0){
+
           $results = mysqli_fetch_array($raw_results);
-          mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput." WHERE iid = ".$results["iid"]);
+          mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput.", email = \"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
+        
         } else {
+
           while($results = mysqli_fetch_array($raw_results)){
             
             if($count == $input){
-              mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput." WHERE iid = ".$results["iid"]);
+              mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput.", email = \"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
             }
+
             ++$count;
+
           }
+
         }
 
         header("Refresh:0");
+        
       }
 
       if(isset($_POST['but_0'])){
