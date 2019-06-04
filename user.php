@@ -99,16 +99,21 @@
   <div class="jumbotron emp">
     <h2 class="display-4">Hello <?php echo $myfname. " ". $mylname; ?>!</h2>
     <p class="lead"> Welcome to your Profile!</p>
-    <!-- <hr class="my-4"> -->
+    <hr class="my-4">
 
    <p class = "text-primary"> Email: <?php echo $myemail; ?> </p>
     <p class = "text-info"> Phone Number: <?php echo $mypnum; ?> </p>
-    <!-- <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a> -->
+  </div>
+
+  <div class = "container-fluid">
+    <h2> Your Balance! </h2>
+    <?php
+      
+    ?>
   </div>
 
 
-
-
+  <hr class="style1">
   <div class="container-fluid">
     <h2> Your Items!</h2>
     <div class = "selling">
