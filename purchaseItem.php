@@ -47,11 +47,13 @@
     $query = "INSERT INTO Buys (email, iid, bdate) VALUES ('$myemail', $iid, CURDATE())";
     $result   = $conn->query($query);
     if (!$result) echo "INSERT failed: $query<br>" .
-      $conn->error . "<br><br>";
-
-    //Alert and return to item page
-    $message = "Your order has been placed";
-    echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
+      $conn->error . "<br>";
+    else {
+      //Alert and return to item page
+      $message = "Your order has been placed";
+      echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
+    }
+    
   }
 
   //Checking if the user has enough monnaie
