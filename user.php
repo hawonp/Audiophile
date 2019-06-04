@@ -139,7 +139,7 @@
           // output data of each row
           echo "<tbody>";
           while($row = $result->fetch_assoc()) {
-            echo "<tr><td>".$row["iid"]."</td><td>".$row["iname"]."</td><td>".$row["sellprice"]." won</td><td>".$row["stock"]."</td><td>".$row["subcategory"]."</td></tr>";
+            echo "<tr><td>".$row["iid"]."</td><td><a href='item.php?iid=".$row["iid"]."'>".$row["iname"]."</a></td><td>".$row["sellprice"]." won</td><td>".$row["stock"]."</td><td>".$row["subcategory"]."</td></tr>";
           }
           echo "</tbody>";
           echo "</table>";
@@ -172,7 +172,7 @@
           echo "<tbody>";
           // output data of each row
           while($row = $result->fetch_assoc()) {
-            echo "<tr><td>".$row["iname"]."</td><td align=\"right\">".$row["bdate"]."</td></tr>";
+            echo "<tr><td><a href='item.php?iid=".$row["iid"]."'>".$row["iname"]."</a></td><td align=\"right\">".$row["bdate"]."</td></tr>";
           }
           echo "</tbody>";
           echo "</table>";
@@ -196,11 +196,15 @@
       $result = $conn->query($sql);
 
       if ($result->num_rows > 0) {
-        echo "<table width=\"50%\"><tr><th align=\"left\">Item name</th> <th align=\"right\">bid price</th> <th align=\"right\">end date</th></tr>";
+        echo "<table class = \"table table-hover\" width=\"50%\"><thread><tr><th align=\"left\">Item name</th> <th align=\"right\">bid price</th> <th align=\"right\">end date</th></tr></thread> ";
+        echo "<tbody>";
         // output data of each row
         while($row = $result->fetch_assoc()) {
-          echo "<tr><td>".$row["iname"]."</td> <td align=\"right\">".$row["curr_bid"]."</td> <td align=\"right\">".$row["end_date"]."</td></tr>";
+          echo "<tr><td><a href='item.php?iid=".$row["iid"]."'>".$row["iname"]."</a></td> <td align=\"right\">".$row["curr_bid"]."</td> <td align=\"right\">".$row["end_date"]."</td></tr>";
+
+          // echo "<tr><td>".$row["iname"]."</td> <td align=\"right\">".$row["curr_bid"]."</td> <td align=\"right\">".$row["end_date"]."</td></tr>";
         }
+        echo "</tbody>";
         echo "</table>";
       } else {
         echo "<i>You are not participating in any auction!</i>";

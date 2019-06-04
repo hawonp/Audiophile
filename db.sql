@@ -158,7 +158,7 @@ INSERT INTO User(first_name, last_name, password, email, phone_num, details, str
 INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
   VALUES ("Anand", "Hari", "ps8", "ihmsm@gmail.com", "9279909520", "161", "Some Temple Rd", "Hampi");
 INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
-  VALUES ("Rohan", "Chittumuru", "ps9", "XxAuctionmastaxX@gmail.com", "999291191", "Indu Fortune Fields 299", "Hafeezpet Rd", "Hyderabad");
+  VALUES ("Arthur", "Lee", "give100pls", "artlee@gmail.com", "999291191", "Indu Fortune Fields 299", "Hafeezpet Rd", "Hyderabad");
 
 -- Item 0
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (399000, 299250);
@@ -182,72 +182,72 @@ INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (3, "JAYBIRD Tarah
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (110000, 82500);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Gaming headphones", "Headphones");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("CORSAIR Void Pro RGB Wireless", "Gaming headphones");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (4, "CORSAIR Void Pro RGB Wireless", 110000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (4, "CORSAIR Void Pro RGB Wireless", 110000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (1900000, 1425000);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Studio monitor headphones", "Headphones");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("SENNHEISER HD800", "Studio monitor headphones");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (5, "SENNHEISER HD800", 1900000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (5, "SENNHEISER HD800", 1900000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (350000, 262500);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Noise cancelling headphones", "Headphones");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("SONY WH-1000XM3", "Noise cancelling headphones");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (6, "SONY WH-1000XM3", 350000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (6, "SONY WH-1000XM3", 350000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (2800000, 2100000);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Portable digital audio player", "Media_Players");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("ASTELL & KERN AK240", "Portable digital audio player");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (7, "ASTELL & KERN AK240", 2800000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (7, "ASTELL & KERN AK240", 2800000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (32000000, 24000000);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Floorstanding speaker", "Speakers");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("BOWERS & WILKINS 802 D3", "Floorstanding speaker");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (8, "BOWERS & WILKINS 802 D3", 32000000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (8, "BOWERS & WILKINS 802 D3", 32000000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (1300000, 975000);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Bookshelf speaker", "Speakers");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("KEF LS50", "Bookshelf speaker");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (9, "KEF LS50", 1300000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (9, "KEF LS50", 1300000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (220000, 165000);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Sound bar", "Speakers");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("YAMAHA YAS-108", "Sound bar");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (10, "YAMAHA YAS-108", 220000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (10, "YAMAHA YAS-108", 220000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (380000, 285000);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Turntable", "Media_Players");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("DENON DP-300F", "Turntable");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (11, "DENON DP-300F", 380000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (11, "DENON DP-300F", 380000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (330000, 247500);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Integrated Amplifier", "Amplifiers");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("ONKYO A-9030", "Integrated Amplifier");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (12, "ONKYO A-9030", 330000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (12, "ONKYO A-9030", 330000, "artlee@gmail.com", 10);
 
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Center speaker", "Speakers");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("JBL Studio 520C", "Center speaker");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (13, "JBL Studio 520C", 330000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (13, "JBL Studio 520C", 330000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (60000, 45000);
 INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Speaker cable", "Accessories");
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("NAIM NAC A5", "Speaker cable");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (14, "NAIM NAC A5", 60000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (14, "NAIM NAC A5", 60000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (450000, 337500);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("BOSE Quiet Comfort 35 II", "Noise cancelling headphones");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (15, "BOSE Quiet Comfort 35 II", 450000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (15, "BOSE Quiet Comfort 35 II", 450000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (200000, 150000);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("AUDIO TECHNICA ATH-ANC700BT", "Noise cancelling headphones");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (16, "AUDIO TECHNICA ATH-ANC700BT", 200000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (16, "AUDIO TECHNICA ATH-ANC700BT", 200000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (230000, 172500);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("BEYERDYNAMIC DT-770 Pro", "Studio monitor headphones");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (17, "BEYERDYNAMIC DT-770 Pro", 230000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (17, "BEYERDYNAMIC DT-770 Pro", 230000, "artlee@gmail.com", 10);
 
 INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (260000 , 195000);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("BOSE SoundSport Pulse Wireless", "Sports earphones");
-INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (18, "BOSE SoundSport Pulse Wireless", 260000, "XxAuctionmastaxX@gmail.com", 10);
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (18, "BOSE SoundSport Pulse Wireless", 260000, "artlee@gmail.com", 10);
 
 
 --Auction 0: Item 0, user 1
@@ -255,10 +255,10 @@ INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfra
 --Auction 1: Item 1, user 1
 INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 2, 360000, "2019-06-01", "2019-06-8");
 --Auction by auctionmastaxX
-INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("XxAuctionmastaxX@gmail.com", 15, 337500, "2019-06-01", "2019-06-8");
-INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("XxAuctionmastaxX@gmail.com", 16, 150000, "2019-06-01", "2019-06-8");
-INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("XxAuctionmastaxX@gmail.com", 17, 172500, "2019-06-01", "2019-06-8");
-INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("XxAuctionmastaxX@gmail.com", 18, 195000, "2019-06-01", "2019-06-8");
+INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("artlee@gmail.com", 15, 337500, "2019-06-01", "2019-06-8");
+INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("artlee@gmail.com", 16, 150000, "2019-06-01", "2019-06-8");
+INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("artlee@gmail.com", 17, 172500, "2019-06-01", "2019-06-8");
+INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("artlee@gmail.com", 18, 195000, "2019-06-01", "2019-06-8");
 
 --Buy 0:
 INSERT INTO Buys (email, iid, bdate) VALUES ("lol@gmail.com", 1, "2000-03-05");
