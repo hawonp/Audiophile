@@ -279,6 +279,10 @@ INSERT INTO Review (email, iid, rating, rcontent) VALUES("sanjaylanjay@gmail.com
 -- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "b");
 -- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "a");
 
+INSERT INTO Likes(email, iid) VALUES("hawo@gmail.com", 1);
+INSERT INTO Likes(email, iid) VALUES("hawon@gmail.com", 1);
+INSERT INTO Likes(email, iid) VALUES("hawo@gmail.com", 1);
+
 -- TEST SQL QUERIES --
 SELECT * FROM User;
 --
@@ -296,9 +300,7 @@ SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumbe
 UPDATE User SET credit=100000000 WHERE email='hawonp@gmail.com';
 
 -- NOTIFICATION TRIGGERS
--- 2) someone liked your item
 -- 3) an item that you liked is on auction
--- 4) someone outbid you on auction #
 
 --TRIGGERs
 
@@ -323,13 +325,22 @@ CREATE TRIGGER ItemSold AFTER INSERT ON Buys
   END; //
 delimiter ;
 
--- delimiter //
--- CREATE TRIGGER ItemLike AFTER INSERT ON Likes
---   FOR EACH ROW
---   BEGIN
---     UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
---     SELECT email INTO @hey FROM Item WHERE iid=NEW.iid;
---     INSERT INTO Notification(email, iid, ncontent) VALUES(@hey, NEW.iid, "Your Item Has Been Sold!");
---     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You bought this item! Leave a review!");
---   END; //
--- delimiter ;
+delimiter //
+CREATE TRIGGER ItemLike AFTER INSERT ON Likes
+  FOR EACH ROW
+  BEGIN
+    -- email, iid, curr_bid, start_date, end_date
+    SELECT email INTO @info FROM Item WHERE iid=NEW.iid;
+    INSERT INTO Notification(email, iid, ncontent) VALUES(@info, NEW.iid, "Someone liked your item!");
+    INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You liked this item!");
+  END; //
+delimiter ;
+
+delimiter //
+CREATE TRIGGER ItemBid AFTER UPDATE ON Auction
+  FOR EACH ROW
+  BEGIN
+    INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You are now the top bidder!");
+  END; //
+
+delimiter ;
