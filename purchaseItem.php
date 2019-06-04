@@ -131,7 +131,7 @@
           }
 
           //Get the info of the item and seller
-          $sql = "SELECT ";
+          $sql = "SELECT * FROM item i JOIN (SELECT c.country FROM city c INNER JOIN (select u.city FROM user u WHERE u.email='$seller') AS j1 ON c.city=j1.city) AS j2 WHERE i.iid='$iid';";
           $result = $conn->query($sql);
           
           if ($result->num_rows > 0) {
