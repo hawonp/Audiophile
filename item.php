@@ -20,14 +20,20 @@
   $rating;
 
   if(isset($_POST['liked'])){
-    $myemail = $_SESSION['email'];
-    // echo "hello";
-    // $sql = "UPDATE User SET credit = '$mynum' WHERE email='$myemail'";
-    $sql = "INSERT INTO Likes(email, iid) VALUES('$myemail', '$iid')";
-    mysqli_query($conn, $sql);
+    $sql = "SELECT email FROM Item where iid = '$iid'";
+    $result = $conn->query($sql);
 
-    $message = "You have liked this item!";
-    echo "<script type='text/javascript'>alert('$message');</script>";
+    $row = $result->fetch_assoc();
+
+    $myemail = $_SESSION['email'];
+
+    if($row['email'] != $myemail){
+      $sql = "INSERT INTO Likes(email, iid) VALUES('$myemail', '$iid')";
+      mysqli_query($conn, $sql);
+
+      $message = "You have liked this item!";
+      echo "<script type='text/javascript'>alert('$message');</script>";
+    }
   }
 ?>
 

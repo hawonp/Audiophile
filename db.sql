@@ -309,13 +309,12 @@ CREATE TRIGGER ItemSold AFTER INSERT ON Buys
   END; //
 delimiter ;
 
--- delimiter //
--- CREATE TRIGGER ItemLike AFTER INSERT ON Likes
---   FOR EACH ROW
---   BEGIN
---     UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
---     SELECT email INTO @hey FROM Item WHERE iid=NEW.iid;
---     INSERT INTO Notification(email, iid, ncontent) VALUES(@hey, NEW.iid, "Your Item Has Been Sold!");
---     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You bought this item! Leave a review!");
---   END; //
--- delimiter ;
+delimiter //
+CREATE TRIGGER ItemLike AFTER INSERT ON Likes
+  FOR EACH ROW
+  BEGIN
+    SELECT email INTO @hey FROM Item WHERE iid=NEW.iid;
+    INSERT INTO Notification(email, iid, ncontent) VALUES(@hey, NEW.iid, "Someone liked your item!");
+    INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You liked this item!");
+  END; //
+delimiter ;
