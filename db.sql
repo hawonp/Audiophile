@@ -117,11 +117,9 @@ CREATE TABLE Review (
   FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
-CREATE TABLE Wishlist (
+CREATE TABLE Likes(
   email VARCHAR(50),
   iid INTEGER,
-  likes INTEGER,
-  wcontent VARCHAR(256),
   PRIMARY KEY(email, iid),
   FOREIGN KEY(email) REFERENCES User(email),
   FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE

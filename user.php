@@ -179,7 +179,7 @@
           echo "</table>";
           echo "</div class = \"container\">";
         } else {
-          echo "<i>You have not bought anything yet!</i>";
+          echo "<i>You have not liked anything yet!</i>";
         }
 
       ?>
