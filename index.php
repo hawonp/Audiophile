@@ -1,14 +1,27 @@
 <?php
   session_start();
-  if(isset($_SESSION["email"])) {
-    $link = "logout.php";
-    $text = "LOGOUT";
-    // header("Location:index.php");
+  if(!isset($_SESSION['email'])){
+    header("Location:Login.php");
   }
-  else {
-    $link = "login.php";
-    $text = "LOGIN";
+
+  $servername = "localhost";
+  $username = "user";
+  $password = "hey";
+  $dbname = "auction_db";
+
+  // Create connection
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  // Check connection
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
   }
+
+  $mycat = "";
+  if(isset($_GET['cat'])){
+    $mycat = $_GET['cat'];
+  }
+  // $mycat = $_GET['cat'];
+
 ?>
 
 <!DOCTYPE html>
@@ -20,81 +33,137 @@
   <meta name="description" content="whatever">
   <meta name="author" content="whatever">
 
-  <link href="./css/styles.css" rel="stylesheet">
+  <!-- <link href="./css/styles.css" rel="stylesheet"> -->
 
-  <title>Auction</title>
+  <title>Audiophile</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/shop-homepage.css" rel="stylesheet">
+
+
 </head>
 
 <body>
 
   <!-- Navigation -->
-  <div class="topnav">
-    <a class="active" href="index.php">Home</a>
-    <a href="auction.php">Auction</a>
-    <a href="selling.php">Sales</a>
-    <a class="rightAlign" href="<?php echo $link; ?>"> <?php echo $text; ?></a>
-    <!-- change later if needed-->
-    <a class="rightAlign" href="user.php">YOUR PROFILE</a>
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.php">Audiophile</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.php">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="selling.php">Sales</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="auction.php">Auctions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="user.php">My Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">LOGOUT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <!-- <hr> -->
 
-  <!-- Items on Auction  -->
-  <div class="auction">
-    <h1> Items on Auction! </h1>
+  <!-- Page Content -->
+  <div class="container">
 
-    <table style="width:75%">
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Age</th>
-      </tr>
-      <tr>
-        <td>Jill</td>
-        <td>Smith</td>
-        <td>50</td>
-      </tr>
-      <tr>
-        <td>Eve</td>
-        <td>Jackson</td>
-        <td>94</td>
-      </tr>
-    </table>
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Store</h1>
+        <div class="list-group">
+          <a href="index.php?cat=Earphones" class="list-group-item">Earphones</a>
+          <a href="index.php?cat=Headphones" class="list-group-item">Headphones</a>
+          <a href="index.php?cat=Speakers" class="list-group-item">Speakers</a>
+          <a href="index.php?cat=Media_Players" class="list-group-item">Media Players</a>
+          <a href="index.php?cat=Amplifiers" class="list-group-item">Amplifiers</a>
+          <a href="index.php?cat=Accessories" class="list-group-item">Accessories</a>
+          <a href="index.php" class="list-group-item">All</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+        <div class="container">
+          <img class="d-block img-fluid" src="http://placehold.it/900x350">
+        </div>
+
+        <br>
+
+        <div class="row">
+
+          <?php
+            if($mycat == ""){
+              $sql = "SELECT * FROM Sells S, Item I, Item_To_Subcategory C Where S.iid = I.iid AND I.iname = C.iname";
+            } else {
+              $sql = "SELECT i.iid, i.iname, s2.subcategory, s2.category, i.sellprice FROM Item i INNER JOIN (SELECT s1.category, s1.subcategory, i1.iname FROM Item_To_Subcategory I1 INNER JOIN (SELECT * FROM Subcategory_To_Category sc WHERE sc.category='$mycat') AS s1 ON s1.subcategory=I1.subcategory) AS s2 ON i.iname=s2.iname WHERE i.iid IN (SELECT s.iid FROM Sells s)";
+              // $sql = "SELECT I.iid, I.iname, I.sellprice, S.subcategory FROM Sells S, Item I, Item_To_Subcategory S, Subcategory_To_Category Where S.iid = I.iid AND I.iname = S.iname AND C.category='$mycat'";
+            }
+
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              while($row = $result->fetch_assoc()) {
+                echo "<div class = \"col-lg-4 col-md-6 mb-4\">";
+                  echo "<div class=\"card h-100\">";
+                    echo "<img class=\"card-img-top\" src='images/".$row["iid"].".jpg' alt=\"Image Does Not Exist!\">";
+                    echo "<div class=\"card-body\">";
+                      echo "<h4 class=\"card-title\">";
+                      echo "<a href='item.php?iid=".$row["iid"]."'>".$row["iname"]."</a></h4>";
+                      echo "<h5>".$row["sellprice"]." WON</h5>";
+                    echo "</div>";
+                    echo "<div class=\"card-footer\"> <small class=\"text-muted\">".$row["subcategory"]."</small> </div>";
+                  echo "</div>";
+                echo "</div>";
+              }
+
+            } else {
+                echo "<p> No Items Being Sold! </p>";
+            }
+          ?>
+
+        </div>
+        <!-- /.row -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
 
   </div>
+  <!-- /.container -->
 
-  <br>
-  <hr>
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; HaJoSue 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
 
-  <!-- Items being sold -->
-  <div class = "selling">
-
-    <h1> Items on Sale! </h1>
-
-    <table style="width:75%">
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Age</th>
-      </tr>
-      <tr>
-        <td>Jill</td>
-        <td>Smith</td>
-        <td>50</td>
-      </tr>
-      <tr>
-        <td>Eve</td>
-        <td>Jackson</td>
-        <td>94</td>
-      </tr>
-    </table>
-
-  </div>
-
-  <!-- FOOTER -->
-  <div class="footer">
-    <p>Copyright &copy; HaJoSue 2019</p>
-  </div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
 </body>

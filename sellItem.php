@@ -4,8 +4,6 @@
     header("Location:Login.php");
   }
 
-  // echo mt_rand();
-
   // Create connection
   $servername = "localhost";
   $username = "user";
@@ -47,13 +45,30 @@
     $sql = "INSERT INTO Item(iid, iname, sellprice)
       VALUES('$myitemid', '$myiname', '$mysellprice')";
 
-    if(mysqli_query($conn, $sql) == true){
+    mysqli_query($conn, $sql);
 
+    // if(mysqli_query($conn, $sql) == true){
+    //
+    // } else {
+    //   echo "cannot add new item<br>";
+    //   echo mysqli_error($conn);
+    // }
+    // mysqli_query($conn, $sql);
+
+    // INSERT NEW SELLS TUPLE
+    $myemail = $_SESSION['email'];
+
+    $sql = "INSERT INTO Sells(email, iid, stock)
+      VALUES('$myemail', '$myitemid', '$mystock')";
+
+    if(mysqli_query($conn, $sql) == true){
+      // echo "added sell tuple success!";
     } else {
       echo "cannot add new item<br>";
       echo mysqli_error($conn);
     }
-    // mysqli_query($conn, $sql);
+
+    mysqli_close($conn);
 
     header("Location:user.php");
   }
@@ -69,66 +84,50 @@
   <meta name="description" content="whatever">
   <meta name="author" content="whatever">
 
-  <link href="./css/styles.css" rel="stylesheet">
   <link href="./css/login.css" rel="stylesheet">
-  <link href="./css/button.css" rel="stylesheet">
 
+  <title>Audiophile</title>
 
-  <title>Auction</title>
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/shop-homepage.css" rel="stylesheet">
+
 </head>
 
 <body>
 
-  <!-- Navigation -->
-  <!-- <div class="topnav">
-    <a href="index.php">Home</a>
-    <a href="auction.php">Auction</a>
-    <a href="selling.php">Sales</a>
-    <a class="rightAlign" href="logout.php">LOGOUT</a>
-    <a class="rightAlign" href="user.php">YOUR PROFILE</a>
-  </div> -->
+  <div class="container login-container">
+    <!-- <div class="row"> -->
+      <div class="login-form-1">
+        <h3>Sell an Item!</h3>
+        <p> Please Fill the Item Information! </p>
 
-  <!-- <hr> -->
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
-  <center>
-  <div class = "login">
-    <h2> Sell an Item! </h2>
-    <p> Please fill the item information! </p>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "item_name" placeholder="Item Name *" required />
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" name = "sellprice" placeholder="Selling Price *" min="1" max="20000" required />
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "category" placeholder="Category *" required />
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" name = "stock" placeholder="Stock *"  min="1" max="100"required />
+          </div>
 
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-      Item Name: <input type="text" name="item_name" required>
-      Sellprice: <input type="number" name="sellprice" min="1" max="20000">
-      <br>
+          <br>
+          <div class="form-group">
+            <input type="submit" class="btnSubmit" value="Submit" />
+          </div>
+        </form>
 
-      <p> The Minimum Bid to enter an auction on this item will be 75% of the sellprice! </p>
-
-      <!-- Category: <input type="text" list="categories" />
-      <datalist id="categories">
-        <option value="headphones">
-        <option value="earphones">
-      </datalist> -->
-      Category: <input type="text" name="category" required>
-      Stock: <input type="number" name="stock" min="1" max="100">
-
-      <br><br>
-
-      <input type="submit" class="button_primary" value="Submit">
-      <input type="reset" class="button_default" value = "Reset">
-
-      <br><br>
-
-      <button class= "button_return" onclick="goBack()">Go Back</button>
-      <script>
-        function goBack() {
-          window.history.back();
-        }
-      </script>
-
-    </form>
-
+      </div>
+    <!-- </div> -->
   </div>
-  </center>
-
 
   <!-- FOOTER -->
   <div class="footer">

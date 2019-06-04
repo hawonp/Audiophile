@@ -35,39 +35,16 @@
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-      $row = $result->fetch_assoc(); 
+      $row = $result->fetch_assoc();
       echo "<title>".$row["iname"]."</title>";
     } else {
       echo "SUCH ITEM DOESN'T EXIST";
     }
   ?>
-
-  <script>
-  function openCity(evt, cityName) {
-    // Declare all variables
-    var i, tabcontent, tablinks;
-
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-
-    // Get all elements with class="tablinks" and remove the class "active"
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-  }
-
-  </script>
 </head>
 
 <body>
+
 
 <!-- php input handlers -->
 <?php
@@ -98,7 +75,7 @@
     header("Refresh:0");
   }
 ?>
-  
+
   <!-- Navigation -->
   <div class="topnav">
     <a href="index.php">Home</a>
@@ -122,7 +99,38 @@
       <div class="itemDesc">
         <h2> <?php echo $row["iname"]; ?></h2>
         <hr>
-        description
+        <?php
+          $sql = "SELECT AVG(r.rating) AS avgRating FROM Review r WHERE r.iid=$iid";
+          $result = $conn->query($sql);
+
+          if ($result->num_rows > 0) {
+            // output data of each row
+            $row = $result->fetch_assoc();
+            echo "Rating: ".round($row["avgRating"], 1)."/5";
+          } else {
+            echo "The item has not been reviewed yet";
+          }
+        ?>
+      </div>
+      <!-- Item seller list -->
+      <div class="itemSellers">
+        <h2> Buy from sellers below! </h2>
+        <hr>
+        <?php
+          $sql = "SELECT s.email, s.stock FROM Sells s WHERE s.iid=$iid ORDER BY s.stock DESC";
+          $result = $conn->query($sql);
+
+          if ($result->num_rows > 0) {
+            echo "<table align='center'><tr><th class='itemSellersContent'>Seller</th> <th class='itemSellersContent'>Stock</th></tr>";
+          // output data of each row
+            while($row = $result->fetch_assoc()) {
+            echo "<tr><td class='itemSellersContent'><a href='purchaseItem.php?iid=$iid&seller=".$row["email"]."'>".$row["email"]."dsadsa</a> <td class='itemSellersContent'>".$row["stock"]."</td></tr>";
+            }
+            echo "</table>";
+          } else {
+            echo "Oops! No one is selling this item right now";
+          }
+        ?>
       </div>
     </div>
   </div>
@@ -131,7 +139,7 @@
   <hr>
 
   <div class="tab">
-    <button class="tablinks" onclick="openCity(event, 'posts')">Discussions </button>
+    <button class="tablinks" onclick="openCity(event, 'posts')" id="defaultOpen"> Discussions </button>
     <button class="tablinks" onclick="openCity(event, 'reviews')">Reviews</button>
   </div>
 
@@ -141,13 +149,13 @@
     <!-- Text input -->
     <div style="text-align: center">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
-        <textarea name="discussion" rows="7" style="width:80%;" name="discussion " placeholder="Enter discussion here"></textarea>
+        <textarea name="discussion" rows="7" style="width:80%;" name="discussion " placeholder="Enter discussion here" maxlength="256" required></textarea>
         <input type="submit" value="Submit">
       </form>
     </div>
 
     <!-- posts -->
-    <div>
+    <div style="text-align: center">
       <?php
         $sql = "SELECT * FROM Discussion d WHERE d.iid=$iid ORDER BY d.thread ASC";
         $result = $conn->query($sql);
@@ -172,7 +180,7 @@
     <!-- Text input -->
     <div style="text-align: center">
       <form method="post" action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']);?>">
-        <textarea name="review" rows="7" style="width:70%;" name="review" placeholder="Enter review here" required></textarea>Rating : <input type="number" name="rating" value="5"max="5" required>
+        <textarea name="review" rows="7" style="width:70%;" name="review" placeholder="Enter review here" maxlength="256" required ></textarea>Rating : <input type="number" name="rating" value="5"max="5" required>
         <input type="submit" value="Submit">
       </form>
     </div>
@@ -182,7 +190,7 @@
       <?php
         $sql = "SELECT * FROM Review r WHERE r.iid=$iid";
         $result = $conn->query($sql);
-    
+
         if ($result->num_rows > 0) {
           echo "<table class='commentTable' align='center'><tr><th class='discussionContent'></th></tr>";
           // output data of each row
@@ -196,19 +204,38 @@
       ?>
     </div>
   </div>
-<!-- CREATE TABLE Review (
-  email VARCHAR(20),
-  iid INTEGER,
-  rating FLOAT,
-  rcontent VARCHAR(64),
-  PRIMARY KEY(email, iid),
-  FOREIGN KEY(email) REFERENCES User(email),
-  FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
-); -->
+
   <!-- FOOTER -->
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
   </div>
+
+  <script>
+  function openCity(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+  </script>
 
 </body>
 </html>
