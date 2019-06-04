@@ -16,19 +16,19 @@
     }
 
     $myemail = $_SESSION['email'];
-
     $sql = "SELECT * FROM User WHERE email = '$myemail'";
     $result = mysqli_query($conn,$sql);
-    // $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    // $count = mysqli_num_rows($result);
-
     $row = $result->fetch_assoc();
 
-    // echo $row['first_name'];
     $myfname = $row['first_name'];
     $mylname = $row['last_name'];
-    $myemail = $row['email'];
     $mypnum = $row['phone_num'];
+
+    if(isset($_POST['balance'])){
+      $mynum = $_POST['balance'];
+      $sql = "UPDATE User SET credit = '$mynum' WHERE email='$myemail'";
+      mysqli_query($conn, $sql);
+    }
 }
 
 ?>
@@ -56,14 +56,6 @@
 </head>
 
 <body>
-  <!-- Navigation -->
-  <!-- <div class="topnav">
-    <a href="index.php">Home</a>
-    <a href="auction.php">Auction</a>
-    <a href="selling.php">Sales</a>
-    <a class="rightAlign" href="logout.php">LOGOUT</a>
-    <a class="rightAlignActive" href="user.php">YOUR PROFILE</a>
-  </div> -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.php">Audiophile</a>
@@ -77,9 +69,6 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="selling.php">Sales</a>
-          </li> -->
           <li class="nav-item">
             <a class="nav-link" href="auction.php">Auctions</a>
           </li>
@@ -105,13 +94,31 @@
     <p class = "text-info"> Phone Number: <?php echo $mypnum; ?> </p>
   </div>
 
-  <div class = "container-fluid">
-    <h2> Your Balance! </h2>
-    <?php
-      
-    ?>
+  <div class ="container-fluid">
+    <div class="row">
+      <div class="col col-lg-6">
+        <h2> Your Balance! </h2>
+        <?php
+          $usr_email=$_SESSION['email'];
+          $sql = "SELECT credit FROM User WHERE email = '$usr_email'";
+          $result = $conn->query($sql);
+          $row = $result->fetch_assoc();
+          echo "<h4><i>".$row['credit']." WON </i></h4>";
+        ?>
+      </div>
+      <div class="col-lg-6">
+        <h5> Recharge Your Balance? </h5>
+        <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+          <div class="form-group">
+            <input type="number" class="form-control" name = "balance" placeholder="Enter Balance *" min="1" required />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-
 
   <hr class="style1">
   <div class="container-fluid">
