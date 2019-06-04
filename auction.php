@@ -91,11 +91,6 @@
 
   <div class="container-fluid selling">
     <?php
-<<<<<<< HEAD
-      
-      
-    
-=======
 
       function increaseBid($conn, $input, $textinput){
 
@@ -114,7 +109,6 @@
         }
       }
 
->>>>>>> 5e9d25c164010cdb5cd7da25a2d6fae725c0b17b
       $result = mysqli_query($conn, "SELECT * FROM Auction a, Item i WHERE a.iid = i.iid");
       $numRow = mysqli_num_rows($result);
       $inc = 0;
