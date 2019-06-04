@@ -310,17 +310,17 @@ CREATE TRIGGER ItemSold AFTER INSERT ON Buys
   FOR EACH ROW
   BEGIN
     UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
-    SELECT c.country INTO @heycs FROM City c INNER JOIN (SELECT u.city FROM User u INNER JOIN (SELECT i.email FROM item i WHERE i.iid=NEW.iid) AS j1 ON j1.email=u.email) AS j2 ON c.city=j2.city;
-    SELECT c.country INTO @heycb FROM City c INNER JOIN (SELECT u.city FROM User u WHERE u.email=NEW.email) AS j1 ON j1.city=c.city;
-    SELECT sellprice INTO @heys FROM Item WHERE iid=NEW.iid;
-    IF (@heycs != @heycb) THEN
-      UPDATE User SET credit = credit - (@heys * 1.1) WHERE email=NEW.email;
+    SELECT c.country INTO @sellerCountry FROM City c INNER JOIN (SELECT u.city FROM User u INNER JOIN (SELECT i.email FROM item i WHERE i.iid=NEW.iid) AS j1 ON j1.email=u.email) AS j2 ON c.city=j2.city;
+    SELECT c.country INTO @buyerCountry FROM City c INNER JOIN (SELECT u.city FROM User u WHERE u.email=NEW.email) AS j1 ON j1.city=c.city;
+    SELECT sellprice INTO @sellprice FROM Item WHERE iid=NEW.iid;
+    IF (@sellerCountry != @buyerCountry) THEN
+      UPDATE User SET credit = credit - (@sellprice * 1.1) WHERE email=NEW.email;
     ELSE
-      UPDATE User SET credit = credit - @heys WHERE email=NEW.email;
+      UPDATE User SET credit = credit - @sellprice WHERE email=NEW.email;
     END iF;
-    SELECT email INTO @hey FROM Item WHERE iid=NEW.iid;
-    UPDATE User SET credit = credit + @heys WHERE email=@hey;
-    INSERT INTO Notification(email, iid, ncontent) VALUES(@hey, NEW.iid, "Your Item Has Been Sold!");
+    SELECT email INTO @email FROM Item WHERE iid=NEW.iid;
+    UPDATE User SET credit = credit + @sellprice WHERE email=@hey;
+    INSERT INTO Notification(email, iid, ncontent) VALUES(@email, NEW.iid, "Your Item Has Been Sold!");
     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You bought this item! Leave a review!");
   END; //
 delimiter ;
