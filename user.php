@@ -85,7 +85,7 @@
 
   <center>
   <!-- User info -->
-  <div class="jumbotron emp">
+  <div class="jumbotron">
     <h2 class="display-4">Hello <?php echo $myfname. " ". $mylname; ?>!</h2>
     <p class="lead"> Welcome to your Profile!</p>
     <hr class="my-4">
@@ -150,6 +150,39 @@
       ?>
       <br>
       <a class="btn btn-primary btn-lg" href="/auction/sellItem.php" role="button">Sell More Items?</a>
+    </div>
+  </div>
+
+
+  <hr class="style1">
+  <!-- Purchase History -->
+  <div class="container-fluid bg-grey">
+    <h2> Items You've Liked!</h2>
+
+    <div class = "selling">
+      <!-- retreiving data from db -->
+      <?php
+        $usr_email=$_SESSION['email'];
+        $sql = " SELECT I.iid, I.iname FROM Item I INNER JOIN Likes L WHERE L.email='$usr_email' AND L.iid = I.iid";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+          echo "<div class = \"container\">";
+          echo "<table class = \"table table-hover\" width=\"50%\"><thread> <tr><th align=\"left\">Item name</th></tr></thread> ";
+
+          echo "<tbody>";
+          // output data of each row
+          while($row = $result->fetch_assoc()) {
+            echo "<tr><td><a href='item.php?iid=".$row["iid"]."'>".$row["iname"]."</a></td></tr>";
+          }
+          echo "</tbody>";
+          echo "</table>";
+          echo "</div class = \"container\">";
+        } else {
+          echo "<i>You have not bought anything yet!</i>";
+        }
+
+      ?>
     </div>
   </div>
 
