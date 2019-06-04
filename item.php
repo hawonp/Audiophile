@@ -159,21 +159,20 @@
           echo "<br>";
 
           //Get stock number
-          $sql = "SELECT s.email, s.stock FROM Item s WHERE s.iid=$iid ORDER BY s.stock DESC";
+          $sql = "SELECT * FROM Item s JOIN (SELECT COUNT(*) FROM Likes l WHERE l.iid=$iid) AS j1 WHERE s.iid=$iid";
           $result = $conn->query($sql);
 
           if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             if ($row["stock"] > 0) {
               echo "Stock: ".$row["stock"];
+              echo "<br><br>";
+              echo "Likes: ".$row["COUNT(*)"];
               echo "<br>";
-              echo "<br>";
-
               echo "<form method=\"POST\">";
               echo "<input type=\"hidden\" name=\"liked\">";
               echo "<button class = \"btn btn-primary btn-sm\" type = \"submit\"> Like </button>";
               echo "</form>";
-              echo "<br>";
 
               echo "<a class=\"btn btn-primary btn-sm\" href='purchaseItem.php?iid=$iid&seller=".$row["email"]."' role=\"button\">Buy this item</a>";
             } else {
