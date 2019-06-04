@@ -55,22 +55,11 @@
     // }
 
     //INSERT NEW ITEM TUPLE
-    $sql = "INSERT INTO Item(iname, sellprice)
-      VALUES('$myiname', '$mysellprice')";
-
-    mysqli_query($conn, $sql);
-
-    //INSERT NEW SELL TUPLE
-    $sql = "SELECT iid FROM Item WHERE iname='$myiname'";
-
-    $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-
     $mystock = $_POST['stock'];
     $myemail = $_SESSION['email'];
-    $myiid = $row['iid'];
 
-    $sql = "INSERT INTO Sells(email, iid, stock) VALUES('$myemail','$myiid','$mystock')";
+    $sql = "INSERT INTO Item(iname, sellprice, email, stock)
+      VALUES('$myiname', '$mysellprice', '$myemail', '$mystock')";
 
     mysqli_query($conn, $sql);
 
