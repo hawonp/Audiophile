@@ -284,18 +284,11 @@ SELECT * FROM User;
 --
 SELECT * FROM City;
 
--- SELECT * FROM Address;
-
 SELECT * FROM Auction;
 
 SELECT * FROM Buys;
 
 SELECT * FROM Item_To_Subcategory;
-
--- email VARCHAR(50),
--- iid INTEGER,
--- ncontent VARCHAR(50),
--- nnumber VARCHAR(20),
 
 SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumber DESC LIMIT 2;
 
@@ -303,3 +296,14 @@ SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumbe
 
 -- CREATE TRIGGER manage_stock AFTER INSERT ON Buys
 --   FOR
+
+-- NOTIFICATION TRIGGERS
+
+-- email VARCHAR(50),
+-- iid INTEGER,
+-- ncontent VARCHAR(50),
+-- 1) your item has been Sold
+-- 2) someone liked your item
+-- 3) an item that you liked is on auction
+-- 4) someone outbid you on auction #
+-- 5) review this item!

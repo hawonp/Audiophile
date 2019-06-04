@@ -100,7 +100,7 @@
         while($row = mysqli_fetch_array($result)) {
           echo "<tr><td>".$row['iname']."</td><td>".$row['email']."</td><td>".$row['curr_bid']."</td><td>".$row['end_date']."</td>
           <td><form name=\"increase_bid\" method='POST' action=auction.php>
-          <input type=text size=30 name=\"bid_".$inc."\"/>
+          <input type=number size=30 name=\"bid_".$inc."\"/>
           <input type=submit name=\"but_".$inc."\" value=\"RACE!\"/>
           </form></td></tr>";
           ++$inc;
@@ -117,20 +117,23 @@
 
       function increaseBid($conn, $input, $textinput){
         
-        $raw_results = mysqli_query($conn, "SELECT * FROM Auction a, Item i Where a.iid = i.iid"); 
+        $raw_results = mysqli_query($conn, "SELECT * FROM Auction a, Item i Where a.iid = i.iid ORDER BY a.iid"); 
         $count = 0;
 
-        if(is_numeric($_POST['bid_0'])){
             if($input == 0){
 
                 $results = mysqli_fetch_array($raw_results);
               
-              if((int)$textinput <= $results['curr_bid']){
+              if((int)$textinput<=$results['curr_bid']){
           
-           //   $message = "The bidding value is too small!";
-                $message = "This is the one!"; 
+                $message = "The bidding value is too small!";
                 echo "<script type='text/javascript'>alert('$message');</script>";
           
+              } else if($textinput > 2147483647){
+               
+                $message = "The number is too large! Please re-enter.";
+                echo "<script type='text/javascript'>alert('$message');</script>";
+              
               } else {  
               
                   $message = "Your bidding was successful.";
@@ -145,10 +148,15 @@
                 if($count == $input){
 
                     if((int)$textinput <= $results['curr_bid']){
-                        $message = "This is the 222222222!"; 
-                        //$message = "The bidding value is too small!";
+                         
+                        $message = "The bidding value is too small!";
                         echo "<script type='text/javascript'>alert('$message');</script>";
 
+                    } else if($textinput > 2147483647){
+               
+                      $message = "The number is too large! Please re-enter.";
+                      echo "<script type='text/javascript'>alert('$message');</script>";
+                    
                     } else { 
 
                       $message = "Your bidding was successful.";
@@ -164,10 +172,6 @@
 
               }
           
-          } else {
-             $message = "Please enter numbers only!"; 
-            echo "<script type='text/javascript'>alert('$message');</script>";
-          }
           echo ('<meta http-equiv="refresh" content="0;url='.$_SERVER['HTTP_REFERER'].'">');
         } // The end of function
 
@@ -179,33 +183,19 @@
 		  } else if(isset($_POST['but_2'])){
         increaseBid($conn, 2, $_POST['bid_2']);
       } else if(isset($_POST['but_3'])){
-    
         increaseBid($conn, 3, $_POST['bid_3']);
-	    	
       }else if(isset($_POST['but_4'])){
-     
         increaseBid($conn, 4, $_POST['bid_4']);
-	    	
       }else if(isset($_POST['but_5'])){
-        
         increaseBid($conn, 5, $_POST['bid_5']);
-        
       }else if(isset($_POST['but_6'])){
-       
         increaseBid($conn, 6, $_POST['bid_6']);
-        
       }else if(isset($_POST['but_7'])){
-        
         increaseBid($conn, 7, $_POST['bid_7']);
-        
       }else if(isset($_POST['but_8'])){
-        
         increaseBid($conn, 8, $_POST['bid_8']);
-        
       }else if(isset($_POST['but_9'])){
-        
         increaseBid($conn, 9, $_POST['bid_9']);
-        
 	  }
 ?>
 </div>
