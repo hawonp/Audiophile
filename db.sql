@@ -29,6 +29,7 @@ CREATE TABLE User (
   details VARCHAR(50),
   street VARCHAR(50),
   city VARCHAR(50),
+  credit INTEGER DEFAULT 0,
   PRIMARY KEY(email),
   FOREIGN KEY(city) REFERENCES City(city)
 );
