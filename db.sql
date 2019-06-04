@@ -70,7 +70,7 @@ CREATE TABLE Item_To_Subcategory(
 CREATE TABLE Item (
   iname VARCHAR(100),
   sellprice INTEGER,
-  iid INTEGER,
+  iid INTEGER NOT NULL AUTO_INCREMENT,
   PRIMARY KEY(iid),
   FOREIGN KEY(sellprice) REFERENCES Sellprice_To_Bid(sellprice),
   FOREIGN KEY(iname) REFERENCES Item_To_Subcategory(iname)
