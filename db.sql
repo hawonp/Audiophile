@@ -78,7 +78,7 @@ CREATE TABLE Buys (
 CREATE TABLE Auction (
   email VARCHAR(50),
   iid INTEGER,
-  curr_bid INTEGER,
+  curr_bid INTEGER DEFAULT 0,
   start_date DATE,
   end_date DATE,
   PRIMARY KEY(email, iid),
@@ -279,10 +279,6 @@ INSERT INTO Review (email, iid, rating, rcontent) VALUES("sanjaylanjay@gmail.com
 -- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "b");
 -- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "a");
 
-INSERT INTO Likes(email, iid) VALUES("hawo@gmail.com", 1);
-INSERT INTO Likes(email, iid) VALUES("hawon@gmail.com", 1);
-INSERT INTO Likes(email, iid) VALUES("hawo@gmail.com", 1);
-
 -- TEST SQL QUERIES --
 SELECT * FROM User;
 --
@@ -320,9 +316,15 @@ delimiter //
 CREATE TRIGGER ItemLike AFTER INSERT ON Likes
   FOR EACH ROW
   BEGIN
+    SELECT email INTO @name FROM Item WHERE iid=NEW.iid;
+
+    SELECT COUNT(*) INTO @info FROM Likes l WHERE l.iid=NEW.iid;
+
+    IF(@info % 3 ==0) THEN
+      INSERT INTO Auction(email, iid, start_date, end_date) VALUES(@name, NEW.iid, CURDATE(), CURDATE());
+    END IF;
     -- email, iid, curr_bid, start_date, end_date
-    SELECT email INTO @info FROM Item WHERE iid=NEW.iid;
-    INSERT INTO Notification(email, iid, ncontent) VALUES(@info, NEW.iid, "Someone liked your item!");
+    INSERT INTO Notification(email, iid, ncontent) VALUES(@name, NEW.iid, "Someone liked your item!");
     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You liked this item!");
   END; //
 delimiter ;
