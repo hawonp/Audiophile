@@ -248,6 +248,34 @@ INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (260000 , 195000);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("BOSE SoundSport Pulse Wireless", "Sports earphones");
 INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (18, "BOSE SoundSport Pulse Wireless", 260000, "artlee@gmail.com", 10);
 
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (340000000, 255000000);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("MAGICO Q7 MKII", "Floorstanding speaker");
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (19, "MAGICO Q7 MKII", 340000000, "artlee@gmail.com", 5);
+
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (1200000, 900000);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("POLK AUDIO RTi A7", "Floorstanding speaker");
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (20, "POLK AUDIO RTi A7", 1200000, "artlee@gmail.com", 6);
+
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (660000, 495000);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("BOSTON ACOUSTICS A250", "Floorstanding speaker");
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (21, "BOSTON ACOUSTICS A250", 660000, "artlee@gmail.com", 3);
+
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (23500000, 17625000);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("FOCAL Diablo Utopia III Evo", "Bookshelf speaker");
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (22, "FOCAL Diablo Utopia III Evo", 23500000, "artlee@gmail.com", 3);
+
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (520000, 390000);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("JAMO C91", "Bookshelf speaker");
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (23, "JAMO C91", 520000, "artlee@gmail.com", 3);
+
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (450000, 337500);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("DENON DHT-T110", "Sound bar");
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (24, "DENON DHT-T110", 450000, "artlee@gmail.com", 3);
+
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (33000000, 24750000);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("DYNAUDIO Evidence Center", "Center speaker");
+INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (25, "DYNAUDIO Evidence Center", 33000000, "artlee@gmail.com", 3);
+
 
 --Auction 0: Item 0, user 1
 INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 1, 360000, "2019-06-03", "2019-06-13");
