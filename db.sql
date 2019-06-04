@@ -260,7 +260,7 @@ INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("artlee
 INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("artlee@gmail.com", 18, 195000, "2019-06-01", "2019-06-8");
 
 --Buy 0:
-INSERT INTO Buys (email, iid, bdate) VALUES ("lol@gmail.com", 1, "2000-03-05");
+INSERT INTO Buys (email, iid, bdate) VALUES ("artlee@gmail.com", 1, "2000-03-05");
 
 --Adding pre reviews for some
 INSERT INTO Review (email, iid, rating, rcontent) VALUES("ihmsm@gmail.com", 1, 3, "It was eh. Expected more from senn");
@@ -288,5 +288,5 @@ SELECT * FROM Item_To_Subcategory;
 
 --TRIGGERs
 
-CREATE TRIGGER manage_stock AFTER INSERT ON Buys
-  FOR 
+-- CREATE TRIGGER manage_stock AFTER INSERT ON Buys
+--   FOR

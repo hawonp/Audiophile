@@ -195,7 +195,7 @@
       <!-- retreiving data from db -->
       <?php
         $usr_email=$_SESSION['email'];
-        $sql = "SELECT i.iname, bs.bdate FROM Item i JOIN (SELECT b.iid, b.bdate FROM Buys b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
+        $sql = "SELECT i.iid, i.iname, bs.bdate FROM Item i JOIN (SELECT b.iid, b.bdate FROM Buys b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
