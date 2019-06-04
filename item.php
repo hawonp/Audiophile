@@ -42,10 +42,6 @@
     }
   ?>
 </head>
-
-<body>
-
-
 <!-- php input handlers -->
 <?php
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -72,9 +68,12 @@
         echo "<script type='text/javascript'>alert('$message');</script>";
       }
     }
-    header("Refresh:0");
+    $result->close();
+    $conn->close();
   }
 ?>
+
+<body>
 
   <!-- Navigation -->
   <div class="topnav">
