@@ -372,3 +372,19 @@ CREATE TRIGGER ItemBid AFTER UPDATE ON Auction
   END; //
 
 delimiter ;
+
+delimiter //
+CREATE TRIGGER ItemInAuction AFTER INSERT ON Auction
+  FOR EACH ROW
+  BEGIN
+    SELECT COUNT(*) INTO @auctionNum FROM Auction a WHERE a.iid=NEW.iid;
+    IF(@auctionNum > 10) THEN
+      -- ROLLBACK;
+      DELETE FROM Auction WHERE iid=NEW.iid AND email=NEW.email AND curr_bid = 0;
+      UPDATE Item SET Item.stock = Item.stock+1 WHERE iid=NEW.iid;
+    END IF;
+
+    INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You are now the top bidder!");
+  END; //
+
+delimiter ;

@@ -123,7 +123,7 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="auction.php">Auctions</a>
           </li>
           <li class="nav-item">
@@ -171,6 +171,8 @@
           if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             if ($row["stock"] > 0) {
+              echo "Seller: ".$row["email"];
+              echo "<br><br>";
               echo "Stock: ".$row["stock"];
               echo "<br><br>";
               echo "Likes: ".$row["COUNT(*)"];
