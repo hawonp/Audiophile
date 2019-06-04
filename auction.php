@@ -94,11 +94,11 @@
 
       if (mysqli_num_rows($result) > 0) {
 
-        echo "<table class = \"table table-hover\"><thread><tr><th>Item name</th> <th>Current bidder</th> <th>Current bid price</th><th>Auction end date</th><th>Bidding Amount Entry</th></tr></thread>";
+        echo "<table class = \"table table-hover\"><thread><tr><th>Item name</th> <th>Current bidder</th> <th>Current bid price (Won)</th><th>Auction end date</th><th>Bidding Amount Entry</th></tr></thread>";
         echo "<tbody>";
 
         while($row = mysqli_fetch_array($result)) {
-          echo "<tr><td>".$row['iname']."</td><td>".$row['email']."</td><td>".$row['curr_bid']."</td><td>".$row['end_date']."</td>
+          echo "<tr><td>".$row['iname']."</td><td>".$row[0]."</td><td>".$row['curr_bid']."</td><td>".$row['end_date']."</td>
           <td><form name=\"increase_bid\" method='POST' action=auction.php>
           <input type=number size=30 name=\"bid_".$inc."\"/>
           <input type=submit name=\"but_".$inc."\" value=\"RACE!\"/>
@@ -129,15 +129,16 @@
                 $message = "The bidding value is too small!";
                 echo "<script type='text/javascript'>alert('$message');</script>";
           
-              } else if($textinput > 2147483647){
+              } else if($textinput >= 2147483647){
                
                 $message = "The number is too large! Please re-enter.";
                 echo "<script type='text/javascript'>alert('$message');</script>";
               
               } else {  
               
-                  $message = "Your bidding was successful.";
-			            mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput.", email = \"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
+                  $message = "Your bidding was successful. ".$result['email'];
+                  mysqli_query($conn, "UPDATE Auction SET curr_bid=".(int)$textinput." WHERE iid = ".$results["iid"]);
+                  mysqli_query($conn, "UPDATE Auction SET email=\"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
                   echo "<script type='text/javascript'>alert('$message');</script>";
 
               } 
@@ -152,7 +153,7 @@
                         $message = "The bidding value is too small!";
                         echo "<script type='text/javascript'>alert('$message');</script>";
 
-                    } else if($textinput > 2147483647){
+                    } else if($textinput >= 2147483647){
                
                       $message = "The number is too large! Please re-enter.";
                       echo "<script type='text/javascript'>alert('$message');</script>";
@@ -160,7 +161,8 @@
                     } else { 
 
                       $message = "Your bidding was successful.";
-				              mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput.", email = \"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
+                      mysqli_query($conn, "UPDATE Auction SET curr_bid=".(int)$textinput." WHERE iid = ".$results["iid"]);
+                      mysqli_query($conn, "UPDATE Auction SET email=\"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
                       echo "<script type='text/javascript'>alert('$message');</script>";
 
                     } 
@@ -197,6 +199,8 @@
       }else if(isset($_POST['but_9'])){
         increaseBid($conn, 9, $_POST['bid_9']);
 	  }
+
+    mysqli_close($conn);
 ?>
 </div>
 
