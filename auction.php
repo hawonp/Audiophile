@@ -128,13 +128,13 @@
           if((int)$textinput<= $results['curr_bid']){
           
               $message = "The bidding value is too small!";
-              echo "<<script type='text/javascript'>alert('$message');</script>>";
+              echo "<script type='text/javascript'>alert('$message');</script>";
           
           } else {  
 
               $message = "Your bidding was successful.";
               mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput.", email = \"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
-              echo "<<script type='text/javascript'>alert('$message');</script>>";
+              echo "<script type='text/javascript'>alert('$message');</script>";
           }
         } else {
 
@@ -145,13 +145,13 @@
               if((int)$textinput<= $results['curr_bid']){
 
                 $message = "The bidding value is too small!";
-                echo "<<script type='text/javascript'>alert('$message');</script>>";
+                echo "<script type='text/javascript'>alert('$message');</script>";
 
               } else { 
 
                 $message = "Your bidding was successful.";
                 mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput.", email = \"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
-                echo "<<script type='text/javascript'>alert('$message');</script>>";
+                echo "<script type='text/javascript'>alert('$message');</script>";
 
               } 
             }
