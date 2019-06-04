@@ -68,8 +68,6 @@
         echo "<script type='text/javascript'>alert('$message');</script>";
       }
     }
-    $result->close();
-    $conn->close();
   }
 ?>
 

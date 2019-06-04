@@ -18,55 +18,6 @@
   $myemail = $_SESSION['email'];
   $iid = $_GET['iid'];
   $seller = $_GET['seller'];
-
-  // INSERT NEW ITEM INTO RESPECTIVE TABLES
-  if($_SERVER["REQUEST_METHOD"] == "POST") {
-    // INSERT NEW Sellprice_To_Bid TUPLE
-    // WILL REJECT ACTION IF DUPLICATE
-    $mysellprice = $_POST['sellprice'];
-    $myminbid = $mysellprice * 0.75;
-
-    $sql = "INSERT INTO Sellprice_To_Bid(sellprice, minbid)
-      VALUES('$mysellprice' , '$myminbid')";
-
-    mysqli_query($conn, $sql);
-
-    // INSERT NEW Item_To_Category TUPLE
-    // WILL REJECT ACTION IF DUPLICATE
-    $myiname = $_POST['item_name'];
-    $mycategory = $_POST['category'];
-
-    $sql = "INSERT INTO Item_To_Category(iname, category)
-      VALUES('$myiname', '$mycategory')";
-
-    mysqli_query($conn, $sql);
-
-    // INSERT NEW Item tuple
-    $myitemid = mt_rand();
-    $mystock = $_POST['stock'];
-
-    $sql = "INSERT INTO Item(iid, iname, sellprice)
-      VALUES('$myitemid', '$myiname', '$mysellprice')";
-
-    mysqli_query($conn, $sql);
-
-    // INSERT NEW SELLS TUPLE
-    $myemail = $_SESSION['email'];
-
-    $sql = "INSERT INTO Sells(email, iid, stock)
-      VALUES('$myemail', '$myitemid', '$mystock')";
-
-    if(mysqli_query($conn, $sql) == true){
-      // echo "added sell tuple success!";
-    } else {
-      echo "cannot add new item<br>";
-      echo mysqli_error($conn);
-    }
-
-    mysqli_close($conn);
-    header("Location:item.php?iid=$iid");
-  }
-
 ?>
 
 <!DOCTYPE html>
@@ -136,23 +87,32 @@
           
           if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $mycountry = $row["country"];
-            $myaddress = $row["details"]. " " .$row["street"]. " " .$row["city"]. " " .$row["country"];
-            $mycredit = $row["credit"];
+            $theircountry = $row["country"];
+            $theiname = $row["iname"];
+            $subtotal = $row["sellprice"];
           
           } else {
               echo "Somethings wrong...";
           }
+          $shippingfee = 0;
+          if ($mycountry != $theircountry) {
+            $shippingfee = $subtotal * 0.1;
+          }
+          $total = $shippingfee + $subtotal;
 
           //Print the stuff
-          echo "Item name here and price here";
-          echo "Shipping address: " .$myaddress;
-          echo "subtotal";
-          echo "Shipping Fee";
-          echo "Total";
-
-          echo "place order";
+          echo "<table align='center' class='table-dark table-striped'><tr><th></th> <th></th></tr>";
+          echo "<tr><td style='text-align: left'>Item: </td> <td style='text-align: right'>$theiname</td></tr>";
+          echo "<tr><td style='text-align: left'>Shipping address: </td> <td style='text-align: right'>$myaddress</td></tr>";
+          echo "<tr><td style='text-align: left'>Subtotal: </td> <td style='text-align: right'>$subtotal ₩</td></tr>";
+          echo "<tr><td style='text-align: left'>Shipping + tax fee: </td> <td style='text-align: right'>$shippingfee ₩</td></tr>";
+          echo "<tr><td style='text-align: left'>Total: </td> <td style='text-align: right'>$total ₩</td></tr>";
+          echo "</table>";
         ?>
+        <br>
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+          <input type="submit" class="btnSubmit" name = "submit" value="Submit" />
+        </form>
       </div>
     <!-- </div> -->
   </div>
