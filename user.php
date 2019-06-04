@@ -91,6 +91,7 @@
     <p class="lead"> Welcome to your Profile!</p>
     <hr class="my-4">
 
+
    <p class = "text-primary"> Email: <?php echo $myemail; ?> </p>
     <p class = "text-info"> Phone Number: <?php echo $mypnum; ?> </p>
   </div>
