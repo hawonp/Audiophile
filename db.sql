@@ -288,5 +288,5 @@ SELECT * FROM Item_To_Subcategory;
 
 --TRIGGERs
 
--- CREATE TRIGGER manage_stock AFTER INSERT ON Buys
---   FOR
+CREATE TRIGGER manage_stock AFTER INSERT ON Buys
+  FOR
