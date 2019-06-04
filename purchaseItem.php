@@ -53,6 +53,17 @@
     $message = "Your order has been placed";
     echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
   }
+
+  //Checking if the user has enough monnaie
+  $sql = "SELECT u.credit, j1.sellprice FROM User u JOIN (SELECT i.sellprice FROM Item i WHERE i.iid=$iid) AS j1 WHERE u.email='$myemail'";
+  $result = $conn->query($sql);
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if ($row["sellprice"] > $row["credit"]) {
+      $message = "You have insufficient balance.";
+      echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
+    }
+  }
 ?>
 
 <body>
