@@ -44,7 +44,6 @@
 
   <link href="./css/styles.css" rel="stylesheet">
   <link href="./css/user.css" rel="stylesheet">
-  <link href="./css/button.css" rel="stylesheet">
 
   <title> Audiophile </title>
 
@@ -53,6 +52,8 @@
 
   <!-- Custom styles for this template -->
   <link href="css/shop-homepage.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -96,7 +97,18 @@
 
   <div class ="container-fluid">
     <div class="row">
-      <div class="col col-lg-6">
+      <div class="col col-lg-4">
+        <h2> Notifications! </h2>
+        <?php
+          $usr_email=$_SESSION['email'];
+          $sql = "SELECT ncontent FROM Notification WHERE email='$usr_email' ORDER BY nnumber DESC LIMIT 2;";
+          $result = $conn->query($sql);
+          while($row = $result->fetch_assoc()){
+            echo "<h6><i>".$row['ncontent']."</i></h6>";
+          }
+        ?>
+      </div>
+      <div class="col col-lg-4">
         <h2> Your Balance! </h2>
         <?php
           $usr_email=$_SESSION['email'];
@@ -106,7 +118,7 @@
           echo "<h4><i>".$row['credit']." WON </i></h4>";
         ?>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-4">
         <h5> Recharge Your Balance? </h5>
         <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
           <div class="form-group">

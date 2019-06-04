@@ -173,6 +173,7 @@
               echo "<input type=\"hidden\" name=\"liked\">";
               echo "<button class = \"btn btn-primary btn-sm\" type = \"submit\"> Like </button>";
               echo "</form>";
+              echo "<br>";
 
               echo "<a class=\"btn btn-primary btn-sm\" href='purchaseItem.php?iid=$iid&seller=".$row["email"]."' role=\"button\">Buy this item</a>";
             } else {
