@@ -86,15 +86,15 @@ CREATE TABLE Auction (
   FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
 );
 
--- CREATE TABLE Notification (
---   email VARCHAR(50),
---   iid INTEGER,
---   ncontent VARCHAR(50),
---   nnumber VARCHAR(20),
---   PRIMARY KEY(email, iid),
---   FOREIGN KEY(email) REFERENCES User(email),
---   FOREIGN KEY(iid) REFERENCES Item(iid)
--- );
+CREATE TABLE Notification (
+  email VARCHAR(50),
+  iid INTEGER,
+  ncontent VARCHAR(50),
+  nnumber INTEGER NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY(nnumber),
+  FOREIGN KEY(email) REFERENCES User(email),
+  FOREIGN KEY(iid) REFERENCES Item(iid)
+);
 
 CREATE TABLE Discussion (
   email VARCHAR(50),
@@ -273,6 +273,12 @@ INSERT INTO Review (email, iid, rating, rcontent) VALUES("lol@gmail.com", 10, 4,
 INSERT INTO Review (email, iid, rating, rcontent) VALUES("hawonp@gmail.com", 10, 3, "the ting goes skrrra pap pap ka ka ka raw sauce no ketchup 2 + 2 = 4, - 1 = 3 quick mafs hence you get a 3");
 INSERT INTO Review (email, iid, rating, rcontent) VALUES("sanjaylanjay@gmail.com", 10, 2, "Me no like");
 
+
+--add pre notification for art lee
+INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "c");
+INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "b");
+INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "a");
+
 -- TEST SQL QUERIES --
 SELECT * FROM User;
 --
@@ -285,6 +291,13 @@ SELECT * FROM Auction;
 SELECT * FROM Buys;
 
 SELECT * FROM Item_To_Subcategory;
+
+-- email VARCHAR(50),
+-- iid INTEGER,
+-- ncontent VARCHAR(50),
+-- nnumber VARCHAR(20),
+
+SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumber DESC LIMIT 2;
 
 --TRIGGERs
 
