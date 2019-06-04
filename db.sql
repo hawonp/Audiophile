@@ -292,18 +292,32 @@ SELECT * FROM Item_To_Subcategory;
 
 SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumber DESC LIMIT 2;
 
+--For testing purposes
+UPDATE User SET credit=100000000 WHERE email='hawonp@gmail.com';
+
 -- NOTIFICATION TRIGGERS
 -- 2) someone liked your item
 -- 3) an item that you liked is on auction
 -- 4) someone outbid you on auction #
 
 --TRIGGERs
+
+--On Buy
 delimiter //
 CREATE TRIGGER ItemSold AFTER INSERT ON Buys
   FOR EACH ROW
   BEGIN
     UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
+    SELECT c.country INTO @heycs FROM City c INNER JOIN (SELECT u.city FROM User u INNER JOIN (SELECT i.email FROM item i WHERE i.iid=NEW.iid) AS j1 ON j1.email=u.email) AS j2 ON c.city=j2.city;
+    SELECT c.country INTO @heycb FROM City c INNER JOIN (SELECT u.city FROM User u WHERE u.email=NEW.email) AS j1 ON j1.city=c.city;
+    SELECT sellprice INTO @heys FROM Item WHERE iid=NEW.iid;
+    IF (@heycs != @heycb) THEN
+      UPDATE User SET credit = credit - (@heys * 1.1) WHERE email=NEW.email;
+    ELSE
+      UPDATE User SET credit = credit - @heys WHERE email=NEW.email;
+    END iF;
     SELECT email INTO @hey FROM Item WHERE iid=NEW.iid;
+    UPDATE User SET credit = credit + @heys WHERE email=@hey;
     INSERT INTO Notification(email, iid, ncontent) VALUES(@hey, NEW.iid, "Your Item Has Been Sold!");
     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You bought this item! Leave a review!");
   END; //
