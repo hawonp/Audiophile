@@ -124,7 +124,7 @@
             echo "<table align='center'><tr><th class='itemSellersContent'>Seller</th> <th class='itemSellersContent'>Stock</th></tr>";
           // output data of each row
             while($row = $result->fetch_assoc()) {
-            echo "<tr><td class='itemSellersContent'><a href='purchaseItem.php?iid=$iid&seller=".$row["email"]."'>".$row["email"]."dsadsa</a> <td class='itemSellersContent'>".$row["stock"]."</td></tr>";
+            echo "<tr><td class='itemSellersContent'><a href='purchaseItem.php?iid=$iid&seller=".$row["email"]."'>".$row["email"]."</a> <td class='itemSellersContent'>".$row["stock"]."</td></tr>";
             }
             echo "</table>";
           } else {

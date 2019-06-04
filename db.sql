@@ -251,6 +251,22 @@ INSERT INTO Subcategory_To_Category (subcategory, category) VALUES ("Speaker cab
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("NAIM NAC A5", "Speaker cable");
 INSERT INTO Item (iid, iname, sellprice) VALUES (14, "NAIM NAC A5", 60000);
 
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (450000, 337500);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("BOSE Quiet Comfort 35 II", "Noise cancelling headphones");
+INSERT INTO Item (iid, iname, sellprice) VALUES (15, "BOSE Quiet Comfort 35 II", 450000);
+
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (200000, 150000);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("AUDIO TECHNICA ATH-ANC700BT", "Noise cancelling headphones");
+INSERT INTO Item (iid, iname, sellprice) VALUES (16, "AUDIO TECHNICA ATH-ANC700BT", 200000);
+
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (230000, 172500);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("BEYERDYNAMIC DT-770 Pro", "Studio monitor headphones");
+INSERT INTO Item (iid, iname, sellprice) VALUES (17, "BEYERDYNAMIC DT-770 Pro", 230000);
+
+INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (260000 , 195000);
+INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("BOSE SoundSport Pulse Wireless", "Sports earphones");
+INSERT INTO Item (iid, iname, sellprice) VALUES (18, "BOSE SoundSport Pulse Wireless", 260000);
+
 --User 1 selling Item 0
 INSERT INTO Sells (email, iid, stock) VALUES ("hawonp@gmail.com", 1, 5);
 
