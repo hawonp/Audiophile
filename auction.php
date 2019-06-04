@@ -53,7 +53,9 @@
 
   <div class="selling">
     <?php
-        
+      
+      
+    
       $result = mysqli_query($conn, "SELECT * FROM Auction a, Item i WHERE a.iid = i.iid");
       $numRow = mysqli_num_rows($result);
       $inc = 0;
@@ -89,9 +91,11 @@
           mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput." WHERE iid = ".$results["iid"]);
         } else {
           while($results = mysqli_fetch_array($raw_results)){
+            
             if($count == $input){
               mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput." WHERE iid = ".$results["iid"]);
             }
+            ++$count;
           }
         }
 
@@ -120,7 +124,6 @@
         increaseBid($conn, 9, $_POST['bid_9']);
       }
 
-      
     ?>
 
   </div>
