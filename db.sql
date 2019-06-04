@@ -295,11 +295,7 @@ SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumbe
 --For testing purposes
 UPDATE User SET credit=100000000 WHERE email='hawonp@gmail.com';
 
--- NOTIFICATION TRIGGERS
--- 3) an item that you liked is on auction
-
 --TRIGGERs
-
 --On Buy
 delimiter //
 CREATE TRIGGER ItemSold AFTER INSERT ON Buys
@@ -326,11 +322,13 @@ CREATE TRIGGER ItemLike AFTER INSERT ON Likes
   FOR EACH ROW
   BEGIN
     SELECT email INTO @name FROM Item WHERE iid=NEW.iid;
-
     SELECT COUNT(*) INTO @info FROM Likes l WHERE l.iid=NEW.iid;
+    SELECT stock INTO @stock FROM Item WHERE iid=NEW.iid;
 
-    IF(@info % 3 ==0) THEN
+    IF(@stock > 0 AND @info % 1 = 0) THEN
+      UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
       INSERT INTO Auction(email, iid, start_date, end_date) VALUES(@name, NEW.iid, CURDATE(), CURDATE());
+      INSERT INTO Notification(email, iid, ncontent) VALUES(@name, NEW.iid, "Your item is on auction!");
     END IF;
     -- email, iid, curr_bid, start_date, end_date
     INSERT INTO Notification(email, iid, ncontent) VALUES(@name, NEW.iid, "Someone liked your item!");
