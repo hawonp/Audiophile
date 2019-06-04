@@ -49,7 +49,9 @@
     if (!$result) echo "INSERT failed: $query<br>" .
       $conn->error . "<br><br>";
 
-    header("Location:item.php?iid=$iid");
+    //Alert and return to item page
+    $message = "Your order has been placed";
+    echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
   }
 ?>
 
