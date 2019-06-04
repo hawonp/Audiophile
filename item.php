@@ -177,7 +177,7 @@
 
               echo "<a class=\"btn btn-primary btn-sm\" href='purchaseItem.php?iid=$iid&seller=".$row["email"]."' role=\"button\">Buy this item</a>";
             } else {
-              echo "Out of stock";
+              echo "<em>Out of stock</em>";
             }
           } else {
             echo "Something went wrong";

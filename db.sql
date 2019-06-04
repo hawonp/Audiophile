@@ -300,6 +300,11 @@ SELECT * FROM Item_To_Subcategory;
 SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumber DESC LIMIT 2;
 
 --TRIGGERs
+delimiter //
+CREATE TRIGGER nbuy AFTER INSERT ON Buys
+  FOR EACH ROW
+  BEGIN
+    UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
+  END; //
+delimiter ;
 
-CREATE TRIGGER manage_stock AFTER INSERT ON Buys
-  FOR
