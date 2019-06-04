@@ -28,46 +28,53 @@
 
     mysqli_query($conn, $sql);
 
-    // INSERT NEW Item_To_Category TUPLE
+    // INSERT NEW Subcategory_To_Category TUPLE
     // WILL REJECT ACTION IF DUPLICATE
-    $myiname = $_POST['item_name'];
     $mycategory = $_POST['category'];
+    $mysubcategory = $_POST['sub_category'];
 
-    $sql = "INSERT INTO Item_To_Category(iname, category)
-      VALUES('$myiname', '$mycategory')";
-
-    mysqli_query($conn, $sql);
-
-    // INSERT NEW Item tuple
-    $myitemid = mt_rand();
-    $mystock = $_POST['stock'];
-
-    $sql = "INSERT INTO Item(iid, iname, sellprice)
-      VALUES('$myitemid', '$myiname', '$mysellprice')";
-
-    mysqli_query($conn, $sql);
-
-    // if(mysqli_query($conn, $sql) == true){
-    //
-    // } else {
-    //   echo "cannot add new item<br>";
-    //   echo mysqli_error($conn);
-    // }
-    // mysqli_query($conn, $sql);
-
-    // INSERT NEW SELLS TUPLE
-    $myemail = $_SESSION['email'];
-
-    $sql = "INSERT INTO Sells(email, iid, stock)
-      VALUES('$myemail', '$myitemid', '$mystock')";
-
-    if(mysqli_query($conn, $sql) == true){
-      // echo "added sell tuple success!";
-    } else {
-      echo "cannot add new item<br>";
-      echo mysqli_error($conn);
+    if($mycategory == ""){
+      $message = "Please Select a Category!";
+      echo "<script type='text/javascript'>alert('$message');</script>";
     }
 
+    $sql = "INSERT INTO Subcategory_To_Category(subcategory, category)
+      VALUES('$mysubcategory','$mycategory')";
+
+    mysqli_query($conn, $sql);
+
+    // INSERT NEW Item_To_Subcategory TUPLE
+    // WILL REJECT ACTION IF DUPLICATE
+    $myiname = $_POST['item_name'];
+    $sql = "INSERT INTO Item_To_Subcategory(iname, subcategory)
+      VALUES('$myiname', '$mysubcategory')";
+
+    mysqli_query($conn, $sql);
+    // if(mysqli_query($conn, $sql) == false){
+    //   echo mysqli_error($conn);
+    // }
+
+    //INSERT NEW ITEM TUPLE
+    $sql = "INSERT INTO Item(iname, sellprice)
+      VALUES('$myiname', '$mysellprice')";
+
+    mysqli_query($conn, $sql);
+
+    //INSERT NEW SELL TUPLE
+    $sql = "SELECT iid FROM Item WHERE iname='$myiname'";
+
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+
+    $mystock = $_POST['stock'];
+    $myemail = $_SESSION['email'];
+    $myiid = $row['iid'];
+
+    $sql = "INSERT INTO Sells(email, iid, stock) VALUES('$myemail','$myiid','$mystock')";
+
+    mysqli_query($conn, $sql);
+
+    // echo "success!";
     mysqli_close($conn);
 
     header("Location:user.php");
@@ -113,15 +120,29 @@
             <input type="number" class="form-control" name = "sellprice" placeholder="Selling Price *" min="1" max="20000" required />
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" name = "category" placeholder="Category *" required />
-          </div>
-          <div class="form-group">
             <input type="number" class="form-control" name = "stock" placeholder="Stock *"  min="1" max="100"required />
           </div>
-
+          <div class="form-group">
+            <select class = "form-control" name="category" required>
+              <option value="">--Please choose an Category--</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Amplifiers">Amplifiers</option>
+              <option value="Earphones">Earphones</option>
+              <option value="Headphones">Headphones</option>
+              <option value="Media_Players">Media Players</option>
+              <option value="Speakers">Speakers</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name = "sub_category" placeholder="Subcategory  *" required />
+          </div>
           <br>
           <div class="form-group">
-            <input type="submit" class="btnSubmit" value="Submit" />
+            <input type="submit" class="btnSubmit" name = "submit" value="Submit" />
+          </div>
+          <div class="form-group">
+            <br>
+            <input type="button" class="btnSubmit" value="Return to previous page" onClick="javascript:history.go(-1)" />
           </div>
         </form>
 
@@ -130,10 +151,9 @@
   </div>
 
   <!-- FOOTER -->
-  <div class="footer">
+  <!-- <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
-  </div>
-
+  </div> -->
 
 </body>
 
