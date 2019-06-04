@@ -307,3 +307,12 @@ SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumbe
 -- 3) an item that you liked is on auction
 -- 4) someone outbid you on auction #
 -- 5) review this item!
+
+--TRIGGERs
+delimiter //
+CREATE TRIGGER nbuy AFTER INSERT ON Buys
+  FOR EACH ROW
+  BEGIN
+    UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
+  END; //
+delimiter ;
