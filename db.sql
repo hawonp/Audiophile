@@ -66,10 +66,11 @@ CREATE TABLE Item (
 );
 
 CREATE TABLE Buys (
+  bid INTEGER NOT NULL AUTO_INCREMENT,
   email VARCHAR(50),
   iid INTEGER,
   bdate DATE,
-  PRIMARY KEY(email, iid),
+  PRIMARY KEY(bid),
   FOREIGN KEY(email) REFERENCES User(email),
   FOREIGN KEY(iid) REFERENCES Item(iid)
 );
@@ -286,3 +287,5 @@ SELECT * FROM Auction;
 SELECT * FROM Buys;
 
 SELECT * FROM Item_To_Subcategory;
+
+--TRIGGERs

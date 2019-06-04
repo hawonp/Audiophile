@@ -44,16 +44,14 @@
 <?php
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //posting discussions
-    if (empty($_POST["discussion"])) {
-      $discussion = "";
-    } else {
-      $discussion = $_POST["discussion"];
-      $query = "INSERT INTO Discussion (email, iid, comment_date, comment) VALUES" ."('".$_SESSION['email']."', $iid, CURDATE(), '$discussion')";
-      $result   = $conn->query($query);
-      if (!$result) echo "INSERT failed: $query<br>" .
-        $conn->error . "<br><br>";
-    }
+    $query = "INSERT INTO Buys (email, iid, bdate) VALUES ('$myemail', $iid, CURDATE())";
+    $result   = $conn->query($query);
+    if (!$result) echo "INSERT failed: $query<br>" .
+      $conn->error . "<br><br>";
 
+    //Alert and return to item page
+    $message = "Your order has been placed";
+    echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
   }
 ?>
 
@@ -108,7 +106,7 @@
           echo "</table>";
         ?>
         <br>
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <form method="POST" action="<?php echo "purchaseItem.php?iid=$iid&seller=$seller";?>">
           <input type="submit" class="btnSubmit" name = "submit" value="Submit" />
         </form>
       </div>
