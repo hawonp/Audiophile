@@ -54,7 +54,6 @@
         $conn->error . "<br><br>";
     }
 
-    mysqli_close($conn);
   }
 ?>
 

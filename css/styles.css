@@ -113,7 +113,7 @@ tr, th, td{
 
 .itemDesc {
   float: left;
-  width: 70%;
+  width: 60%;
   margin-left: 2%;
 }
 
@@ -153,7 +153,8 @@ tr, th, td{
 .discussionContent {
   margin: auto;
   padding: 20px;
-  border: 1px;
+  border: 0px;
+  border: none;
   text-align: left;
   width: 100%;
 }
