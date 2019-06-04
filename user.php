@@ -126,18 +126,19 @@
     <div class = "selling">
       <?php
         $usr_email=$_SESSION['email'];
-        $sql = "SELECT i.iname, bs.stock FROM Item i JOIN (SELECT b.iid, b.stock FROM Sells b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
+        $sql = "SELECT i.iname, i.iid, i.sellprice, i.stock FROM Item i WHERE i.email='$usr_email'";
+        // $sql = "SELECT i.iname, bs.stock FROM Item i JOIN (SELECT b.iid, b.stock FROM Sells b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
           // echo "<div class = \"container\">"
           echo "<div class = \"container\">";
-          echo "<table class = \"table table-hover\" width=\"50%\"> <thread> <tr> <th align=\"left\">Item name</th> <th align=\"right\">Stock</th></tr></thread>";
+          echo "<table class = \"table table-hover\" width=\"50%\"> <thread> <tr> <th align=\"left\">ID</th> <th> Name </th>  <th> Price </th> <th>Stock</th></tr></thread>";
 
           // output data of each row
           echo "<tbody>";
           while($row = $result->fetch_assoc()) {
-            echo "<tr><td>".$row["iname"]."</td><td align=\"right\">".$row["stock"]."</td></tr>";
+            echo "<tr><td>".$row["iid"]."</td><td>".$row["iname"]."</td><td>".$row["sellprice"]." won</td><td>".$row["stock"]."</td></tr>";
           }
           echo "</tbody>";
           echo "</table>";
