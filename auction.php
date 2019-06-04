@@ -188,6 +188,7 @@
         increaseBid($conn, 9, $_POST['bid_9']);
       }
 
+      
     ?>
 
   </div>
