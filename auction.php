@@ -91,6 +91,11 @@
 
   <div class="container-fluid selling">
     <?php
+<<<<<<< HEAD
+      
+      
+    
+=======
 
       function increaseBid($conn, $input, $textinput){
 
@@ -109,6 +114,7 @@
         }
       }
 
+>>>>>>> 5e9d25c164010cdb5cd7da25a2d6fae725c0b17b
       $result = mysqli_query($conn, "SELECT * FROM Auction a, Item i WHERE a.iid = i.iid");
       $numRow = mysqli_num_rows($result);
       $inc = 0;
@@ -133,6 +139,27 @@
 
         echo "0 results";
 
+      }
+
+      function increaseBid($conn, $input, $textinput){
+       
+        $raw_results = mysqli_query($conn, "SELECT * FROM Auction a, Item i Where a.iid = i.iid"); 
+        $count = 0;
+
+        if($input == 0){
+          $results = mysqli_fetch_array($raw_results);
+          mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput." WHERE iid = ".$results["iid"]);
+        } else {
+          while($results = mysqli_fetch_array($raw_results)){
+            
+            if($count == $input){
+              mysqli_query($conn, "UPDATE Auction SET curr_bid = ".(int)$textinput." WHERE iid = ".$results["iid"]);
+            }
+            ++$count;
+          }
+        }
+
+        header("Refresh:0");
       }
 
       if(isset($_POST['but_0'])){
