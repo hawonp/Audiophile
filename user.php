@@ -26,7 +26,7 @@
 
     if(isset($_POST['balance'])){
       $mynum = $_POST['balance'];
-      $sql = "UPDATE User SET credit = '$mynum' WHERE email='$myemail'";
+      $sql = "UPDATE User SET credit = credit + '$mynum' WHERE email='$myemail'";
       mysqli_query($conn, $sql);
     }
 }
