@@ -367,7 +367,7 @@ CREATE TRIGGER ItemLike AFTER INSERT ON Likes
     SELECT COUNT(*) INTO @info FROM Likes l WHERE l.iid=NEW.iid;
     SELECT stock INTO @stock FROM Item WHERE iid=NEW.iid;
 
-    IF(@stock > 0 AND @info % 2 = 0) THEN
+    IF(@stock > 0 AND @info % 3 = 0) THEN
       -- Decrease item stock by 1
       UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
 
