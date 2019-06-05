@@ -323,42 +323,58 @@ SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumbe
 UPDATE User SET credit=100000000 WHERE email='hawonp@gmail.com';
 
 --TRIGGERs
---On Buy
+
+-- Activates after the User purchases an Item
 delimiter //
 CREATE TRIGGER ItemSold AFTER INSERT ON Buys
   FOR EACH ROW
   BEGIN
+    -- Decrease Item Stock
     UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
-    SELECT c.country INTO @sellerCountry FROM City c INNER JOIN (SELECT u.city FROM User u INNER JOIN (SELECT i.email FROM item i WHERE i.iid=NEW.iid) AS j1 ON j1.email=u.email) AS j2 ON c.city=j2.city;
+
+    -- Transaction Fees (with shipping)
+    SELECT c.country INTO @sellerCountry FROM City c INNER JOIN (SELECT u.city FROM User u INNER JOIN
+      (SELECT i.email FROM item i WHERE i.iid=NEW.iid) AS j1 ON j1.email=u.email) AS j2 ON c.city=j2.city;
     SELECT c.country INTO @buyerCountry FROM City c INNER JOIN (SELECT u.city FROM User u WHERE u.email=NEW.email) AS j1 ON j1.city=c.city;
     SELECT sellprice INTO @sellprice FROM Item WHERE iid=NEW.iid;
+
+    -- Decrease credits from Buyer
     IF (@sellerCountry != @buyerCountry) THEN
       UPDATE User SET credit = credit - (@sellprice * 1.1) WHERE email=NEW.email;
     ELSE
       UPDATE User SET credit = credit - @sellprice WHERE email=NEW.email;
     END iF;
-    SELECT email INTO @email FROM Item WHERE iid=NEW.iid;
+
+    -- Increase credits of Seller
     UPDATE User SET credit = credit + @sellprice WHERE email=@hey;
+
+    -- Add Notifications
+    SELECT email INTO @email FROM Item WHERE iid=NEW.iid;
     INSERT INTO Notification(email, iid, ncontent) VALUES(@email, NEW.iid, "Your Item Has Been Sold!");
     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You bought this item! Leave a review!");
   END; //
 delimiter ;
 
+-- Activates when User Likes an Item
 delimiter //
 CREATE TRIGGER ItemLike AFTER INSERT ON Likes
   FOR EACH ROW
   BEGIN
+
+    -- Insert an item into Auction every 3rd like
     SELECT email INTO @name FROM Item WHERE iid=NEW.iid;
     SELECT COUNT(*) INTO @info FROM Likes l WHERE l.iid=NEW.iid;
     SELECT stock INTO @stock FROM Item WHERE iid=NEW.iid;
 
-    IF(@stock > 0 AND @info % 1 = 0) THEN
+    IF(@stock > 0 AND @info % 2 = 0) THEN
+      -- Decrease item stock by 1
       UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
       SELECT s.minbid INTO @minbid FROM Sellprice_To_Bid s, Item i WHERE i.iid=NEW.iid AND s.sellprice=i.sellprice;
       INSERT INTO Auction(email, iid, curr_bid, start_date, end_date) VALUES(@name, NEW.iid, @minbid, CURDATE(), CURDATE());
       INSERT INTO Notification(email, iid, ncontent) VALUES(@name, NEW.iid, "Your item is on auction!");
     END IF;
-    -- email, iid, curr_bid, start_date, end_date
+
+    -- Notify users about their likes
     INSERT INTO Notification(email, iid, ncontent) VALUES(@name, NEW.iid, "Someone liked your item!");
     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You liked this item!");
   END; //
@@ -373,17 +389,21 @@ CREATE TRIGGER ItemBid AFTER UPDATE ON Auction
 
 delimiter ;
 
+-- Activates on New Auction
 delimiter //
 CREATE TRIGGER ItemInAuction AFTER INSERT ON Auction
   FOR EACH ROW
   BEGIN
+    -- Get current number of auctions
     SELECT COUNT(*) INTO @auctionNum FROM Auction a WHERE a.iid=NEW.iid;
+
+    -- If number of auctions exceeds 10
     IF(@auctionNum > 10) THEN
-      -- ROLLBACK;
+      -- ROLLBACK insert on Auction;
       DELETE FROM Auction WHERE iid=NEW.iid AND email=NEW.email AND curr_bid = 0;
       UPDATE Item SET Item.stock = Item.stock+1 WHERE iid=NEW.iid;
-    END IF;
-    INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You are now the top bidder!");
-  END; //
+      INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "Auction Limit Reached :(");
 
+    END IF;
+  END; //
 delimiter ;
