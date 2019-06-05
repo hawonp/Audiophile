@@ -268,7 +268,6 @@ INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (520000, 390000);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("JAMO C91", "Bookshelf speaker");
 INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (23, "JAMO C91", 520000, "artlee@gmail.com", 3);
 
--- INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (450000, 337500);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("DENON DHT-T110", "Sound bar");
 INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (24, "DENON DHT-T110", 450000, "artlee@gmail.com", 3);
 
@@ -370,9 +369,8 @@ CREATE TRIGGER ItemLike AFTER INSERT ON Likes
     IF(@stock > 0 AND @info % 3 = 0) THEN
       -- Decrease item stock by 1
       UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
-
-      -- Add Item to Auction & Notify
-      INSERT INTO Auction(email, iid, start_date, end_date) VALUES(@name, NEW.iid, CURDATE(), CURDATE());
+      SELECT s.minbid INTO @minbid FROM Sellprice_To_Bid s, Item i WHERE i.iid=NEW.iid AND s.sellprice=i.sellprice;
+      INSERT INTO Auction(email, iid, curr_bid, start_date, end_date) VALUES(@name, NEW.iid, @minbid, CURDATE(), CURDATE());
       INSERT INTO Notification(email, iid, ncontent) VALUES(@name, NEW.iid, "Your item is on auction!");
     END IF;
 
