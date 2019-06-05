@@ -268,7 +268,7 @@ INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (520000, 390000);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("JAMO C91", "Bookshelf speaker");
 INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (23, "JAMO C91", 520000, "artlee@gmail.com", 3);
 
-INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (450000, 337500);
+-- INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (450000, 337500);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("DENON DHT-T110", "Sound bar");
 INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (24, "DENON DHT-T110", 450000, "artlee@gmail.com", 3);
 
@@ -367,7 +367,7 @@ CREATE TRIGGER ItemLike AFTER INSERT ON Likes
     SELECT COUNT(*) INTO @info FROM Likes l WHERE l.iid=NEW.iid;
     SELECT stock INTO @stock FROM Item WHERE iid=NEW.iid;
 
-    IF(@stock > 0 AND @info % 3 = 0) THEN
+    IF(@stock > 0 AND @info % 2 = 0) THEN
       -- Decrease item stock by 1
       UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
 
