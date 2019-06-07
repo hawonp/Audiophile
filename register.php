@@ -4,6 +4,8 @@ $username = "user";
 $password = "hey";
 $dbname = "auction_db";
 
+$error = "";
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
