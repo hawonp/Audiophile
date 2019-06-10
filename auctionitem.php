@@ -1,3 +1,8 @@
+<!--
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
+-->
 
 <?php
   session_start();
@@ -21,7 +26,7 @@
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $buyer = $_GET['buy'];
 
-    //Checking if the buyer has enough monnaie
+    //Checking if the buyer has enough money
     $sql = "SELECT U.credit, A.curr_bid FROM User u, Auction A WHERE u.email =A.email AND A.email='$buyer'";
     // $sql = "SELECT u.credit, j1.sellprice FROM User u JOIN (SELECT i.sellprice FROM Item i WHERE i.iid=$iid) AS j1 WHERE u.email='$myemail'"
     $result = $conn->query($sql);
@@ -29,6 +34,7 @@
       $row = $result->fetch_assoc();
       $total = $row['curr_bid'];
 
+      //if the buyer has insufficient money, reject transaction
       if ($row["curr_bid"] <= $row["credit"]) {
         $sql2 = "UPDATE User Set User.credit = User.credit + '$total' WHERE User.email = '$myemail'";
         mysqli_query($conn,$sql2);
@@ -42,37 +48,19 @@
         $message = "Transaction sucessful!";
         // echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
 
+      //buyer has sufficient money, accept transaction
       } else {
         $message = "Buyer has insufficient balance. Auction closed without transaction.";
         // echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
       }
 
+      //close auction regardless of buyer having sufficient money or not
       $sql2 = "DELETE FROM Auction where email= '$buyer' AND iid='$iid'";
       $result = mysqli_query($conn,$sql2);
 
+      //redirect back to item page
       echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
-
-      //
-      // if($result){
-      //   echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
-      // } else {
-      //
-      // }
-      //
-      // echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
     }
-
-  //   //posting discussions
-  //   $query = "INSERT INTO Buys (email, iid, bdate) VALUES ('$myemail', $iid, CURDATE())";
-  //   $result   = $conn->query($query);
-  //   if (!$result) echo "INSERT failed: $query<br>" .
-  //     $conn->error . "<br>";
-  //   else {
-  //     //Alert and return to item page
-  //     $message = "Your order has been placed";
-  //     echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
-  //   }
-  //
   }
 
 ?>
@@ -120,7 +108,6 @@
               echo "Somethings wrong...";
           }
 
-
           //get info on who is the most current bidder and their bid amount
           $sql = "SELECT I.iname, A.curr_bid, A.email AS buyer FROM Item I, Auction A WHERE I.iid = A.iid AND I.email='$myemail'";
           $result = $conn->query($sql);
@@ -130,9 +117,9 @@
             $subtotal = $row["curr_bid"];
             $theiname = $row["iname"];
           }
+
           //Get address of buyer
           $sql = "SELECT u.details, u.street, u.city, c.country, u.credit FROM User u, City c WHERE u.email='$buyer' AND u.city=c.city";
-          // $sql = "SELECT I.iname, A.curr_bid, A.email AS buyer FROM Item I, Auction A WHERE I.iid = A.iid AND I.email='$myemail'";
           $result = $conn->query($sql);
 
           if ($result->num_rows > 0) {
@@ -140,11 +127,11 @@
             $theircountry = $row["country"];
             $theiraddress = $row["details"]. " " .$row["street"]. " " .$row["city"]. " " .$row["country"];
 
-            // $subtotal = $row["sellprice"];
-
           } else {
               echo "Somethings wrong...";
           }
+
+          //calculate any shipping fees if neccessary
           $shippingfee = 0;
           if ($mycountry != $theircountry) {
             $shippingfee = $subtotal * 0.1;
@@ -159,12 +146,17 @@
             $exists = $row['exist'];
           }
 
+          //item is not on auction
           if($exists == 0){
             $message = "This item is not on auction right now!";
             echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
-          } else if($myemail == $buyer){
+          }
+          //there is no current bidder
+          else if($myemail == $buyer){
             echo "<p class = \"error\"> No one has bid on your item!</p>";
-          } else {
+          }
+          //display transaction fees (successful closure)
+           else {
             //Print the stuff
             echo "<table align='center' class='table-dark table-striped'><tr><th></th> <th></th></tr>";
             echo "<tr><td style='text-align: left'>Auctioned Item: </td> <td style='text-align: right'>$theiname</td></tr>";
@@ -192,5 +184,4 @@
 
 
 </body>
-
 </html>

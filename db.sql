@@ -1,8 +1,47 @@
 /*
-  Authors: Hawon Park, Jeong Ho Shin, Sujeong Youn
-*/
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
 
--- C:\Users\hawon\Documents\GitHub\cse305final\db.sql
+            This sql script forms the backbone of our web application.
+
+            This script initializes the db tables, and populates them with a moderate amount of data.
+            The reason why there is not an extensive amount of data hard coded within the script itself is
+            that most of the functions of the web application dynamically populate the tables,
+            or rely on the dynamically populated tables.
+
+            The script also contains the following triggers:
+              ItemLike
+              ItemInAuction
+              ItemSold
+              ItemBid
+
+            ItemLike triggers when an user likes a new item.
+            As auctions are based on the number of likes an item has,
+            the trigger adds an item to the Auction table every third like (in our case).
+
+            Users are notified that an item they liked in on auction while the owner is notified that
+            their item is now on auction.
+
+            ItemsInAuction triggers after a new item is put on Auction.
+            The web application limits the total number of ongoing auctions to 10, so this trigger is
+            used to delete any new insertion to the Auction table when there are already 10 existing auctions.
+
+            This is similiar to using ROLLBACK with procedures.
+
+            The user who liked the last item that was deleted from the Auction table is notified as such.
+
+            ItemSold triggers when an item is sold to a buyer.
+
+            The total stock of the item is decreased by one, and proper transactions are made to the owner
+            and buyer. If buyer does not live in the same country as the owner, a 10% shipping fee is included
+            in the total price of the item.
+
+            Both the owner and buyer are notified of the successful transation.
+
+            ItemBid triggers upon a successful bid on an ongoing auction. The user who made the highest bid
+            is notified that he is now the highest bidder.
+*/
 
 -- DATABASE INITIALIZATION --
 DROP DATABASE IF EXISTS auction_db;
@@ -276,7 +315,6 @@ INSERT INTO Sellprice_To_Bid (sellprice, minbid) VALUES (33000000, 24750000);
 INSERT INTO Item_To_Subcategory (iname, subcategory) VALUES ("DYNAUDIO Evidence Center", "Center speaker");
 INSERT INTO Item (iid, iname, sellprice, email, stock) VALUES (25, "DYNAUDIO Evidence Center", 33000000, "artlee@gmail.com", 3);
 
-
 --Auction 0: Item 0, user 1
 INSERT INTO Auction (email, iid, curr_bid, start_date, end_date) VALUES ("topfrag@gmail.com", 1, 360000, "2019-06-03", "2019-06-13");
 --Auction 1: Item 1, user 1
@@ -346,8 +384,7 @@ CREATE TRIGGER ItemLike AFTER INSERT ON Likes
     SELECT stock INTO @stock FROM Item WHERE iid=NEW.iid;
 
     IF(@stock > 0 AND @info % 3 = 0) THEN
-      -- Decrease item stock by 1
-      UPDATE Item SET Item.stock = Item.stock-1 WHERE iid=NEW.iid;
+      -- Insert the item into the Auction Table
       SELECT s.minbid INTO @minbid FROM Sellprice_To_Bid s, Item i WHERE i.iid=NEW.iid AND s.sellprice=i.sellprice;
       INSERT INTO Auction(email, iid, curr_bid, start_date, end_date) VALUES(@name, NEW.iid, @minbid, CURDATE(), CURDATE());
       INSERT INTO Notification(email, iid, ncontent) VALUES(@name, NEW.iid, "Your item is on auction!");
@@ -378,12 +415,11 @@ CREATE TRIGGER ItemInAuction AFTER INSERT ON Auction
   END; //
 delimiter ;
 
--- after update
+-- after update on Auction
 delimiter //
 CREATE TRIGGER ItemBid AFTER UPDATE ON Auction
   FOR EACH ROW
   BEGIN
     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You are now the top bidder!");
   END; //
-
 delimiter ;

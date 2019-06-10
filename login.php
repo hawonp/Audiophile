@@ -1,3 +1,9 @@
+<!--
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
+-->
+
 <?php
   session_start();
   $servername = "localhost";
@@ -19,21 +25,25 @@
     $myusername = mysqli_real_escape_string($conn,$_POST['email']);
     $mypassword = mysqli_real_escape_string($conn,$_POST['password']);
 
+    //verify user credentials
     $sql = "SELECT email FROM User WHERE email = '$myusername' and password = '$mypassword'";
     $result = mysqli_query($conn,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     $count = mysqli_num_rows($result);
 
+    //if login credentials are correct, there should only be one result from the sql query
     if($count == 1) {
-      // session_register("myusername");
       $_SESSION['email'] = $myusername;
-    }else {
+    }
+    //login credentials are incorrect
+    else {
       $error = "Your Login Name or Password is invalid";
       $error = "Incorrect email or password!<br>";
     }
   }
   mysqli_close($conn);
 
+  //redirect to landing page upon successful login
   if(isset($_SESSION["email"])) {
     header("Location:index.php");
   }
@@ -62,8 +72,8 @@
 
 <body>
 
+  <!-- Login Form -->
   <div class="container login-container">
-    <!-- <div class="row"> -->
       <div class="login-form-1">
         <h3>Please Login First!</h3>
 

@@ -1,3 +1,8 @@
+<!--
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
+-->
 
 <?php
   session_start();
@@ -53,7 +58,6 @@
       $message = "Your order has been placed";
       echo "<script>alert('$message');window.location.href='item.php?iid=$iid';</script>";
     }
-    
   }
 
   //Checking if the user has enough monnaie
@@ -71,21 +75,20 @@
 <body>
 
   <div class="container login-container">
-    <!-- <div class="row"> -->
       <div class="login-form-1">
         <h3> Place your order </h3>
         <?php
           //Get the user and seller item
           $sql = "SELECT u.details, u.street, u.city, c.country, u.credit FROM User u, City c WHERE u.email='$myemail' AND u.city=c.city";
           $result = $conn->query($sql);
-          
+
           //Get the info of the purchaser
           if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $mycountry = $row["country"];
             $myaddress = $row["details"]. " " .$row["street"]. " " .$row["city"]. " " .$row["country"];
             $mycredit = $row["credit"];
-          
+
           } else {
               echo "Somethings wrong...";
           }
@@ -93,13 +96,13 @@
           //Get the info of the item and seller
           $sql = "SELECT * FROM item i JOIN (SELECT c.country FROM city c INNER JOIN (select u.city FROM user u WHERE u.email='$seller') AS j1 ON c.city=j1.city) AS j2 WHERE i.iid='$iid';";
           $result = $conn->query($sql);
-          
+
           if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $theircountry = $row["country"];
             $theiname = $row["iname"];
             $subtotal = $row["sellprice"];
-          
+
           } else {
               echo "Somethings wrong...";
           }
@@ -130,7 +133,6 @@
   <div class="footer">
     <p>Copyright &copy; HaJoSue 2019</p>
   </div>
-
 
 </body>
 

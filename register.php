@@ -1,3 +1,9 @@
+<!--
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
+-->
+
 <?php
 $servername = "localhost";
 $username = "user";
@@ -21,9 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
   //attempt to execute the prepared
   if ($res = mysqli_query($conn, $sql)){
-    // echo "hey";
     if (mysqli_num_rows($res) > 0) { //if there already exists a product with the specifications
-      // echo "WARNING: This email is already taken! <br>";
       $link = "WARNING: This email is already taken!";
     }
     else {
@@ -31,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       $sql = "SELECT country FROM City WHERE city = \"".$_POST["city"]."\"";
       if ($res = mysqli_query($conn, $sql)){
         if (mysqli_num_rows($res) > 0) { //if there already exists a product with the specifications
-          echo "Skip adding new city tuple";
+          // echo "Skip adding new city tuple";
         }
         else {
           $sql2 = "INSERT INTO City(city, country)
@@ -60,7 +64,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 \"".$_POST["city"]."\")";
 
       if (mysqli_query($conn, $sql) == true) {
-        // echo "New user Added!<br>";
       }
       else {
         echo "Unable to add new user!\n".mysqli_error($conn);
@@ -100,8 +103,8 @@ mysqli_close($conn);
 
 <body>
 
+  <!-- Registration Form -->
   <div class="container login-container">
-    <!-- <div class="row"> -->
       <div class="login-form-1">
         <h3>Sign Up!</h3>
 

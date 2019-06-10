@@ -1,3 +1,9 @@
+<!--
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
+-->
+
 <?php
   session_start();
   if(!isset($_SESSION['email'])){
@@ -36,6 +42,7 @@
   <!-- Custom styles for this template -->
   <link href="css/shop-homepage.css" rel="stylesheet">
 
+  <!-- Footer CSS b/c Bootstrap was not working on this page -->
   <style>
     .footer {
       position: fixed;
@@ -46,6 +53,7 @@
       text-align: center;
     }
   </style>
+
 </head>
 
 <body>
@@ -92,6 +100,7 @@
       $result = mysqli_query($conn, "SELECT * FROM Auction a, Item i WHERE a.iid = i.iid ORDER BY a.iid");
       $inc = 0;
 
+      //Fill out the table of ongoing auctions
       if (mysqli_num_rows($result) > 0) {
 
         echo "<table class = \"table table-hover\"><thread><tr><th>Item name</th> <th>Current bidder</th> <th>Current bid price (Won)</th><th>Auction end date</th><th>Bidding Amount Entry</th></tr></thread>";
@@ -110,32 +119,28 @@
         echo "</table>";
 
       } else {
-
         echo "0 results";
-
       }
 
+      //helper method that increases the highest bid of an auction
       function increaseBid($conn, $input, $textinput){
 
         $raw_results = mysqli_query($conn, "SELECT * FROM Auction a, Item i Where a.iid = i.iid ORDER BY a.iid");
         $count = 0;
 
+            //if button id is 0
             if($input == 0){
-
                 $results = mysqli_fetch_array($raw_results);
 
               if((int)$textinput<=$results['curr_bid']){
-
                 $message = "The bidding value is too small!";
                 echo "<script type='text/javascript'>alert('$message');</script>";
 
               } else if($textinput >= 2147483647){
-
                 $message = "The number is too large! Please re-enter.";
                 echo "<script type='text/javascript'>alert('$message');</script>";
 
               } else {
-
                   $message = "Your bidding was successful. ".$result['email'];
                   mysqli_query($conn, "UPDATE Auction SET curr_bid=".(int)$textinput." WHERE iid = ".$results["iid"]);
                   mysqli_query($conn, "UPDATE Auction SET email=\"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
@@ -143,45 +148,37 @@
                   mysqli_query($conn, "UPDATE Auction SET count = count + 1 WHERE iid = ".$results["iid"]);
               }
 
-              } else {
+            } else {
 
+              //for the remaining buttons corresponding to the 10 ongoing auctions
               while($results = mysqli_fetch_array($raw_results)){
 
                 if($count == $input){
 
                     if((int)$textinput <= $results['curr_bid']){
-
                         $message = "The bidding value is too small!";
                         echo "<script type='text/javascript'>alert('$message');</script>";
 
                     } else if($textinput >= 2147483647){
-
                       $message = "The number is too large! Please re-enter.";
                       echo "<script type='text/javascript'>alert('$message');</script>";
 
                     } else {
-
                       $message = "Your bidding was successful.";
                       mysqli_query($conn, "UPDATE Auction SET curr_bid=".(int)$textinput." WHERE iid = ".$results["iid"]);
                       mysqli_query($conn, "UPDATE Auction SET email=\"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
                       echo "<script type='text/javascript'>alert('$message');</script>";
                       mysqli_query($conn, "UPDATE Auction SET count = count + 1 WHERE iid = ".$results["iid"]);
-
                     }
                 }
 
                 ++$count;
-
-                }
-
               }
-
-
+            }
           echo ('<meta http-equiv="refresh" content="0;url='.$_SERVER['HTTP_REFERER'].'">');
-
         } // The end of function
 
-
+        //correlate each auction to a button and its ID number
       if(isset($_POST['but_0'])){
         increaseBid($conn, 0, $_POST['bid_0']);
       } else if(isset($_POST['but_1'])){
@@ -203,9 +200,8 @@
       }else if(isset($_POST['but_9'])){
         increaseBid($conn, 9, $_POST['bid_9']);
 	  }
-
     mysqli_close($conn);
-?>
+    ?>
 </div>
 
   <div class="py-5 footer bg-dark">
@@ -215,5 +211,4 @@
   </div>
 
 </body>
-
 </html>

@@ -1,3 +1,9 @@
+<!--
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
+-->
+
 <?php
   session_start();
   if(!isset($_SESSION['email'])){
@@ -16,11 +22,11 @@
       die("Connection failed: " . $conn->connect_error);
   }
 
+  //set php variable to sorting category (if passed by GET)
   $mycat = "";
   if(isset($_GET['cat'])){
     $mycat = $_GET['cat'];
   }
-  // $mycat = $_GET['cat'];
 
 ?>
 
@@ -33,8 +39,6 @@
   <meta name="description" content="whatever">
   <meta name="author" content="whatever">
 
-  <!-- <link href="./css/styles.css" rel="stylesheet"> -->
-
   <title>Audiophile</title>
 
   <!-- Bootstrap core CSS -->
@@ -42,7 +46,6 @@
 
   <!-- Custom styles for this template -->
   <link href="css/shop-homepage.css" rel="stylesheet">
-
 
 </head>
 
@@ -62,9 +65,6 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="selling.php">Sales</a>
-          </li> -->
           <li class="nav-item">
             <a class="nav-link" href="auction.php">Auctions</a>
           </li>
@@ -86,8 +86,11 @@
 
     <div class="row">
 
+      <!--
+       Side bar navigation for sorting by category
+       Sorting is accomplished by using the PHP GET method to pass variables as part of the URL
+      -->
       <div class="col-lg-3">
-
         <h1 class="my-4">Store</h1>
         <div class="list-group">
           <a href="index.php?cat=Earphones" class="list-group-item">Earphones</a>
@@ -98,7 +101,6 @@
           <a href="index.php?cat=Accessories" class="list-group-item">Accessories</a>
           <a href="index.php" class="list-group-item">All</a>
         </div>
-
       </div>
       <!-- /.col-lg-3 -->
 
@@ -109,18 +111,23 @@
 
         <br>
 
+        <!-- Dynamically populated table of items being sold -->
         <div class="row">
 
           <?php
+            //Display all items regardless of category
             if($mycat == ""){
               $sql = "SELECT I.iid, I.iname, I.sellprice, C.subcategory FROM Item I, Item_To_Subcategory C Where I.iname = C.iname";
-            } else {
+            }
+            //Display the items that belong to a specific Category
+            else {
               $sql = "select i.iid, i.iname, s2.subcategory, s2.category, i.sellprice FROM Item i INNER JOIN (select s1.category, s1.subcategory, i1.iname from Item_To_Subcategory I1 INNER JOIN (select * from Subcategory_To_Category sc where sc.category='$mycat') AS s1 ON s1.subcategory=I1.subcategory) AS s2 ON i.iname=s2.iname";
-              // $sql = "SELECT I.iid, I.iname, I.sellprice, S.subcategory FROM Sells S, Item I, Item_To_Subcategory S, Subcategory_To_Category Where S.iid = I.iid AND I.iname = S.iname AND C.category='$mycat'";
             }
 
             $result = $conn->query($sql);
 
+            //populate the table with the query results.
+            // clicking on an item will redirect you to the specific item page 
             if ($result->num_rows > 0) {
               while($row = $result->fetch_assoc()) {
                 echo "<div class = \"col-lg-4 col-md-6 mb-4\">";

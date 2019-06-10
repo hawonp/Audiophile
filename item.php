@@ -1,3 +1,9 @@
+<!--
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
+-->
+
 <?php
   session_start();
   if(!isset($_SESSION['email'])){
@@ -137,7 +143,7 @@
     </div>
   </nav>
 
-  <!-- Item description -->
+  <!-- Item Descriptions -->
   <div class="itemDes">
     <div class="row">
       <!-- Item image -->
@@ -146,11 +152,13 @@
           echo "<img src='images/".$iid.".jpg' alt='Item image'>";
         ?>
       </div>
-      <!-- Ite  m Description? -->
+      <!-- Item Description? -->
       <div class="itemDesc">
         <h2> <?php echo $row["iname"]; ?></h2>
         <hr>
         <?php
+
+          //display the average rating of the item
           $sql = "SELECT AVG(r.rating) AS avgRating FROM Review r WHERE r.iid=$iid";
           $result = $conn->query($sql);
 
@@ -164,16 +172,22 @@
           echo "<br>";
           echo "<br>";
 
-          //Get stock number
+          //get the stock of the item
           $sql = "SELECT * FROM Item s JOIN (SELECT COUNT(*) FROM Likes l WHERE l.iid=$iid) AS j1 WHERE s.iid=$iid";
           $result = $conn->query($sql);
 
+          //if there are items available for sale
           if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
+
+            //if the this item is owned by the current user
+            //include a button allowing users to close auctions on their own items
             if ($row["email"]==$_SESSION['email']) {
               echo "<h3><i> This is your item </i></h3>";
               echo "<a class=\"btn btn-primary btn-sm\" href='auctionitem.php?iid=$iid' role=\"button\">Finish Auction</a>";
 
+            //display stock, rating, and a purchase button
+            //note that you cannot purchase an item with insufficient credits
             } else if ($row["stock"] > 0) {
               echo "Seller: ".$row["email"];
               echo "<br><br>";
@@ -186,7 +200,6 @@
               echo "<button class = \"btn btn-primary btn-sm\" type = \"submit\"> Like </button>";
               echo "</form>";
               echo "<br>";
-
               echo "<a class=\"btn btn-primary btn-sm\" href='purchaseItem.php?iid=$iid&seller=".$row["email"]."' role=\"button\">Buy this item</a>";
             } else {
               echo "<em>Out of stock</em>";
@@ -202,6 +215,7 @@
   <!-- hr -->
   <hr>
 
+  <!-- Item Discussion and Review Tabs -->
   <div class="tab">
     <button class="tablinks" onclick="openCity(event, 'posts')" id="defaultOpen"> Discussions </button>
     <button class="tablinks" onclick="openCity(event, 'reviews')">Reviews</button>
@@ -275,6 +289,8 @@
   </div>
 
   <script>
+
+  //Function to switch between the two tabs (discussions & reviewss)
   function openCity(evt, cityName) {
     // Declare all variables
     var i, tabcontent, tablinks;

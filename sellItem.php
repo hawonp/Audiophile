@@ -1,3 +1,9 @@
+<!--
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
+-->
+
 <?php
   session_start();
   if(!isset($_SESSION['email'])){
@@ -50,9 +56,6 @@
       VALUES('$myiname', '$mysubcategory')";
 
     mysqli_query($conn, $sql);
-    // if(mysqli_query($conn, $sql) == false){
-    //   echo mysqli_error($conn);
-    // }
 
     //INSERT NEW ITEM TUPLE
     $mystock = $_POST['stock'];
@@ -141,11 +144,6 @@
       </div>
     <!-- </div> -->
   </div>
-
-  <!-- FOOTER -->
-  <!-- <div class="footer">
-    <p>Copyright &copy; HaJoSue 2019</p>
-  </div> -->
 
 </body>
 

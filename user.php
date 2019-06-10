@@ -1,3 +1,9 @@
+<!--
+  Authors:  Hawon Park    hawon.park@stonybrook.edu
+            Jeong Ho Shin jeongho.shin@stonybrook.edu
+            Sujeong Youn  sujeong.youn@stonybrook.edu
+-->
+
 <?php
   session_start();
   if(!isset($_SESSION['email'])){
@@ -15,6 +21,7 @@
       die("Connection failed: " . $conn->connect_error);
     }
 
+    // Get necessary information of the current user
     $myemail = $_SESSION['email'];
     $sql = "SELECT * FROM User WHERE email = '$myemail'";
     $result = mysqli_query($conn,$sql);
@@ -24,6 +31,7 @@
     $mylname = $row['last_name'];
     $mypnum = $row['phone_num'];
 
+    //Increase user credits upon request (PHP form)
     if(isset($_POST['balance'])){
       $mynum = $_POST['balance'];
       $sql = "UPDATE User SET credit = credit + '$mynum' WHERE email='$myemail'";
@@ -96,26 +104,32 @@
     <p class = "text-info"> Phone Number: <?php echo $mypnum; ?> </p>
   </div>
 
+  <!-- Notifications and User Credit -->
   <div class ="container-fluid">
     <div class="row">
+
+      <!-- Notifications -->
       <div class="col col-lg-4">
         <h2> Notifications! </h2>
         <?php
+
+          // Display existing notifications of current user
           $usr_email=$_SESSION['email'];
           $sql = " SELECT N.iid, N.ncontent, I.iname FROM Notification N, Item I WHERE N.email='$usr_email' AND N.iid = I.iid;";
-          // $sql = "SELECT iid, ncontent FROM Notification WHERE email='$usr_email' ORDER BY nnumber DESC LIMIT 3;";
           $result = $conn->query($sql);
           while($row = $result->fetch_assoc()){
             echo "<h6 style=\"text-align : left\"><i>(".$row['iname'].") : ".$row['ncontent']."</i></h6>";
-            // echo "<h6><i> ID (".$row['iid']."</i><i>) ".$row['ncontent']."</i></h6>";
             echo "<br>";
 
           }
         ?>
       </div>
+
+      <!-- User Credits -->
       <div class="col col-lg-4">
         <h2> Your Balance! </h2>
         <?php
+          //Display current user balance
           $usr_email=$_SESSION['email'];
           $sql = "SELECT credit FROM User WHERE email = '$usr_email'";
           $result = $conn->query($sql);
@@ -123,6 +137,8 @@
           echo "<h4><i>".$row['credit']." WON </i></h4>";
         ?>
       </div>
+
+      <!-- Recharge User Credits (accomplished via PHP forms) -->
       <div class="col-lg-4">
         <h5> Recharge Your Balance? </h5>
         <form  method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -137,19 +153,19 @@
     </div>
   </div>
 
+  <!-- Your current items on sale -->
   <hr class="style1">
   <div class="container-fluid">
     <h2> Your Items!</h2>
     <div class = "selling">
       <?php
+
+        // Get items (and accompanying subcategories) sold by the current user
         $usr_email=$_SESSION['email'];
         $sql = "SELECT I.iname, I.sellprice, I.iid, I.stock, R.subcategory FROM Item I INNER JOIN Item_To_Subcategory R WHERE I.email = '$usr_email' and R.iname = I.iname";
-        // $sql = "SELECT i.iname, i.iid, i.sellprice, i.stock FROM Item i WHERE i.email='$usr_email'";
-        // $sql = "SELECT i.iname, bs.stock FROM Item i JOIN (SELECT b.iid, b.stock FROM Sells b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-          // echo "<div class = \"container\">"
           echo "<div class = \"container\">";
           echo "<table class = \"table table-hover\" width=\"50%\"> <thread> <tr> <th align=\"left\">ID</th> <th> Name </th>  <th> Price </th> <th>Stock</th> <th>Type</th></tr></thread>";
 
@@ -170,14 +186,13 @@
     </div>
   </div>
 
-
+  <!-- Like History -->
   <hr class="style1">
-  <!-- Purchase History -->
   <div class="container-fluid bg-grey">
     <h2> Items You've Liked!</h2>
 
     <div class = "selling">
-      <!-- retreiving data from db -->
+      <!-- retreiving like history from db -->
       <?php
         $usr_email=$_SESSION['email'];
         $sql = " SELECT I.iid, I.iname FROM Item I INNER JOIN Likes L WHERE L.email='$usr_email' AND L.iid = I.iid";
@@ -203,13 +218,13 @@
     </div>
   </div>
 
-  <hr class="style1">
   <!-- Purchase History -->
+  <hr class="style1">
   <div class="container-fluid bg-grey">
     <h2> Purchase History!</h2>
 
     <div class = "selling">
-      <!-- retreiving data from db -->
+      <!-- retreiving purchase history from db -->
       <?php
         $usr_email=$_SESSION['email'];
         $sql = "SELECT i.iid, i.iname, bs.bdate FROM Item i JOIN (SELECT b.iid, b.bdate FROM Buys b Where b.email=\"$usr_email\") bs ON bs.iid=i.iid";
@@ -236,11 +251,13 @@
 
   </div>
 
-  <hr class="style1">
   <!-- Auction history-->
+  <hr class="style1">
   <div class = "container selling">
     <h2> Auctions you are participating in</h2>
     <?php
+
+      // get the auctions in which the user is the current highest bidder
       $usr_email=$_SESSION['email'];
       $sql = "SELECT i.iname, a1.* FROM Item i JOIN (SELECT * FROM Auction a Where a.email=\"$usr_email\") a1 ON a1.iid=i.iid";
       $result = $conn->query($sql);
