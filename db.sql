@@ -134,7 +134,7 @@ INSERT INTO User(first_name, last_name, password, email, phone_num, details, str
 
 -- user 2
 INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
-  VALUES ("Jeong Ho", "Shin", "ps2", "topfrag@gmail.com", "119", "A516", "Moonwharo-119", "Songdo");
+  VALUES ("Jeong Ho", "Shin", "ps2", "topfrag@gmail.com", "119", "A532", "Moonwharo-119", "Songdo");
 
 -- user 3
 INSERT INTO User(first_name, last_name, password, email, phone_num, details, street, city)
@@ -301,28 +301,6 @@ INSERT INTO Review (email, iid, rating, rcontent) VALUES("lol@gmail.com", 10, 4,
 INSERT INTO Review (email, iid, rating, rcontent) VALUES("hawonp@gmail.com", 10, 3, "the ting goes skrrra pap pap ka ka ka raw sauce no ketchup 2 + 2 = 4, - 1 = 3 quick mafs hence you get a 3");
 INSERT INTO Review (email, iid, rating, rcontent) VALUES("sanjaylanjay@gmail.com", 10, 2, "Me no like");
 
-
---add pre notification for art lee
--- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "c");
--- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "b");
--- INSERT INTO Notification(email, iid, ncontent) VALUES("artlee@gmail.com", 1, "a");
-
--- TEST SQL QUERIES --
-SELECT * FROM User;
---
-SELECT * FROM City;
-
-SELECT * FROM Auction;
-
-SELECT * FROM Buys;
-
-SELECT * FROM Item_To_Subcategory;
-
-SELECT ncontent FROM Notification WHERE email="artlee@gmail.com" ORDER BY nnumber DESC LIMIT 2;
-
---For testing purposes
-UPDATE User SET credit=100000000 WHERE email='hawonp@gmail.com';
-
 --TRIGGERs
 
 -- Activates after the User purchases an Item
@@ -381,29 +359,6 @@ CREATE TRIGGER ItemLike AFTER INSERT ON Likes
   END; //
 delimiter ;
 
-delimiter //
-CREATE TRIGGER ItemBid AFTER UPDATE ON Auction
-  FOR EACH ROW
-  BEGIN
-    INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You are now the top bidder!");
-
-    SELECT count INTO @c FROM Auction A WHERE A.iid=NEW.iid AND A.email=NEW.email;
-    --
-    IF(@c > 2) THEN
-      -- UPDATE Auction SET Auction.count = Auction.count+1 WHERE iid= NEW.iid;
-      SELECT curr_bid INTO @payment FROM Auction A where A.iid=NEW.iid AND A.email=NEW.email;
-      SELECT email INTO @owner FROM Item I where I.iid = NEW.iid;
-      DELETE FROM Auction WHERE iid=NEW.iid and email = NEW.email;
-
-      UPDATE User SET User.credit = User.credit + @payment WHERE User.email = NEW.email;
-      UPDATE User SET User.credit = User.credit - @payment WHERE User.email = @owner;
-
-
-    END IF;
-  END; //
-
-delimiter ;
-
 -- Activates on New Auction
 delimiter //
 CREATE TRIGGER ItemInAuction AFTER INSERT ON Auction
@@ -421,4 +376,14 @@ CREATE TRIGGER ItemInAuction AFTER INSERT ON Auction
 
     END IF;
   END; //
+delimiter ;
+
+-- after update
+delimiter //
+CREATE TRIGGER ItemBid AFTER UPDATE ON Auction
+  FOR EACH ROW
+  BEGIN
+    INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You are now the top bidder!");
+  END; //
+
 delimiter ;

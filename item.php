@@ -172,6 +172,8 @@
             $row = $result->fetch_assoc();
             if ($row["email"]==$_SESSION['email']) {
               echo "<h3><i> This is your item </i></h3>";
+              echo "<a class=\"btn btn-primary btn-sm\" href='auctionitem.php?iid=$iid' role=\"button\">Finish Auction</a>";
+
             } else if ($row["stock"] > 0) {
               echo "Seller: ".$row["email"];
               echo "<br><br>";
