@@ -81,7 +81,7 @@ CREATE TABLE Auction (
   curr_bid INTEGER DEFAULT 0,
   start_date DATE,
   end_date DATE,
-  count INTEGER NOT NULL,
+  count INTEGER DEFAULT 0,
   PRIMARY KEY(email, iid),
   FOREIGN KEY(email) REFERENCES User(email),
   FOREIGN KEY(iid) REFERENCES Item(iid) ON DELETE CASCADE
@@ -388,9 +388,18 @@ CREATE TRIGGER ItemBid AFTER UPDATE ON Auction
     INSERT INTO Notification(email, iid, ncontent) VALUES(NEW.email, NEW.iid, "You are now the top bidder!");
 
     SELECT count INTO @c FROM Auction A WHERE A.iid=NEW.iid AND A.email=NEW.email;
+    --
+    IF(@c > 2) THEN
+      -- UPDATE Auction SET Auction.count = Auction.count+1 WHERE iid= NEW.iid;
+      DELETE FROM Auction WHERE iid=NEW.iid and email = NEW.email;
 
-    IF(@c < 5) THEN
-      UPDATE Auction A SET A.count = A.count+1 WHERE A.iid= NEW.iid AND A.email=NEW.email;
+      SELECT curr_bid INTO @payment FROM Auction A where A.iid=NEW.iid AND A.email=NEW.email;
+      SELECT email INTO @owner FROM Item I where I.iid = NEW.iid;
+
+      UPDATE User SET User.credit = User.credit + @payment WHERE User.email = NEW.email;
+      UPDATE User SET User.credit = User.credit - @payment WHERE User.email = @owner;
+
+
     END IF;
   END; //
 
@@ -414,13 +423,3 @@ CREATE TRIGGER ItemInAuction AFTER INSERT ON Auction
     END IF;
   END; //
 delimiter ;
-
--- delimiter //
--- CREATE EVENT ScheduledAuction ON SCHEDULE EVERY 1 DAY
---   DO BEGIN
---     SELECT * FROM User;
---   END; //
---
--- delimiter ;
-
--- SHOW EVENTS;
