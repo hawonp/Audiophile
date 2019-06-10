@@ -170,7 +170,9 @@
 
           if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            if ($row["stock"] > 0) {
+            if ($row["email"]==$_SESSION['email']) {
+              echo "<h3><i> This is your item </i></h3>";
+            } else if ($row["stock"] > 0) {
               echo "Seller: ".$row["email"];
               echo "<br><br>";
               echo "Stock: ".$row["stock"];
