@@ -391,10 +391,9 @@ CREATE TRIGGER ItemBid AFTER UPDATE ON Auction
     --
     IF(@c > 2) THEN
       -- UPDATE Auction SET Auction.count = Auction.count+1 WHERE iid= NEW.iid;
-      DELETE FROM Auction WHERE iid=NEW.iid and email = NEW.email;
-
       SELECT curr_bid INTO @payment FROM Auction A where A.iid=NEW.iid AND A.email=NEW.email;
       SELECT email INTO @owner FROM Item I where I.iid = NEW.iid;
+      DELETE FROM Auction WHERE iid=NEW.iid and email = NEW.email;
 
       UPDATE User SET User.credit = User.credit + @payment WHERE User.email = NEW.email;
       UPDATE User SET User.credit = User.credit - @payment WHERE User.email = @owner;
