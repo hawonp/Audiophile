@@ -123,7 +123,7 @@
             if($input == 0){
 
                 $results = mysqli_fetch_array($raw_results);
-              
+                
               if((int)$textinput<=$results['curr_bid']){
           
                 $message = "The bidding value is too small!";
@@ -142,7 +142,8 @@
                   echo "<script type='text/javascript'>alert('$message');</script>";
 
               } 
-            } else {
+
+              } else {
 
               while($results = mysqli_fetch_array($raw_results)){
             
@@ -174,7 +175,9 @@
 
               }
           
+          mysqli_query($conn, "UPDATE Auction SET count = count + 1");
           echo ('<meta http-equiv="refresh" content="0;url='.$_SERVER['HTTP_REFERER'].'">');
+
         } // The end of function
 
      
