@@ -140,7 +140,7 @@
                   mysqli_query($conn, "UPDATE Auction SET curr_bid=".(int)$textinput." WHERE iid = ".$results["iid"]);
                   mysqli_query($conn, "UPDATE Auction SET email=\"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
                   echo "<script type='text/javascript'>alert('$message');</script>";
-                  mysqli_query($conn, "UPDATE Auction SET count = count + 1");
+                  mysqli_query($conn, "UPDATE Auction SET count = count + 1 WHERE iid = ".$results["iid"]);
               } 
 
               } else {
@@ -165,7 +165,7 @@
                       mysqli_query($conn, "UPDATE Auction SET curr_bid=".(int)$textinput." WHERE iid = ".$results["iid"]);
                       mysqli_query($conn, "UPDATE Auction SET email=\"".$_SESSION['email']."\" WHERE iid = ".$results["iid"]);
                       echo "<script type='text/javascript'>alert('$message');</script>";
-                      mysqli_query($conn, "UPDATE Auction SET count = count + 1");
+                      mysqli_query($conn, "UPDATE Auction SET count = count + 1 WHERE iid = ".$results["iid"]);
                     } 
                 }
 
